@@ -1,19 +1,19 @@
 <template>
   <div>
     <div v-for="(value, name) in event.parameters" :key="name">
-      <Parameter :parameterName=name :eventIndex=eventIndex />
+      <ParameterSlider :parameterName=name :eventIndex=eventIndex />
     </div>
   </div>
 </template>
 
 <script>
-import Parameter from '@/components/Parameters/Parameter.vue'
+import ParameterSlider from '@/components/Parameters/ParameterSlider.vue'
 
 export default {
   name: 'EventFault',
   props: ['eventIndex'],
   components: {
-    Parameter
+    ParameterSlider
   },
   computed: {
     event: function () {

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-tabs grow v-model="tab" x-small>
+  <v-tabs grow v-model="tab" x-small class="mb-10">
     <v-tab href="#tab1" class="text-overline pa-0">Edit</v-tab>
     <v-tab href="#tab2" class="text-overline pa-0">Random Generator</v-tab>
     <v-tab href="#tab3" class="text-overline pa-0">Load</v-tab>

@@ -2,7 +2,10 @@
   <div>
     <v-row v-for="(layerName, index) in event.parameters.layer_names" :key="index">
       <v-col>
-        <LayerThickness :layerIndex="index"/>
+        <LayerThickness :layerIndex="index" />
+      </v-col>
+      <v-col class="my-0 py-0">
+        <LayerLithology :layerIndex="index" />
       </v-col>
     </v-row>
   </div>
@@ -10,13 +13,13 @@
 
 <script>
 import LayerThickness from '@/components/Parameters/LayerThickness.vue'
-// import LayerLithology from '@/components/LayerLithology.vue'
+import LayerLithology from '@/components/Parameters/LayerLithology.vue'
 
 export default {
   name: 'Stratigraphy',
   components: {
     LayerThickness,
-    // LayerLithology
+    LayerLithology
   },
   computed: {
     event: function () {

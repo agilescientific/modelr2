@@ -13,7 +13,12 @@ export default new Vuex.Store({
   },
   state: {
     previewAutoReload: true,
-    modelExtent: [0, 10000, 0, 1000, 0, 5000]
+    modelExtent: [0, 10000, 0, 1000, 0, 5000],
+    rockDensities: {
+      'Sandstone': 2600,
+      'Shale': 2450,
+      'Coal': 1300,
+    }
   },
   mutations: {
     setPreviewSection(state, payload) {
@@ -37,8 +42,8 @@ export default new Vuex.Store({
       })
     },
     drawSection({state}) {
-      var canvasX = 200;
-      var canvasY = 100;
+      var canvasX = 400;
+      var canvasY = 200;
       var canvas = document.getElementById("plotCanvas")
       canvas.width = canvasX;
       canvas.height = canvasY;
@@ -57,7 +62,7 @@ export default new Vuex.Store({
       let section = state.previewSection;
       for (let x = 0; x < canvasX; x += 1) {
         for (let y = 0; y < canvasY; y += 1) {
-          let c = colors[section[y][x]];
+          let c = colors[section[Math.floor(y/2)][Math.floor(x/2)]];
           let value = 
             (c[3] * 255 << 24) |    // alpha
             (c[2] << 16) |          // blue

@@ -4,7 +4,7 @@
       color="primary--text"
       class="text-capitalize"
     >
-      {{ event.type }}
+      {{ event.type }} <span class="ml-2 grey--text">{{ eventIndex }}</span>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
       <EventFold v-if="event.type === 'fold'" :eventIndex="eventIndex" />
@@ -12,18 +12,6 @@
       <EventStratigraphy v-if="event.type === 'stratigraphy'" :eventIndex="eventIndex" />
       <EventFault v-if="event.type === 'fault'" :eventIndex="eventIndex" />
     </v-expansion-panel-content>
-
-    <v-btn
-      color="grey lighten-2"
-      fab
-      light
-      x-small
-      absolute
-      bottom
-      :style="{left: '45%'}"
-    >
-      <v-icon>mdi-plus</v-icon>
-    </v-btn>
   </div>
 </template>
 
