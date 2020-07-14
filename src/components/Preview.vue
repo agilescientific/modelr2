@@ -8,22 +8,29 @@
       </v-card>   
       <div class="d-flex flex-row align-center">
         <v-btn class="ml-4" small @click="computeSection()">Recompute</v-btn>
-        <v-switch class="ml-3" label="Auto-Update"></v-switch>
+        <v-switch v-model="previewAutoReload" class="ml-3" label="Auto-Update"></v-switch>
+        <v-switch v-model="previewSeismic" class="ml-3" label="Seismic FM"></v-switch>
       </div>
+
       <v-card-title>History Object</v-card-title>
-    
-    <v-card class="mx-4 pa-2">
-      <code>
-      {{ getEvents }}
-      </code>
-    </v-card>
+      <v-card class="mx-4 pa-2">
+        <code>
+          {{ events }}
+        </code>
+      </v-card>
+
+      <v-card-title>Settings</v-card-title>
+      <v-card class="mx-4 pa-2">
+        <code>
+          {{ settings }}
+        </code>
+      </v-card>
      </v-card>
      
   </div>
 </template>
 
 <script>
-// import { mapState } from 'vuex';
 import { mapActions } from 'vuex';
 
 export default {
@@ -34,11 +41,27 @@ export default {
     }
   },
   computed: {
-    // ...mapState({
-    //   events: state => state.history.events
-    // })
-    getEvents() {
+    events() {
       return this.$store.state.history.events
+    },
+    settings() {
+      return this.$store.state.settings
+    },
+    previewSeismic: {
+      get() {
+        return this.$store.state.settings.previewSeismic
+      },
+      set(value) {
+        this.$store.state.settings.previewSeismic = value
+      }
+    },
+    previewAutoReload: {
+      get() {
+        return this.$store.state.settings.previewAutoReload
+      },
+      set(value) {
+        this.$store.state.settings.previewAutoReload = value
+      }
     }
   },
   methods: {

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import history from './modules/history';
+import settings from './modules/settings';
 import axios from 'axios';
 
 Vue.use(Vuex)
@@ -9,10 +10,10 @@ const backendPath = 'http://localhost:5000/history';
 
 export default new Vuex.Store({
   modules: {
-    history: history
+    history: history,
+    settings: settings
   },
   state: {
-    previewAutoReload: true,
     modelExtent: [0, 10000, 0, 1000, 0, 5000],
     rockDensities: {
       'Sandstone': 2600,

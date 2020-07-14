@@ -43,9 +43,9 @@ const state = {
   };
   
   const actions = {
-    updateLayerThickness({commit, dispatch, rootState}, payload) {
-      commit('setLayerThickness', payload)
-      if (rootState.autoReloadPreview) {
+    updateEventParam({commit, dispatch, rootState}, payload) {
+      commit('setEventParam', payload)
+      if (rootState.settings.previewAutoReload) {
         dispatch('computeSection', null, { root: true })
       }
     }
@@ -61,9 +61,9 @@ const state = {
     insertEvent: (state, payload) => {
       state.events.splice(payload.index + 1, 0, payload.event)
     },
-    setEventParam: (state, payload) => (
+    setEventParam: (state, payload) => {
       state.events[payload.n].parameters[payload.key] = payload.value
-    ),
+    },
     appendEvent: (state, event) => (
       state.events.push(event)
     )

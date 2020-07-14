@@ -34,6 +34,7 @@
         :max="max[parameterName]"
         v-model="value"
         thumb-label
+        @click="a()"
         :label="parameterName"
         class="text-capitalize"
       ></v-slider>
@@ -46,6 +47,17 @@
 export default {
   name: 'Parameter',
   props: ['parameterName', 'eventIndex'],
+  methods: {
+    a() {
+      
+      let payload = {
+        n: this.eventIndex,
+        key: this.parameterName,
+        value: this.value
+      }
+      this.$store.dispatch('history/updateEventParam', payload)
+    }
+  },
   computed: {
     extent() {
       return this.$store.state.modelExtent
