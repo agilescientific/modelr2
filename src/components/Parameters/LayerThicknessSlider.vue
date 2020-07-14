@@ -6,6 +6,7 @@
     :max="modelExtent[5]"
     v-model="thicknesses[layerIndex]"
     :label="layerName"
+    @click="updateModel()"
     thumb-label
   ></v-slider>
 </template>
@@ -14,6 +15,16 @@
 export default {
   name: 'LayerThicknessSlider',
   props: ['layerIndex', 'eventIndex'],
+  methods: {
+    updateModel() {
+      let payload = {
+        n: this.eventIndex,
+        key: this.parameterName,
+        value: this.value
+      }
+      this.$store.dispatch('history/updateEventParam', payload)
+    }
+  },
   computed: {
     modelExtent() {
       return this.$store.state.modelExtent
