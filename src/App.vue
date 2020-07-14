@@ -45,8 +45,24 @@
       </v-container>
     </v-main>
 
-    <v-footer app>
-      Footer
+    <v-footer padless light class="white">
+      <v-card flat tile class="text-center mx-auto white">
+        <v-card-text>
+          <v-btn icon>
+            <v-icon>mdi-twitter</v-icon>
+          </v-btn>
+          <v-btn icon>
+            <v-icon>mdi-linkedin</v-icon>
+          </v-btn>
+          <v-btn icon>
+            <v-icon>mdi-slack</v-icon>
+          </v-btn>
+        </v-card-text>
+        <v-card-text>
+          <strong>AppName</strong> by <a href="https://agilescientific.com/">Agile</a>. The source code is licensed UNKNOWN. The website is licensed UNKNOWN.
+        </v-card-text>
+      </v-card>
+      
     </v-footer>
   </v-app>
 </template>
