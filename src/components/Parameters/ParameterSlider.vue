@@ -33,6 +33,7 @@
         :min="min[parameterName]"
         :max="max[parameterName]"
         v-model="value"
+        thumb-label
         :label="parameterName"
         class="text-capitalize"
       ></v-slider>
