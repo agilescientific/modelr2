@@ -36,7 +36,7 @@ export default {
       this.$store.commit('history/insertEvent', {
         index: this.eventIndex,
         event: this.event
-      })
+      });
     }
   }
 }

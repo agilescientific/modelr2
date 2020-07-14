@@ -4,11 +4,12 @@
     <v-select
       class="my-0 py-0"
       :items="rockNames"
-      v-model="name"
+      v-model="names[layerIndex]"
       label="Lithology"
+      @change="densities[layerIndex] = rockDensities[names[layerIndex]]"
       dense
   ></v-select>
-  {{ density }}
+  <!-- {{ density[layerIndex] }} -->
   </v-col>
   <!-- <v-col class="my-0 py-0">
     <v-text-field
@@ -27,38 +28,34 @@
 
 export default {
   name: 'LayerLithology',
-  props: ['layerIndex'],
+  props: ['layerIndex', 'eventIndex'],
   computed: {
+    rockDensities() {
+      return this.$store.state.rockDensities
+    },
     rockNames() {
       return Object.keys(this.$store.state.rockDensities)
-    },
-    rockDensities() {
-      return Object.values(this.$store.state.rockDensities)
     },
     rockName() {
       return this.$store.state.history.events[0].parameters.lithology[this.layerIndex]
     },
-    name: {
+    names: {
       get() {
-        return this.$store.state.history.events[0].parameters.lithology[this.layerIndex]
+        return this.$store.state.history.events[this.eventIndex].parameters.lithology
       },
       set(value) {
-        console.log(value)
-        this.$store.commit('history/setLayerLithology', {
-          n: this.layerIndex, value: value
-        });
-        this.$store.commit('history/setLayerDensity', {
-          n: this.layerIndex, value: this.$store.state.rockDensities[value]
+        this.$store.commit('history/setEventParam', {
+          n: this.eventIndex, key: "lithology", value: value
         });
       }
     },
-    density: {
+    densities: {
       get() {
-        return this.$store.state.history.events[0].parameters.density[this.layerIndex]
+        return this.$store.state.history.events[this.eventIndex].parameters.density
       },
       set(value) {
-        this.$store.commit('history/setLayerDensity', {
-          n: this.layerIndex, value: value
+        this.$store.commit('history/setEventParam', {
+          n: this.eventIndex, key: "density", value: value
         })
       }
     }

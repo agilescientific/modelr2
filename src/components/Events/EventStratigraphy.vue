@@ -7,7 +7,7 @@
   </v-tabs>
   <v-tabs-items v-model="tab">
     <v-tab-item :key="1" value="tab1">
-      <Stratigraphy />
+      <Stratigraphy :eventIndex="eventIndex" />
     </v-tab-item>
     <v-tab-item :key="2" value="tab2">
       <v-card flat>

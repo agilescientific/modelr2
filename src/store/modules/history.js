@@ -61,20 +61,20 @@ const state = {
     insertEvent: (state, payload) => {
       state.events.splice(payload.index + 1, 0, payload.event)
     },
-    setLayerThickness: (state, payload) => {
-      state.events[0].parameters.layer_thickness[payload.n] = payload.value;
-    },
-    setLayerLithology: (state, payload) => {
-      state.events[0].parameters.lithology[payload.n] = payload.value
-      console.log("modified")
-    },
-    setLayerDensity: (state, payload) => (
-      state.events[0].parameters.density[payload.n] = payload.value
-    ),
+    // setLayerThickness: (state, payload) => {
+    //   state.events[0].parameters.layer_thickness[payload.n] = payload.value;
+    // },
+    // setLayerLithology: (state, payload) => {
+    //   state.events[0].parameters.lithology[payload.n] = payload.value
+    //   console.log("modified")
+    // },
+    // setLayerDensity: (state, payload) => (
+    //   state.events[0].parameters.density[payload.n] = payload.value
+    // ),
     setEventParam: (state, payload) => (
       state.events[payload.n].parameters[payload.key] = payload.value
     ),
-    addEvent: (state, event) => (
+    appendEvent: (state, event) => (
       state.events.push(event)
     )
   };

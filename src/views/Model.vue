@@ -13,6 +13,7 @@
 </template>
 
 <script>
+
 import Preview from '@/components/Preview.vue'
 import History from '@/components/History.vue'
 

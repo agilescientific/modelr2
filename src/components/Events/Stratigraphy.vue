@@ -2,39 +2,30 @@
   <div>
     <v-row v-for="(layerName, index) in event.parameters.layer_names" :key="index">
       <v-col>
-        <LayerThickness :layerIndex="index" />
+        <LayerThicknessSlider :eventIndex="eventIndex" :layerIndex="index" />
       </v-col>
       <v-col class="my-0 py-0">
-        <LayerLithology :layerIndex="index" />
+        <LayerLithology :eventIndex="eventIndex" :layerIndex="index" />
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
-import LayerThickness from '@/components/Parameters/LayerThickness.vue'
+import LayerThicknessSlider from '@/components/Parameters/LayerThicknessSlider.vue'
 import LayerLithology from '@/components/Parameters/LayerLithology.vue'
 
 export default {
   name: 'Stratigraphy',
+  props: ['eventIndex'],
   components: {
-    LayerThickness,
+    LayerThicknessSlider,
     LayerLithology
   },
   computed: {
     event: function () {
-      return this.$store.state.history.events[0];
+      return this.$store.state.history.events[this.eventIndex];
     },
-    value: {
-      get() {
-        return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName]
-      },
-      set(value) {
-        this.$store.commit('history/setEventParam', {
-          n: this.eventIndex, key: this.parameterName, value: value
-        })
-      }
-    }
   }
 }
 </script>
