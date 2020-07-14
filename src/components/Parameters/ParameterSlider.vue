@@ -7,6 +7,7 @@
             :min="extent[0]"
             :max="extent[1]"
             v-model="value[0]"
+            @click="a()"
             label="X"
           ></v-slider>
         </v-col>
@@ -15,6 +16,7 @@
             :min="extent[2]"
             :max="extent[3]"
             v-model="value[1]"
+            @click="a()"
             label="Y"
           ></v-slider>
         </v-col>
@@ -23,6 +25,7 @@
             :min="extent[4]"
             :max="extent[5]"
             v-model="value[2]"
+            @click="a()"
             label="Z"
           ></v-slider>
         </v-col>

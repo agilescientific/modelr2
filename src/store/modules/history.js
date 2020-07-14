@@ -48,6 +48,12 @@ const state = {
       if (rootState.settings.previewAutoReload) {
         dispatch('computeSection', null, { root: true })
       }
+    },
+    updateEventInsert({commit, dispatch, rootState}, payload) {
+      commit('insertEvent', payload)
+      if (rootState.settings.previewAutoReload) {
+        dispatch('computeSection', null, { root: true })
+      }
     }
   };
   

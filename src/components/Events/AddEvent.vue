@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     insertEvent() {
-      this.$store.commit('history/insertEvent', {
+      this.$store.dispatch('history/updateEventInsert', {
         index: this.eventIndex,
         event: this.event
       });
