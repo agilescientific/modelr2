@@ -30,8 +30,8 @@
     </div>
     <div v-else>
       <v-slider
-        min="0"
-        max="1000"
+        :min="min[parameterName]"
+        :max="max[parameterName]"
         v-model="value"
         :label="parameterName"
         class="text-capitalize"
@@ -41,7 +41,6 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex';
 
 export default {
   name: 'Parameter',
@@ -49,6 +48,24 @@ export default {
   computed: {
     extent() {
       return this.$store.state.modelExtent
+    },
+    min() {
+      return {
+        dip: 0,
+        dip_dir: 0,
+        slip: 0,
+        amplitude: 0,
+        wavelength: 0,
+      }
+    },
+    max() {
+      return {
+        dip: 90,
+        dip_dir: 360,
+        slip: this.extent[5],
+        amplitude: this.extent[5],
+        wavelength: Math.max(...this.extent) * 5,
+      }
     },
     value: {
       get() {
