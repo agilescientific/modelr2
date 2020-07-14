@@ -6,6 +6,8 @@ sys.path.append("../pynoddy/")
 import pynoddy
 import pynoddy.experiment
 import numpy as np
+import scipy.stats
+import bruges
 
 
 # configuration
@@ -23,6 +25,47 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 def compute_model():
     print("Compute Model")
     pass
+
+
+@app.route("/seismic", methods=['POST'])
+@cross_origin()
+def simulate_seismic():
+    data = request.data
+    parsed = json.loads(data)
+    section = np.array(json.loads(parsed.get('section')))
+    n_layers = len(np.unique(section))  # TODO: get this from history?
+
+    np.random.seed(42)
+    rho = np.array(
+        [scipy.stats.uniform(3200, 3300).rvs() for _ in range(n_layers + 1)]
+    )
+    vp = np.array(
+        [scipy.stats.uniform(2550, 2650).rvs() for _ in range(n_layers + 1)]
+    )
+    ai = vp * rho
+
+    # turn geomodel into velocity model
+    boolean = np.repeat(
+        section.flatten()[None, :], n_layers, axis=0
+    )==np.arange(1, n_layers + 1)[None, :].T
+    velocity = np.sum(
+        boolean.astype(int) * ai[None, :n_layers].T, axis=0
+    ).reshape(*section.shape)
+
+    upper, lower = velocity[:-1][:], velocity[1:][:]
+    rc = (lower - upper) / (lower + upper)
+
+    w = bruges.filters.ricker(duration=0.100, dt=0.002, f=40)
+
+    seismic = np.apply_along_axis(
+        lambda t: np.convolve(t, w, mode='same'),
+        axis=0, arr=rc #+ np.random.randn(99,200) * 0.01
+    )
+
+    seismic += np.abs(np.min(seismic))
+    seismic /= np.max(seismic)
+
+    return jsonify({'seismic': seismic.tolist()})
 
 
 request_data = {

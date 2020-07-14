@@ -5,7 +5,10 @@
       <v-card-subtitle>Preview model samples.</v-card-subtitle>
       <v-card flat class="ml-4">
         <canvas id="plotCanvas"></canvas>
-      </v-card>   
+      </v-card>
+      <v-card flat class="ml-4">
+        <canvas id="plotSeismic"></canvas>
+      </v-card>  
       <div class="d-flex flex-row align-center">
         <v-btn class="ml-4" small @click="computeSection()">Recompute</v-btn>
         <v-switch v-model="previewAutoReload" class="ml-3" label="Auto-Update"></v-switch>
