@@ -76,7 +76,7 @@ export default new Vuex.Store({
     },
 
     drawSeismicSection({state}, payload) {
-      var {ctx, buffer8, data, imageData} = prepareCanvas(payload)
+      let {ctx, buffer8, data, imageData} = prepareCanvas(payload)
 
       let colormap = require('colormap');
       let colors = colormap({
@@ -103,7 +103,7 @@ export default new Vuex.Store({
     },
 
     drawSection({state}, payload) {
-      var {ctx, buffer8, data, imageData} = prepareCanvas(payload)
+      let {ctx, buffer8, data, imageData} = prepareCanvas(payload)
 
       let colormap = require('colormap');
       let colors = colormap({
@@ -134,15 +134,15 @@ export default new Vuex.Store({
 })
 
 function prepareCanvas(payload) {
-  var canvasX = payload.shape[0];
-  var canvasY = payload.shape[1];
-  var canvas = document.getElementById(payload.canvasId)
+  let canvasX = payload.shape[0];
+  let canvasY = payload.shape[1];
+  let canvas = document.getElementById(payload.canvasId)
   canvas.width = canvasX;
   canvas.height = canvasY;
-  var ctx = canvas.getContext("2d");
-  var imageData = ctx.getImageData(0, 0, canvasX, canvasY);
-  var buffer = new ArrayBuffer(imageData.data.length);
-  var buffer8 = new Uint8ClampedArray(buffer);
-  var data = new Uint32Array(buffer);
+  let ctx = canvas.getContext("2d");
+  let imageData = ctx.getImageData(0, 0, canvasX, canvasY);
+  let buffer = new ArrayBuffer(imageData.data.length);
+  let buffer8 = new Uint8ClampedArray(buffer);
+  let data = new Uint32Array(buffer);
   return {ctx, buffer8, data, imageData}
 }
