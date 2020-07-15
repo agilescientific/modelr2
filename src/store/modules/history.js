@@ -4,15 +4,24 @@ const state = {
       type: "stratigraphy",
       name: undefined,
       parameters: {
-        num_layers: 8,
+        num_layers: 18,
         layer_names: [
           'layer 1', 'layer 2', 'layer 3',
           'layer 4', 'layer 5', 'layer 6',
-          'layer 7', 'layer 8'
+          'layer 7', 'layer 8', 'layer 9',
+          'layer 10', 'layer 11', 'layer 12',
+          'layer 13', 'layer 14', 'layer 15',
+          'layer 16', 'layer 17', 'layer 18'
         ],
-        layer_thickness: [1500, 500, 500, 500, 500, 500, 500, 500],
-        lithology: ["Sandstone", "Sandstone", "Shale", 'Coal', 'Sandstone', 'Sandstone', 'Sandstone', 'Sandstone'],
-        density: [2600, 2600, 2450, 1300, 2600, 2600, 2600, 2600]
+        layer_thickness: [1500, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150],
+        lithology: [
+            "Sandstone", "Sandstone", "Shale", 'Coal', 'Sandstone', 'Sandstone', 'Sandstone', 'Sandstone', 'Sandstone',
+            "Sandstone", "Sandstone", "Shale", 'Coal', 'Sandstone', 'Sandstone', 'Sandstone', 'Sandstone', 'Sandstone'
+        ],
+        density: [
+            2600, 2600, 2450, 1300, 2600, 2600, 2600, 2600, 2600,
+            2600, 2600, 2450, 1300, 2600, 2600, 2600, 2600, 2600
+        ]
       }
     },
     {

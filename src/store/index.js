@@ -19,10 +19,15 @@ export default new Vuex.Store({
       'Sandstone': 2600,
       'Shale': 2450,
       'Coal': 1300,
-    }
+    },
+    previewSection: undefined,
+    previewSeismic: undefined,
   },
 
   mutations: {
+    setParameter(state, payload) {
+      state[payload.parameter] = payload.value
+    },
     setPreviewSection(state, payload) {
       state.previewSection = payload.section
     },
@@ -35,14 +40,25 @@ export default new Vuex.Store({
     computeSection({commit, state, dispatch}) {
       axios({
         method: 'post',
-        url: backendPath + 'history',
+        url: backendPath + 'compute',
         data: {
-          history: JSON.stringify(state.history.events)
+          history: JSON.stringify(state.history.events),
+          computeSeismic: JSON.stringify(true)
         }
       }).then((response) => {
         commit(
-          'setPreviewSection', 
-          {section: response.data['model']}
+          'setParameter',
+          {
+            parameter: 'previewSection',
+            value: response.data['section']
+          }
+        )
+        commit(
+          'setParameter',
+          {
+            parameter: 'previewSeismic',
+            value: response.data['seismic']
+          }
         )
         dispatch('drawSection', {
           canvasId: 'plotCanvas',
@@ -50,8 +66,13 @@ export default new Vuex.Store({
           data: 'previewSection',
           shape: [400, 200]
         });
+        dispatch('drawSeismicSection', {
+          canvasId: 'plotSeismic',
+          cmap: 'viridis',
+          data: 'previewSeismic',
+          shape: [400, 198]
+        })
       })
-      // dispatch('computeSeismic')
     },
 
     computeSeismic({commit, state, dispatch}) {
@@ -68,7 +89,7 @@ export default new Vuex.Store({
         );
         dispatch('drawSeismicSection', {
           canvasId: 'plotSeismic',
-          cmap: 'viridis',
+          cmap: 'greys',
           data: 'previewSeismic',
           shape: [400, 198]
         });
@@ -80,7 +101,7 @@ export default new Vuex.Store({
 
       let colormap = require('colormap');
       let colors = colormap({
-        colormap: 'jet',
+        colormap: payload.cmap,
         nshades: 255,
         format: 'rgba',
         alpha: 1
@@ -108,7 +129,7 @@ export default new Vuex.Store({
       let colormap = require('colormap');
       let colors = colormap({
         colormap: payload.cmap,  // TODO: get colormap from state
-        nshades: 11, // TODO: get nlayers for cmap from state
+        nshades: 19, // TODO: get nlayers for cmap from state
         format: 'rgba',
         alpha: 1
       })

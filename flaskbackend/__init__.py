@@ -22,25 +22,49 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 # TODO: make sure to not allow all cross-origin requests in production
 
 @app.route("/compute", methods=['POST'])
-def compute_model():
-    print("Compute Model")
-    pass
+def compute():
+    data = json.loads(request.data)
+
+    # compute geomodel from payload history
+    history = data.get('history')
+    section = np.flip(compute_geomodel(history), axis=0).astype(int)
+
+    if data.get("computeSeismic") == "true":
+        seismic = compute_seismic(section).tolist()
+    else:
+        seismic = None
+    
+    payload = {
+        'section': section.tolist(),
+        'seismic': seismic
+    }
+    return jsonify(payload)
 
 
-@app.route("/seismic", methods=['POST'])
-@cross_origin()
-def simulate_seismic():
-    data = request.data
-    parsed = json.loads(data)
-    section = np.array(json.loads(parsed.get('section')))
+def compute_geomodel(history: list) -> np.ndarray:
+    events = []
+    for event in json.loads(history):
+        event_type, event_name = event.get("type"), event.get("name")
+        event_params = event.get("parameters")
+        if event_name:
+            event_params['name'] = event_name
+        events.append([event_type, event_params])
+
+    exp = parse_events(events)
+    tmp_out = exp.get_section()
+    section, _ = tmp_out.get_section_voxels()
+    return section
+
+
+def compute_seismic(section: np.ndarray) -> np.ndarray:
     n_layers = len(np.unique(section))  # TODO: get this from history?
 
     np.random.seed(42)
     rho = np.array(
-        [scipy.stats.uniform(3200, 3300).rvs() for _ in range(n_layers + 1)]
+        [scipy.stats.uniform(2550, 100).rvs() for _ in range(n_layers + 1)]
     )
     vp = np.array(
-        [scipy.stats.uniform(2550, 2650).rvs() for _ in range(n_layers + 1)]
+        [scipy.stats.uniform(3200, 100).rvs() for _ in range(n_layers + 1)]
     )
     ai = vp * rho
 
@@ -64,36 +88,7 @@ def simulate_seismic():
 
     seismic += np.abs(np.min(seismic))
     seismic /= np.max(seismic)
-
-    return jsonify({'seismic': seismic.tolist()})
-
-
-request_data = {
-    "history": [["stratigraphy", {}], ["fault", {}]],
-    "stochastic": False,
-    "samples": 1000
-}
-
-
-@app.route("/history", methods=['POST'])
-@cross_origin()
-def parse_history():
-    data = request.data
-    parsed = json.loads(data)
-    history = json.loads(parsed.get('history'))
-    events = []
-    for event in history:
-        event_type = event.get("type")
-        event_params = event.get("parameters")
-        event_name = event.get("name")
-        if event_name:
-            event_params['name'] = event_name
-        events.append([event_type, event_params])
-
-    exp = parse_events(events)
-    tmp_out = exp.get_section()
-    section, _ = tmp_out.get_section_voxels()
-    return jsonify({"model": np.flip(section, axis=0).astype(int).tolist()})
+    return seismic
 
 
 def parse_events(
