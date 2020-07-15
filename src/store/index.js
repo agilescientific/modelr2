@@ -21,6 +21,7 @@ export default new Vuex.Store({
       'Coal': 1300,
     }
   },
+
   mutations: {
     setPreviewSection(state, payload) {
       state.previewSection = payload.section
@@ -29,6 +30,7 @@ export default new Vuex.Store({
       state.previewSeismic = payload.seismic
     }
   },
+
   actions: {
     computeSection({commit, state, dispatch}) {
       axios({
@@ -45,7 +47,8 @@ export default new Vuex.Store({
         dispatch('drawSection', {
           canvasId: 'plotCanvas',
           cmap: 'viridis',
-          data: 'previewSection'
+          data: 'previewSection',
+          shape: [400, 200]
         });
       })
       // dispatch('computeSeismic')
@@ -66,22 +69,15 @@ export default new Vuex.Store({
         dispatch('drawSeismicSection', {
           canvasId: 'plotSeismic',
           cmap: 'viridis',
-          data: 'previewSeismic'
+          data: 'previewSeismic',
+          shape: [400, 198]
         });
       })
     },
 
     drawSeismicSection({state}, payload) {
-      var canvasX = 400;
-      var canvasY = 198;
-      var canvas = document.getElementById(payload.canvasId)
-      canvas.width = canvasX;
-      canvas.height = canvasY;
-      var ctx = canvas.getContext("2d");
-      var imageData = ctx.getImageData(0, 0, canvasX, canvasY);
-      var buffer = new ArrayBuffer(imageData.data.length);
-      var buffer8 = new Uint8ClampedArray(buffer);
-      var data = new Uint32Array(buffer);
+      var {ctx, buffer8, data, imageData} = prepareCanvas(payload)
+
       let colormap = require('colormap');
       let colors = colormap({
         colormap: 'jet',
@@ -89,17 +85,17 @@ export default new Vuex.Store({
         format: 'rgba',
         alpha: 1
       })
+
       let section = state[payload.data];
-      for (let x = 0; x < canvasX; x += 1) {
-        for (let y = 0; y < canvasY; y += 1) {
+      for (let x = 0; x < payload.shape[0]; x += 1) {
+        for (let y = 0; y < payload.shape[1]; y += 1) {
           let v = Math.round(section[Math.floor(y/2)][Math.floor(x/2)] * 254)
           let c = colors[v];
-          let value = 
-            (c[3] * 255 << 24) |    // alpha
-            (c[2] << 16) |          // blue
-            (c[1] <<  8) |          // green
-             c[0];
-          data[y * canvasX + x] = value;
+          data[y * payload.shape[0] + x] =
+              (c[3] * 255 << 24) |    // alpha
+              (c[2] << 16) |          // blue
+              (c[1] <<  8) |          // green
+               c[0];                  // red
         }
       }
       imageData.data.set(buffer8);
@@ -107,16 +103,8 @@ export default new Vuex.Store({
     },
 
     drawSection({state}, payload) {
-      var canvasX = 400;
-      var canvasY = 200;
-      var canvas = document.getElementById(payload.canvasId)
-      canvas.width = canvasX;
-      canvas.height = canvasY;
-      var ctx = canvas.getContext("2d");
-      var imageData = ctx.getImageData(0, 0, canvasX, canvasY);
-      var buffer = new ArrayBuffer(imageData.data.length);
-      var buffer8 = new Uint8ClampedArray(buffer);
-      var data = new Uint32Array(buffer);
+      var {ctx, buffer8, data, imageData} = prepareCanvas(payload)
+
       let colormap = require('colormap');
       let colors = colormap({
         colormap: payload.cmap,  // TODO: get colormap from state
@@ -125,15 +113,14 @@ export default new Vuex.Store({
         alpha: 1
       })
       let section = state[payload.data];
-      for (let x = 0; x < canvasX; x += 1) {
-        for (let y = 0; y < canvasY; y += 1) {
+      for (let x = 0; x < payload.shape[0]; x += 1) {
+        for (let y = 0; y < payload.shape[1]; y += 1) {
           let c = colors[section[Math.floor(y/2)][Math.floor(x/2)]];
-          let value = 
+          data[y * payload.shape[0] + x] =
             (c[3] * 255 << 24) |    // alpha
             (c[2] << 16) |          // blue
             (c[1] <<  8) |          // green
              c[0];                  // red
-          data[y * canvasX + x] = value
         }
       }
       imageData.data.set(buffer8);
@@ -145,3 +132,17 @@ export default new Vuex.Store({
     }
   }
 })
+
+function prepareCanvas(payload) {
+  var canvasX = payload.shape[0];
+  var canvasY = payload.shape[1];
+  var canvas = document.getElementById(payload.canvasId)
+  canvas.width = canvasX;
+  canvas.height = canvasY;
+  var ctx = canvas.getContext("2d");
+  var imageData = ctx.getImageData(0, 0, canvasX, canvasY);
+  var buffer = new ArrayBuffer(imageData.data.length);
+  var buffer8 = new Uint8ClampedArray(buffer);
+  var data = new Uint32Array(buffer);
+  return {ctx, buffer8, data, imageData}
+}
