@@ -4,7 +4,9 @@
       color="primary--text"
       class="text-capitalize"
     >
-      {{ event.type }} <span class="ml-2 grey--text">{{ eventIndex }}</span>
+      <template>
+        {{ event.type }} <span class="ml-2 grey--text text--lighten-1">eventIndex {{ eventIndex }}</span>
+      </template>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
       <EventFold v-if="event.type === 'fold'" :eventIndex="eventIndex" />
