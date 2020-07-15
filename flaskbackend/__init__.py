@@ -21,6 +21,29 @@ app.config.from_object(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
 # TODO: make sure to not allow all cross-origin requests in production
 
+@app.route("/compute/<int:n_samples>", methods=['POST'])
+def compute_n(n_samples: int):
+    data = json.loads(request.data)
+    print(n_samples)
+    payload = {
+        "sections": [],
+        "seismics": []
+    }
+
+    history = data.get('history')
+    for n in range(n_samples):
+        # compute geomodel from payload history
+        section = np.flip(compute_geomodel(history), axis=0).astype(int)
+        payload["sections"].append(section.tolist())
+        # compute seismic section
+        if data.get("computeSeismic") == "true":
+            seismic = compute_seismic(section)
+            payload["seismics"].append(seismic.tolist())
+        else:
+            payload["seismics"].append(None)
+    return jsonify(payload)
+
+
 @app.route("/compute", methods=['POST'])
 def compute():
     data = json.loads(request.data)
@@ -61,7 +84,7 @@ def compute_seismic(section: np.ndarray) -> np.ndarray:
 
     np.random.seed(42)
     rho = np.array(
-        [scipy.stats.uniform(2550, 100).rvs() for _ in range(n_layers + 1)]
+        [scipy.stats.norm(2550, 10).rvs() for _ in range(n_layers + 1)]
     )
     vp = np.array(
         [scipy.stats.uniform(3200, 100).rvs() for _ in range(n_layers + 1)]
@@ -74,7 +97,7 @@ def compute_seismic(section: np.ndarray) -> np.ndarray:
     )==np.arange(1, n_layers + 1)[None, :].T
     velocity = np.sum(
         boolean.astype(int) * ai[None, :n_layers].T, axis=0
-    ).reshape(*section.shape)
+    ).reshape(*section.shape) + np.random.randn(100,200) * 20000
 
     upper, lower = velocity[:-1][:], velocity[1:][:]
     rc = (lower - upper) / (lower + upper)
@@ -83,7 +106,7 @@ def compute_seismic(section: np.ndarray) -> np.ndarray:
 
     seismic = np.apply_along_axis(
         lambda t: np.convolve(t, w, mode='same'),
-        axis=0, arr=rc #+ np.random.randn(99,200) * 0.01
+        axis=0, arr=rc + np.random.randn(99,200) * 0.0003
     )
 
     seismic += np.abs(np.min(seismic))

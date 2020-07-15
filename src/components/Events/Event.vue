@@ -18,10 +18,10 @@
 </template>
 
 <script>
-import EventStratigraphy from '@/components/Events/EventStratigraphy.vue';
-import EventFault from '@/components/Events/EventFault.vue';
-import EventUnconformity from '@/components/Events/EventUnconformity.vue';
-import EventFold from '@/components/Events/EventFold.vue';
+import EventStratigraphy from '@/components/Events/Stratigraphy.vue';
+import EventFault from '@/components/Events/Fault.vue';
+import EventUnconformity from '@/components/Events/Unconformity.vue';
+import EventFold from '@/components/Events/Fold.vue';
 
 export default {
   name: 'Event',

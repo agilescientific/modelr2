@@ -13,7 +13,7 @@ const state = {
           'layer 13', 'layer 14', 'layer 15',
           'layer 16', 'layer 17', 'layer 18'
         ],
-        layer_thickness: [1500, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150],
+        layer_thickness: [2500, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150],
         lithology: [
             "Sandstone", "Sandstone", "Shale", 'Coal', 'Sandstone', 'Sandstone', 'Sandstone', 'Sandstone', 'Sandstone',
             "Sandstone", "Sandstone", "Shale", 'Coal', 'Sandstone', 'Sandstone', 'Sandstone', 'Sandstone', 'Sandstone'
@@ -25,16 +25,6 @@ const state = {
       }
     },
     {
-      type: "fault",
-      name: "Fault A",
-      parameters: {
-        pos: [1000, 0, 6000],
-        dip: 45,
-        dip_dir: 90,
-        slip: 750
-      }
-    },
-    {
       type: "fold",
       name: "Fold A",
       parameters: {
@@ -42,7 +32,38 @@ const state = {
         amplitude: 100,
         wavelength: 10000
       }
-    }
+    },
+    {
+      type: "fault",
+      name: "Fault A",
+      parameters: {
+        pos: [1000, 0, 6000],
+        dip: 50,
+        dip_dir: 90,
+        slip: 750
+      }
+    },
+    {
+      type: "fault",
+      name: "Fault B",
+      parameters: {
+        pos: [9000, 0, 5000],
+        dip: 60,
+        dip_dir: 270,
+        slip: 750
+      }
+    },
+    {
+      type: "fault",
+      name: "Fault C",
+      parameters: {
+        pos: [9250, 0, 6000],
+        dip: 60,
+        dip_dir: 270,
+        slip: 250
+      }
+    },
+
   ]
 };
   

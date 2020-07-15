@@ -1,6 +1,7 @@
 const state = {
     previewAutoReload: true,
-    previewSeismic: true
+    previewSeismic: true,
+    previewNSamples: 1
 }
     
 const getters = {

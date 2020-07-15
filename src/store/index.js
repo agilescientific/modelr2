@@ -27,12 +27,6 @@ export default new Vuex.Store({
   mutations: {
     setParameter(state, payload) {
       state[payload.parameter] = payload.value
-    },
-    setPreviewSection(state, payload) {
-      state.previewSection = payload.section
-    },
-    setPreviewSeismic(state, payload) {
-      state.previewSeismic = payload.seismic
     }
   },
 
@@ -40,7 +34,7 @@ export default new Vuex.Store({
     computeSection({commit, state, dispatch}) {
       axios({
         method: 'post',
-        url: backendPath + 'compute',
+        url: backendPath + 'compute/' + state.settings.previewNSamples,
         data: {
           history: JSON.stringify(state.history.events),
           computeSeismic: JSON.stringify(true)
@@ -50,49 +44,32 @@ export default new Vuex.Store({
           'setParameter',
           {
             parameter: 'previewSection',
-            value: response.data['section']
+            value: response.data['sections']
           }
         )
         commit(
           'setParameter',
           {
             parameter: 'previewSeismic',
-            value: response.data['seismic']
+            value: response.data['seismics']
           }
         )
-        dispatch('drawSection', {
-          canvasId: 'plotCanvas',
-          cmap: 'viridis',
-          data: 'previewSection',
-          shape: [400, 200]
-        });
-        dispatch('drawSeismicSection', {
-          canvasId: 'plotSeismic',
-          cmap: 'viridis',
-          data: 'previewSeismic',
-          shape: [400, 198]
-        })
-      })
-    },
-
-    computeSeismic({commit, state, dispatch}) {
-      axios({
-        method: 'post',
-        url: backendPath + 'seismic',
-        data: {
-          section: JSON.stringify(state.previewSection)
+        for (let i = 0; i < state.settings.previewNSamples; i += 1) {
+          dispatch('drawSection', {
+            index: i,
+            canvasId: 'plotCanvas'+(i+1),
+            cmap: 'viridis',
+            data: 'previewSection',
+            shape: [200, 100]
+          });
+          dispatch('drawSeismicSection', {
+            index: i,
+            canvasId: 'plotSeismic'+(i+1),
+            cmap: 'greys',
+            data: 'previewSeismic',
+            shape: [200, 99]
+          })
         }
-      }).then((response) => {
-        commit(
-          'setPreviewSeismic',
-          {seismic: response.data['seismic']}
-        );
-        dispatch('drawSeismicSection', {
-          canvasId: 'plotSeismic',
-          cmap: 'greys',
-          data: 'previewSeismic',
-          shape: [400, 198]
-        });
       })
     },
 
@@ -107,10 +84,10 @@ export default new Vuex.Store({
         alpha: 1
       })
 
-      let section = state[payload.data];
+      let section = state[payload.data][payload.index];
       for (let x = 0; x < payload.shape[0]; x += 1) {
         for (let y = 0; y < payload.shape[1]; y += 1) {
-          let v = Math.round(section[Math.floor(y/2)][Math.floor(x/2)] * 254)
+          let v = Math.round(section[y][x] * 254)
           let c = colors[v];
           data[y * payload.shape[0] + x] =
               (c[3] * 255 << 24) |    // alpha
@@ -133,10 +110,11 @@ export default new Vuex.Store({
         format: 'rgba',
         alpha: 1
       })
-      let section = state[payload.data];
+      console.log(state[payload.data])
+      let section = state[payload.data][payload.index];
       for (let x = 0; x < payload.shape[0]; x += 1) {
         for (let y = 0; y < payload.shape[1]; y += 1) {
-          let c = colors[section[Math.floor(y/2)][Math.floor(x/2)]];
+          let c = colors[section[y][x]];
           data[y * payload.shape[0] + x] =
             (c[3] * 255 << 24) |    // alpha
             (c[2] << 16) |          // blue

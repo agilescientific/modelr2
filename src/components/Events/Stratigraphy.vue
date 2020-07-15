@@ -1,31 +1,48 @@
 <template>
-  <div>
-    <v-row v-for="(layerName, index) in event.parameters.layer_names" :key="index">
-      <v-col>
-        <LayerThicknessSlider :eventIndex="eventIndex" :layerIndex="index" />
-      </v-col>
-      <v-col class="my-0 py-0">
-        <LayerLithology :eventIndex="eventIndex" :layerIndex="index" />
-      </v-col>
-    </v-row>
-  </div>
+<div>
+  <v-tabs grow v-model="tab" x-small class="mb-10">
+    <v-tab href="#tab1" class="text-overline pa-0">Edit</v-tab>
+    <v-tab href="#tab2" class="text-overline pa-0">Random Generator</v-tab>
+    <v-tab href="#tab3" class="text-overline pa-0">Load</v-tab>
+  </v-tabs>
+  <v-tabs-items v-model="tab">
+    <v-tab-item :key="1" value="tab1">
+      <Stratigraphy :eventIndex="eventIndex" />
+    </v-tab-item>
+    <v-tab-item :key="2" value="tab2">
+      <v-card flat>
+        <RandomStratigraphyGenerator />
+      </v-card>
+    </v-tab-item>
+    <v-tab-item :key="3" value="tab3">
+      <v-card flat>Load</v-card>
+    </v-tab-item>
+  </v-tabs-items>
+</div>
+
 </template>
 
 <script>
-import LayerThicknessSlider from '@/components/Parameters/LayerThicknessSlider.vue'
-import LayerLithology from '@/components/Parameters/LayerLithology.vue'
+import Stratigraphy from '@/components/Events/StratigraphyEdit.vue'
+import RandomStratigraphyGenerator from "../RandomStratigraphyGenerator";
 
 export default {
-  name: 'Stratigraphy',
+  name: 'EventStratigraphy',
   props: ['eventIndex'],
   components: {
-    LayerThicknessSlider,
-    LayerLithology
+      RandomStratigraphyGenerator,
+      Stratigraphy
   },
   computed: {
     event: function () {
       return this.$store.state.history.events[this.eventIndex];
-    },
+    }
+  },
+  data() {
+    return {
+      tab: 'tab1'
+    }
   }
 }
 </script>
+

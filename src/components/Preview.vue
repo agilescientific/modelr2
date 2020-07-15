@@ -3,29 +3,43 @@
     <v-card class="mx-auto">
       <v-card-title class="primary--text">Model Preview</v-card-title>
       <v-card-subtitle>Preview model samples.</v-card-subtitle>
-      <v-card flat class="ml-4">
-        <canvas id="plotCanvas"></canvas>
-      </v-card>
-      <v-card flat class="ml-4">
-        <canvas id="plotSeismic"></canvas>
-      </v-card>  
+      <v-card-text>
+        <v-row v-for="i in previewNSamples" :key="i">
+          <v-col>
+            <canvas :id="'plotCanvas'+i"></canvas>
+          </v-col>
+          <v-col>
+            <canvas :id="'plotSeismic'+i"></canvas>
+          </v-col>
+        </v-row>
+      </v-card-text>
       <div class="d-flex flex-row align-center">
         <v-btn class="ml-4" small @click="computeSection()">Recompute</v-btn>
         <v-switch v-model="previewAutoReload" class="ml-3" label="Auto-Update"></v-switch>
         <v-switch v-model="previewSeismic" class="ml-3" label="Seismic FM"></v-switch>
       </div>
-
-      <v-card-title>History Object</v-card-title>
-      <v-card class="mx-4 pa-2">
-        <code>
-          {{ events }}
-        </code>
-      </v-card>
-
+      <v-card-text>
+        <v-slider
+          label="# Samples"
+          min="1"
+          max="3"
+          v-model="previewNSamples"
+          ticks="always"
+          tick-size="4"
+          thumb-label="always"
+          :thumb-size="20"
+        ></v-slider>
+      </v-card-text>
       <v-card-title>Settings</v-card-title>
       <v-card class="mx-4 pa-2">
         <code>
           {{ settings }}
+        </code>
+      </v-card>
+      <v-card-title>History Object</v-card-title>
+      <v-card class="mx-4 pa-2">
+        <code>
+          {{ events }}
         </code>
       </v-card>
      </v-card>
@@ -58,6 +72,14 @@ export default {
         this.$store.state.settings.previewSeismic = value
       }
     },
+      previewNSamples: {
+        get() {
+            return this.$store.state.settings.previewNSamples
+        },
+          set(value) {
+            this.$store.state.settings.previewNSamples = value
+          }
+      },
     previewAutoReload: {
       get() {
         return this.$store.state.settings.previewAutoReload
@@ -74,3 +96,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+  canvas {
+    /*border: solid 1px red;*/
+    width: 100%;
+  }
+</style>
