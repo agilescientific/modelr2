@@ -8,7 +8,8 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    icon: 'mdi-home'
   },
   {
     path: '/model',
@@ -16,8 +17,15 @@ Vue.use(VueRouter)
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Model.vue')
-  }
+    component: () => import(/* webpackChunkName: "about" */ '../views/Model.vue'),
+    icon: 'model_training'
+  },
+    {
+      path: '/rocklibrary',
+      name: 'Rock Library',
+      component: () => import(/* webpackChunkName: "about" */ '../views/RockLibrary.vue'),
+      icon: 'public'
+    }
 ]
 
 const router = new VueRouter({

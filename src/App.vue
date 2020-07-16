@@ -14,27 +14,13 @@
         <v-list-item-group
           active-class="primary--text text--accent-4"
         >
-          <v-list-item :to="{path: '/'}">
+          <v-list-item
+            v-for="route in routes" :key="route.name" :to="{path: route.path}">
             <v-list-item-icon>
-              <v-icon>mdi-home</v-icon>
+              <v-icon>{{ route.icon }}</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Home</v-list-item-title>
+            <v-list-item-title>{{ route.name }}</v-list-item-title>
           </v-list-item>
-
-          <v-list-item  :to="{path: '/model'}">
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Build Model</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Log in</v-list-item-title>
-          </v-list-item>
-
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -76,5 +62,10 @@ export default {
   data: () => ({
     drawer: false
   }),
+    computed: {
+      routes() {
+          return this.$router.options.routes
+      }
+    }
 };
 </script>

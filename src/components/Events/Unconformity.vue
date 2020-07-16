@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(value, name) in event.parameters" :key="name">
+    <div v-for="(_, name) in event.parameters" :key="name">
       <ParameterSlider :parameterName=name :eventIndex=eventIndex />
     </div>
   </div>
