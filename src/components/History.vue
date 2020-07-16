@@ -6,6 +6,7 @@
       <v-expansion-panels :multiple="true" :hover="true">
         <v-expansion-panel v-for="(event, eventIndex) in history" :key="eventIndex">
           <Event :eventIndex="eventIndex" />
+          <DeleteEvent v-if="eventIndex > 0" :eventIndex="eventIndex" />
           <AddEvent :eventIndex="eventIndex" />
         </v-expansion-panel>
       </v-expansion-panels>
@@ -17,10 +18,12 @@
 import { mapState } from 'vuex';
 import Event from '@/components/Events/Event.vue';
 import AddEvent from '@/components/Events/AddEvent.vue';
+import DeleteEvent from "./Events/DeleteEvent";
 
 export default {
   name: 'History',
   components: {
+    DeleteEvent,
     Event,
     AddEvent
   },
@@ -28,5 +31,4 @@ export default {
     history: state => state.history.events
   })
 };
-// TODO: add event func
 </script>

@@ -2,7 +2,7 @@
   <v-speed-dial
     v-model="eventType"
     class="mr-12 speeddial"
-    :open-on-hover="true"
+    :open-on-hover="false"
     direction="left"
     :top="true"
     :right="true"
