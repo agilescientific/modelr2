@@ -3,16 +3,6 @@
     <v-card class="mx-auto">
       <v-card-title class="primary--text">Model Preview</v-card-title>
       <v-card-subtitle>Preview model samples.</v-card-subtitle>
-      <v-card-text>
-        <v-row v-for="i in previewNSamples" :key="i">
-          <v-col>
-            <canvas :id="'plotCanvas'+i"></canvas>
-          </v-col>
-          <v-col>
-            <canvas :id="'plotSeismic'+i"></canvas>
-          </v-col>
-        </v-row>
-      </v-card-text>
       <div class="d-flex flex-row align-center">
         <v-btn class="ml-4" small @click="computeSection()">Recompute</v-btn>
         <v-switch v-model="previewAutoReload" class="ml-3" label="Auto-Update"></v-switch>
@@ -30,6 +20,17 @@
           :thumb-size="20"
         ></v-slider>
       </v-card-text>
+      <v-card-text>
+        <v-row v-for="i in previewNSamples" :key="i">
+          <v-col>
+            <canvas :id="'plotCanvas'+i"></canvas>
+          </v-col>
+          <v-col>
+            <canvas :id="'plotSeismic'+i"></canvas>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      
       <v-card-title>Settings</v-card-title>
       <v-card class="mx-4 pa-2">
         <code>

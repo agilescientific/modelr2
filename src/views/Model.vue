@@ -1,11 +1,12 @@
 <template>
   <div class="model">
     <v-row>
-      <v-col>
-        <preview />
-      </v-col>
+      
       <v-col>
         <history />
+      </v-col>
+      <v-col>
+        <preview />
       </v-col>
     </v-row>
     

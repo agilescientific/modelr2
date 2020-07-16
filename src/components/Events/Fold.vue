@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(value, name) in event.parameters" :key="name">
+    <div v-for="(_, name) in event.parameters" :key="name">
       <ParameterSlider :parameterName=name :eventIndex=eventIndex />
     </div>
   </div>
@@ -10,7 +10,7 @@
 import ParameterSlider from '@/components/Parameters/ParameterSlider.vue'
 
 export default {
-  name: 'EventFault',
+  name: 'EventFold',
   props: ['eventIndex'],
   components: {
     ParameterSlider
@@ -22,3 +22,4 @@ export default {
   }
 }
 </script>
+

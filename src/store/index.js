@@ -83,7 +83,6 @@ export default new Vuex.Store({
         format: 'rgba',
         alpha: 1
       })
-
       let section = state[payload.data][payload.index];
       for (let x = 0; x < payload.shape[0]; x += 1) {
         for (let y = 0; y < payload.shape[1]; y += 1) {
@@ -110,7 +109,6 @@ export default new Vuex.Store({
         format: 'rgba',
         alpha: 1
       })
-      console.log(state[payload.data])
       let section = state[payload.data][payload.index];
       for (let x = 0; x < payload.shape[0]; x += 1) {
         for (let y = 0; y < payload.shape[1]; y += 1) {
