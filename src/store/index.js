@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import history from './modules/history';
 import settings from './modules/settings';
+import rockLibrary from './modules/rockLibrary';
 import axios from 'axios';
 
 Vue.use(Vuex)
@@ -11,15 +12,11 @@ const backendPath = 'http://localhost:5000/';
 export default new Vuex.Store({
   modules: {
     history: history,
-    settings: settings
+    settings: settings,
+    rockLibrary: rockLibrary,
   },
   state: {
     modelExtent: [0, 10000, 0, 1000, 0, 5000],
-    rockDensities: {
-      'Sandstone': 2600,
-      'Shale': 2450,
-      'Coal': 1300,
-    },
     previewSection: undefined,
     previewSeismic: undefined,
   },
