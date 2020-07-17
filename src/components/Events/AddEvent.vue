@@ -41,8 +41,8 @@ export default {
       events: {
         fault: {
           type: "fault",
-          name: "Fault",
           parameters: {
+            name: "Fault",
             pos: [7000, 0, 6000],
             dip: 60,
             dip_dir: 270,
@@ -51,8 +51,8 @@ export default {
         },
         fold: {
           type: "fold",
-          name: "Fold",
           parameters: {
+            name: "Fold",
             pos: [200, 0, 700],
             amplitude: 100,
             wavelength: 10000

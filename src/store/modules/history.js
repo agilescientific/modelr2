@@ -28,6 +28,7 @@ const state = {
       type: "fold",
       name: "Fold A",
       parameters: {
+        name: "Fold A",
         pos: [200, 0, 700],
         amplitude: 100,
         wavelength: 10000
@@ -37,6 +38,7 @@ const state = {
       type: "fault",
       name: "Fault A",
       parameters: {
+        name: "Fault B",
         pos: [1000, 0, 6000],
         dip: 50,
         dip_dir: 90,
@@ -47,6 +49,7 @@ const state = {
       type: "fault",
       name: "Fault B",
       parameters: {
+        name: "Fault C",
         pos: [9000, 0, 5000],
         dip: 60,
         dip_dir: 270,

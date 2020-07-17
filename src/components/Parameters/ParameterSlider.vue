@@ -31,7 +31,7 @@
         </v-col>
       </v-row>      
     </div>
-    <div v-else>
+    <div v-else-if="parameterName !== 'name'">
       <v-slider
         :min="min[parameterName]"
         :max="max[parameterName]"
