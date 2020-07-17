@@ -8,7 +8,7 @@ import axios from 'axios';
 
 Vue.use(Vuex)
 
-const backendPath = 'http://localhost:5000/';
+// const backendPath = 'http://localhost:5000/';
 const fastAPI = 'http://localhost:8000/';
 
 export default new Vuex.Store({
@@ -32,15 +32,6 @@ export default new Vuex.Store({
   },
 
   actions: {
-    updateHistory({state}) {
-      axios({
-        method: 'post',
-        url: fastAPI + 'history',
-        data: {
-          history: JSON.stringify(state.history.events)
-        }
-      })
-    },
     getSection({commit}, payload) {
       axios({
         method: 'get',
@@ -50,50 +41,6 @@ export default new Vuex.Store({
           parameter: 'previewSection',
           value: response.data['section']
         })
-      })
-    },
-
-    computeSection({commit, state}) {
-      axios({
-        method: 'post',
-        url: backendPath + 'compute/' + state.settings.previewNSamples,
-        data: {
-          history: JSON.stringify(state.history.events),
-          computeSeismic: JSON.stringify(true)
-        }
-      }).then((response) => {
-        commit(
-          'setParameter',
-          {
-            parameter: 'previewSection',
-            value: response.data['sections']
-          }
-        )
-        commit(
-          'setParameter',
-          {
-            parameter: 'previewSeismic',
-            value: response.data['seismics']
-          }
-        )
-        for (let i = 0; i < state.settings.previewNSamples; i += 1) {
-          drawSection(
-            'plotCanvas'+(i+1),
-            state.previewSection[i],
-            [200,100],
-            'viridis',
-            20,
-            false
-          );
-          drawSection(
-            'plotSeismic'+(i+1),
-            state.previewSeismic[i],
-            [200,99],
-            'greys',
-            254,
-            true
-          );
-        }
       })
     },
   }
