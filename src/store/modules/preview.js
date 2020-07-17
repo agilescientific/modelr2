@@ -23,16 +23,6 @@ const actions = {
       rootState.fastAPIurl + 'sample/' + state.seed + "/" + state.direction
     ).then((response) => {
         commit('UPDATE_SECTION', {section: response.data.section})
-      }
-    )
-  },
-  updatePreview({state, dispatch}) {
-    dispatch(
-      'updateHistory', null, {root: true}
-    ).then(() => {
-      dispatch(
-        'getPreviewSection'
-      ).then(() => {
         drawSection(
           state.canvas,
           state.section,
@@ -41,7 +31,16 @@ const actions = {
           22,
           false
         )
-      })
+      }
+    )
+  },
+  updatePreview({dispatch}) {
+    dispatch(
+      'history/updateHistory', null, {root: true}
+    ).then(() => {
+      dispatch(
+        'getPreviewSection'
+      )
     }
     )
   }

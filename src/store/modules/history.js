@@ -1,8 +1,9 @@
+import axios from "axios";
+
 const state = {
   events: [
     {
       type: "stratigraphy",
-      name: undefined,
       parameters: {
         num_layers: 18,
         layer_names: [
@@ -26,7 +27,6 @@ const state = {
     },
     {
       type: "fold",
-      name: "Fold A",
       parameters: {
         name: "Fold A",
         pos: [200, 0, 700],
@@ -36,7 +36,6 @@ const state = {
     },
     {
       type: "fault",
-      name: "Fault A",
       parameters: {
         name: "Fault B",
         pos: [1000, 0, 6000],
@@ -47,7 +46,6 @@ const state = {
     },
     {
       type: "fault",
-      name: "Fault B",
       parameters: {
         name: "Fault C",
         pos: [9000, 0, 5000],
@@ -58,8 +56,8 @@ const state = {
     },
     {
       type: "fault",
-      name: "Fault C",
       parameters: {
+        name: "Fault D",
         pos: [9250, 0, 6000],
         dip: 60,
         dip_dir: 270,
@@ -76,22 +74,27 @@ const state = {
   };
   
   const actions = {
+    updateHistory({state, rootState}) {
+      return axios.post(rootState.fastAPIurl + 'history', {
+        history: JSON.stringify(state.events)
+      })
+    },
     updateEventParam({commit, dispatch, rootState}, payload) {
       commit('setEventParam', payload)
       if (rootState.settings.previewAutoReload) {
-        dispatch('computeSection', null, { root: true })
+        dispatch('preview/updatePreview', null, { root: true })
       }
     },
     updateEventInsert({commit, dispatch, rootState}, payload) {
       commit('insertEvent', payload)
       if (rootState.settings.previewAutoReload) {
-        dispatch('computeSection', null, { root: true })
+        dispatch('preview/updatePreview', null, { root: true })
       }
     },
     updateEventDelete({commit, dispatch, rootState}, payload) {
       commit('deleteEvent', payload)
       if (rootState.settings.previewAutoReload) {
-        dispatch('computeSection', null, { root: true })
+        dispatch('preview/updatePreview', null, { root: true })
       }
     }
   };
