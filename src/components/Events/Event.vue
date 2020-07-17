@@ -5,7 +5,7 @@
       class="text-capitalize"
     >
       <template>
-        {{ event.type }} <span class="ml-2 grey--text text--lighten-1">eventIndex {{ eventIndex }}</span>
+        {{ event.type }}<span class="ml-2 grey--text text--lighten-1">{{ eventIndex }}</span>
       </template>
     </v-expansion-panel-header>
     <v-expansion-panel-content>

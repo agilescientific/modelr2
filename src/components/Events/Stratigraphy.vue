@@ -7,7 +7,7 @@
   </v-tabs>
   <v-tabs-items v-model="tab">
     <v-tab-item :key="1" value="tab1">
-      <Stratigraphy :eventIndex="eventIndex" />
+      <StratigraphyEdit :eventIndex="eventIndex" />
     </v-tab-item>
     <v-tab-item :key="2" value="tab2">
       <v-card flat>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import Stratigraphy from '@/components/Events/StratigraphyEdit.vue'
+import StratigraphyEdit from '@/components/Events/StratigraphyEdit.vue'
 import RandomStratigraphyGenerator from "../RandomStratigraphyGenerator";
 
 export default {
@@ -31,7 +31,7 @@ export default {
   props: ['eventIndex'],
   components: {
       RandomStratigraphyGenerator,
-      Stratigraphy
+      StratigraphyEdit
   },
   computed: {
     event: function () {

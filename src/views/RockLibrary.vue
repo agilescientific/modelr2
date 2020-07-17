@@ -3,7 +3,11 @@
     <v-card-title>Rock Library</v-card-title>
     <v-card-subtitle>Choose a rock library, modify or add rock properties.</v-card-subtitle>
     <v-card-text>
-      <v-card v-for="libraryName in Object.keys(libraries)" :key="libraryName">
+      <v-card
+        v-for="libraryName in Object.keys(libraries)"
+        :key="libraryName"
+        class="mb-5"
+      >
         <Library :libraryName="libraryName"></Library>
       </v-card>
     </v-card-text>

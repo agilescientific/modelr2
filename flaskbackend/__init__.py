@@ -82,7 +82,7 @@ def compute_geomodel(history: list) -> np.ndarray:
 def compute_seismic(section: np.ndarray) -> np.ndarray:
     n_layers = len(np.unique(section))  # TODO: get this from history?
 
-    np.random.seed(42)
+    # np.random.seed(42)
     rho = np.array(
         [scipy.stats.norm(2550, 10).rvs() for _ in range(n_layers + 1)]
     )
@@ -102,7 +102,7 @@ def compute_seismic(section: np.ndarray) -> np.ndarray:
     upper, lower = velocity[:-1][:], velocity[1:][:]
     rc = (lower - upper) / (lower + upper)
 
-    w = bruges.filters.ricker(duration=0.100, dt=0.002, f=40)
+    w = bruges.filters.ricker(duration=0.080, dt=0.002, f=30)
 
     seismic = np.apply_along_axis(
         lambda t: np.convolve(t, w, mode='same'),

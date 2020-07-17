@@ -9,16 +9,7 @@
       @change="densities[layerIndex] = rockDensities[names[layerIndex]]"
       dense
   ></v-select>
-  <!-- {{ density[layerIndex] }} -->
   </v-col>
-  <!-- <v-col class="my-0 py-0">
-    <v-text-field
-      class="my-0 py-0"
-      dense
-      type="number"
-      :label="density"
-    ></v-text-field>
-  </v-col> -->
 </v-row>
 </template>
 
@@ -31,7 +22,7 @@ export default {
   props: ['layerIndex', 'eventIndex'],
   computed: {
     rockDensities() {
-      return this.$store.state.rockDensities
+      return this.$store.state.rockLibrary.libraries
     },
     rockNames() {
       return Object.keys(this.$store.state.rockDensities)

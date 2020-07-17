@@ -21,7 +21,8 @@
     </template>
     <v-btn
       v-for="event in Object.keys(events)" :key="event"
-      x-small
+      small
+      color="grey lighten-3"
       @click="insertEvent(event)"
     >
       {{ event }}

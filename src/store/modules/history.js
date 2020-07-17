@@ -84,6 +84,12 @@ const state = {
       if (rootState.settings.previewAutoReload) {
         dispatch('computeSection', null, { root: true })
       }
+    },
+    updateEventDelete({commit, dispatch, rootState}, payload) {
+      commit('deleteEvent', payload)
+      if (rootState.settings.previewAutoReload) {
+        dispatch('computeSection', null, { root: true })
+      }
     }
   };
   
@@ -96,6 +102,9 @@ const state = {
     ),
     insertEvent: (state, payload) => {
       state.events.splice(payload.index + 1, 0, payload.event)
+    },
+    deleteEvent: (state, payload) => {
+      state.events.splice(payload.index, 1)
     },
     setEventParam: (state, payload) => {
       state.events[payload.n].parameters[payload.key] = payload.value

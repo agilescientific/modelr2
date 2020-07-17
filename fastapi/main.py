@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from enum import Enum
 import sys
 from pydantic import BaseModel
@@ -13,6 +14,18 @@ import pynoddy.experiment
 import numpy as np
 
 app = FastAPI()
+
+origins = [
+    'http://localhost:8080'
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=['*'],
+)
+
+
 app.history = None
 history_default = [{
     "type": "stratigraphy",
@@ -85,8 +98,11 @@ async def root():
     return {"message": "Hello API!"}
 
 
+class History(BaseModel):
+    history: str
+
 @app.post("/history")
-async def history(history: List[Event]):
+async def history(history: History):
     app.history = history
     return {"history": app.history}
 

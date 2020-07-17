@@ -30,26 +30,26 @@
           </v-col>
         </v-row>
       </v-card-text>
-      
-      <v-card-title>Settings</v-card-title>
-      <v-card class="mx-4 pa-2">
-        <code>
-          {{ settings }}
-        </code>
-      </v-card>
-      <v-card-title>History Object</v-card-title>
-      <v-card class="mx-4 pa-2">
-        <code>
-          {{ events }}
-        </code>
-      </v-card>
+<!--      <v-card-title>Settings</v-card-title>-->
+<!--      <v-card class="mx-4 pa-2">-->
+<!--        <code>-->
+<!--          {{ settings }}-->
+<!--        </code>-->
+<!--      </v-card>-->
+<!--      <v-card-title>History Object</v-card-title>-->
+<!--      <v-card class="mx-4 pa-2">-->
+<!--        <code>-->
+<!--          {{ events }}-->
+<!--        </code>-->
+<!--      </v-card>-->
      </v-card>
-     
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+// import { mapActions } from 'vuex';
+import axios from 'axios';
+import {drawSection} from "../store";
 
 export default {
   name: 'Preview',
@@ -91,9 +91,26 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      'computeSection',
-    ])
+    computeSection() {
+      axios.post(
+        'http://localhost:8000/history',
+        {
+          history: JSON.stringify(this.$store.state.history.events)
+        }).then(
+          axios.get('http://localhost:8000/sample/42/y').then(
+            (response) => {
+              console.log(response)
+              drawSection(
+                  'plotCanvas1',
+                  response.data['section'],
+                  [200, 100],
+                  'viridis',
+                  20,
+                  false
+                )
+            }
+          ))
+    }
   }
 };
 </script>

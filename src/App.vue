@@ -45,10 +45,12 @@
           </v-btn>
         </v-card-text>
         <v-card-text>
-          <strong>AppName</strong> by <a href="https://agilescientific.com/">Agile</a>. The source code is licensed UNKNOWN. The website is licensed UNKNOWN.
+          <a
+            href="https://agilescientific.com/"
+            class="text-decoration-none"
+          >2020 Agile*</a>
         </v-card-text>
       </v-card>
-      
     </v-footer>
   </v-app>
 </template>
