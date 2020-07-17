@@ -45,7 +45,10 @@ const state = {
         dip_dir: 90,
         slip: 750
       },
-      stochastic: {}
+      stochastic: {
+        dip: ['norm', 50, 5],
+        slip: ['norm', 650, 75]
+      }
     },
     {
       type: "fault",
@@ -57,7 +60,8 @@ const state = {
         slip: 750
       },
       stochastic: {
-        dip: ['norm', 60, 10]
+        dip: ['norm', 60, 5],
+        slip: ['norm', 750, 100]
       }
     },
     {

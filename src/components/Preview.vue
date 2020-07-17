@@ -63,6 +63,7 @@ export default {
       },
       set(value) {
         this.$store.state.preview.seed = value
+        this.updatePreview()
       }
     },
     events() {
