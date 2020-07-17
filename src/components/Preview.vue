@@ -9,16 +9,26 @@
         <v-switch v-model="previewSeismic" class="ml-3" label="Seismic FM"></v-switch>
       </div>
       <v-card-text>
-        <v-slider
-          label="# Samples"
-          min="1"
-          max="3"
-          v-model="previewNSamples"
-          ticks="always"
-          tick-size="4"
-          thumb-label="always"
-          :thumb-size="20"
-        ></v-slider>
+        <v-row>
+          <v-col>
+            <v-text-field dense v-model="seed" type="number" label="Random Seed"></v-text-field>
+          </v-col>
+          <v-col></v-col>
+          <v-col></v-col>
+          <v-col>
+            <v-slider
+              label="# Samples"
+              min="1"
+              max="3"
+              v-model="previewNSamples"
+              dense
+              ticks="always"
+              tick-size="4"
+              thumb-label="always"
+              :thumb-size="20"
+            ></v-slider>
+          </v-col>
+        </v-row>
       </v-card-text>
       <v-card-text>
         <v-row v-for="i in previewNSamples" :key="i">
@@ -30,18 +40,6 @@
           </v-col>
         </v-row>
       </v-card-text>
-<!--      <v-card-title>Settings</v-card-title>-->
-<!--      <v-card class="mx-4 pa-2">-->
-<!--        <code>-->
-<!--          {{ settings }}-->
-<!--        </code>-->
-<!--      </v-card>-->
-<!--      <v-card-title>History Object</v-card-title>-->
-<!--      <v-card class="mx-4 pa-2">-->
-<!--        <code>-->
-<!--          {{ events }}-->
-<!--        </code>-->
-<!--      </v-card>-->
      </v-card>
   </div>
 </template>
@@ -59,6 +57,14 @@ export default {
     }
   },
   computed: {
+    seed: {
+      get() {
+        return this.$store.state.preview.seed
+      },
+      set(value) {
+        this.$store.state.preview.seed = value
+      }
+    },
     events() {
       return this.$store.state.history.events
     },

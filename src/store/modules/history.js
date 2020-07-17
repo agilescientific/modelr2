@@ -23,7 +23,8 @@ const state = {
             2600, 2600, 2450, 1300, 2600, 2600, 2600, 2600, 2600,
             2600, 2600, 2450, 1300, 2600, 2600, 2600, 2600, 2600
         ]
-      }
+      },
+      stochastic: {}
     },
     {
       type: "fold",
@@ -32,7 +33,8 @@ const state = {
         pos: [200, 0, 700],
         amplitude: 100,
         wavelength: 10000
-      }
+      },
+      stochastic: {}
     },
     {
       type: "fault",
@@ -42,7 +44,8 @@ const state = {
         dip: 50,
         dip_dir: 90,
         slip: 750
-      }
+      },
+      stochastic: {}
     },
     {
       type: "fault",
@@ -52,6 +55,9 @@ const state = {
         dip: 60,
         dip_dir: 270,
         slip: 750
+      },
+      stochastic: {
+        dip: ['norm', 60, 10]
       }
     },
     {
@@ -62,7 +68,8 @@ const state = {
         dip: 60,
         dip_dir: 270,
         slip: 250
-      }
+      },
+      stochastic: {}
     },
 
   ]
@@ -79,6 +86,7 @@ const state = {
         history: JSON.stringify(state.events)
       })
     },
+    // TODO: can this be abstracted more to remove code repetition?
     updateEventParam({commit, dispatch, rootState}, payload) {
       commit('setEventParam', payload)
       if (rootState.settings.previewAutoReload) {

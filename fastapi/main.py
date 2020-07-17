@@ -12,6 +12,7 @@ from typing import List, Optional
 import pynoddy.experiment
 import json
 import numpy as np
+import scipy.stats
 app = FastAPI()
 
 origins = [
@@ -100,9 +101,16 @@ async def root():
 class History(BaseModel):
     history: str
 
+
 @app.post("/history")
 async def history(history: History):
-    app.rhist.history = json.loads(history.history)
+    events = json.loads(history.history)
+    for event in events:
+        for name, vals in event.get('stochastic').items():
+            # ['norm', 60, 10]
+            dist = scipy.stats.__dict__.get(vals[0])(loc=vals[1], scale=vals[2])
+            event['parameters'][name] = dist
+    app.rhist.history = events
 
 
 @app.get("/sample/{seed}")
