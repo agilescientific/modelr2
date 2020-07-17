@@ -4,15 +4,14 @@ from enum import Enum
 import sys
 from pydantic import BaseModel
 import uvicorn
-
 sys.path.append("../../pynoddy/")
 sys.path.append("../../randomhistory")
 import randomhistory as rh
 import pynoddy
 from typing import List, Optional
 import pynoddy.experiment
+import json
 import numpy as np
-
 app = FastAPI()
 
 origins = [
@@ -103,8 +102,7 @@ class History(BaseModel):
 
 @app.post("/history")
 async def history(history: History):
-    app.history = history
-    return {"history": app.history}
+    app.rhist.history = json.loads(history.history)
 
 
 @app.get("/sample/{seed}")
