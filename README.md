@@ -27,5 +27,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 # backend
 
 ```
-python run.py
+cd backend
+uvicorn main:app --reload
 ```
