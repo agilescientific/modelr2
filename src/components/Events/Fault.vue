@@ -1,19 +1,28 @@
 <template>
   <div>
+    <v-row>
+      <v-col>Parameter</v-col>
+      <v-col class="">Uncertain</v-col>
+    </v-row>
     <div v-for="(_, name) in event.parameters" :key="name">
-      <ParameterSlider :parameterName=name :eventIndex=eventIndex />
+      <Parameter
+        v-if="name !== 'pos' && name !== 'name'" :parameterName="name" :eventIndex="eventIndex"
+      />
+<!--      <ParameterSlider :parameterName=name :eventIndex="eventIndex" />-->
     </div>
   </div>
 </template>
 
 <script>
-import ParameterSlider from '@/components/Parameters/ParameterSlider.vue'
+// import ParameterSlider from '@/components/Parameters/ParameterSlider.vue'
+import Parameter from "../Parameters/Parameter";
 
 export default {
   name: 'EventFault',
   props: ['eventIndex'],
   components: {
-    ParameterSlider
+    Parameter,
+    // ParameterSlider
   },
   computed: {
     event: function () {

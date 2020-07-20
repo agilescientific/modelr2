@@ -47,7 +47,8 @@ export default {
             dip: 60,
             dip_dir: 270,
             slip: 750
-          }
+          },
+          stochastic: {}
         },
         fold: {
           type: "fold",
@@ -56,7 +57,8 @@ export default {
             pos: [200, 0, 700],
             amplitude: 100,
             wavelength: 10000
-          }
+          },
+          stochastic: {}
         }
       },
     }

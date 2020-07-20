@@ -31,12 +31,13 @@
         </v-col>
       </v-row>      
     </div>
-    <div v-else-if="parameterName !== 'name'">
+    <div>
       <v-slider
         :min="min[parameterName]"
         :max="max[parameterName]"
         v-model="value"
         thumb-label
+        dense
         @click="updateModel()"
         :label="parameterName"
         class="text-capitalize"
@@ -52,7 +53,6 @@ export default {
   props: ['parameterName', 'eventIndex'],
   methods: {
     updateModel() {
-      
       let payload = {
         n: this.eventIndex,
         key: this.parameterName,
