@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const state = {
-  events: [
+  events_: [
     {
       type: "stratigraphy",
       parameters: {
@@ -77,11 +77,11 @@ const state = {
     },
 
   ],
-  events_: [
+  events: [
     {
       type: "stratigraphy",
       parameters: {
-        num_layers: 18,
+        num_layers: {value: 18},
         layer_names: {
           value: [
             'layer 1', 'layer 2', 'layer 3',
@@ -120,8 +120,6 @@ const state = {
     getEvent: (state) => (i) => state.events[i],
     getEvents: (state) => state.events,
     getPram: (state) => (i, name) => state.events[i].parameters[name],
-    getStoch: (state) => (i, name) => state.events[i].stochastic[name],
-    getRockDensities: (state) => state.rockDensities
   };
   
   const actions = {
@@ -164,8 +162,11 @@ const state = {
     deleteEvent: (state, payload) => {
       state.events.splice(payload.index, 1)
     },
+    setEventParamValue: (state, payload) => {
+      state.events[payload.eventIndex].parameters[payload.parameterName].value = payload.value
+    },
     setEventParam: (state, payload) => {
-      state.events[payload.n].parameters[payload.key] = payload.value
+      state.events[payload.eventIndex].parameters[payload.parameterName][payload.key] = payload.value
     },
     appendEvent: (state, event) => (
       state.events.push(event)

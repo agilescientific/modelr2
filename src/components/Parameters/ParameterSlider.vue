@@ -1,17 +1,6 @@
 <template>
   <div>
-    <div v-if="Array.isArray(value)">
-      <v-slider
-        v-model="value[loc]"
-        :min="extent[loc * 2]"
-        :max="extent[(loc * 2) + 1]"
-        :label="posLabel[loc]"
-        @click="updateModel()"
-        dense
-        thumb-label
-      ></v-slider>
-    </div>
-    <div v-else>
+    <div>
       <v-slider
         :min="min[parameterName]"
         :max="max[parameterName]"
@@ -33,8 +22,9 @@ export default {
   methods: {
     updateModel() {
       let payload = {
-        n: this.eventIndex,
-        key: this.parameterName,
+        eventIndex: this.eventIndex,
+        parameterName: this.parameterName,
+        key: 'value',
         value: this.value
       }
       this.$store.dispatch('history/updateEventParam', payload)
@@ -67,11 +57,11 @@ export default {
     },
     value: {
       get() {
-        return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName]
+        return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName].value
       },
       set(value) {
         this.$store.commit('history/setEventParam', {
-          n: this.eventIndex, key: this.parameterName, value: value
+          eventIndex: this.eventIndex, parameterName: this.parameterName, key: 'value', value: value
         })
       }
     }

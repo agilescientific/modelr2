@@ -3,6 +3,13 @@
     <v-card class="mx-auto">
       <v-card-title class="primary--text">Model Preview</v-card-title>
       <v-card-subtitle>Preview model samples.</v-card-subtitle>
+      <v-card>
+        <v-card-text>
+          <code>
+            {{ events }}
+          </code>
+        </v-card-text>
+      </v-card>
       <div class="d-flex flex-row align-center">
         <v-btn class="ml-4" small @click="updatePreview()">Recompute</v-btn>
         <v-switch v-model="previewAutoReload" class="ml-3" label="Auto-Update"></v-switch>
