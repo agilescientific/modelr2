@@ -168,9 +168,19 @@ const state = {
     setEventParam: (state, payload) => {
       state.events[payload.eventIndex].parameters[payload.parameterName][payload.key] = payload.value
     },
-    appendEvent: (state, event) => (
-      state.events.push(event)
-    )
+    TOGGLE_STOCHASTIC: (state, {value, eventIndex, parameterName}) => {
+      console.log(value, eventIndex, parameterName)
+      if (value === true) {
+        state.events[eventIndex].parameters[parameterName].uncertain = true
+        state.events[eventIndex].parameters[parameterName].distribution = 'norm'
+        let value = state.events[eventIndex].parameters[parameterName].value
+        state.events[eventIndex].parameters[parameterName].scale = value
+      } else {
+        state.events[eventIndex].parameters[parameterName].uncertain = false
+        delete state.events[eventIndex].parameters[parameterName].distribution
+        delete state.events[eventIndex].parameters[parameterName].scale
+      }
+    }
   };
   
   export default {

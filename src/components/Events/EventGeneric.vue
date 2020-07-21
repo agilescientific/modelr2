@@ -7,7 +7,7 @@
     <div v-for="(_, name) in getEvent(eventIndex).parameters" :key="name">
       <div v-if="name === 'name'"></div>
       <div v-else>
-        <Parameter :name="name" :eventIndex="eventIndex" />
+        <Parameter :parameterName="name" :eventIndex="eventIndex" />
       </div>
     </div>
   </div>
