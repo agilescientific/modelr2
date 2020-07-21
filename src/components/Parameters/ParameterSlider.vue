@@ -1,37 +1,17 @@
 <template>
   <div>
-    <div v-if="parameterName === 'pos'">
-      <v-row>
-        <v-col>
-          <v-slider
-            :min="extent[0]"
-            :max="extent[1]"
-            v-model="value[0]"
-            @click="updateModel()"
-            label="X"
-          ></v-slider>
-        </v-col>
-        <v-col>
-          <v-slider
-            :min="extent[2]"
-            :max="extent[3]"
-            v-model="value[1]"
-            @click="updateModel()"
-            label="Y"
-          ></v-slider>
-        </v-col>
-        <v-col>
-          <v-slider
-            :min="extent[4]"
-            :max="extent[5]"
-            v-model="value[2]"
-            @click="updateModel()"
-            label="Z"
-          ></v-slider>
-        </v-col>
-      </v-row>      
+    <div v-if="Array.isArray(value)">
+      <v-slider
+        v-model="value[loc]"
+        :min="extent[loc * 2]"
+        :max="extent[(loc * 2) + 1]"
+        :label="posLabel[loc]"
+        @click="updateModel()"
+        dense
+        thumb-label
+      ></v-slider>
     </div>
-    <div>
+    <div v-else>
       <v-slider
         :min="min[parameterName]"
         :max="max[parameterName]"
@@ -47,10 +27,9 @@
 </template>
 
 <script>
-
 export default {
   name: 'Parameter',
-  props: ['parameterName', 'eventIndex'],
+  props: ['parameterName', 'eventIndex', 'loc'],
   methods: {
     updateModel() {
       let payload = {
@@ -62,6 +41,9 @@ export default {
     }
   },
   computed: {
+    posLabel() {
+      return ["X", "Y", "Z"]
+    },
     extent() {
       return this.$store.state.modelExtent
     },
