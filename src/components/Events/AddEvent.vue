@@ -42,23 +42,25 @@ export default {
         fault: {
           type: "fault",
           parameters: {
-            name: "Fault",
-            pos: [7000, 0, 6000],
-            dip: 60,
-            dip_dir: 270,
-            slip: 750
-          },
-          stochastic: {}
+            name: {value: "Fault"},
+            X: {value: 2000 + Math.random() * 6000},
+            Y: {value: 0},
+            Z: {value: 6000},
+            dip: {value: 55 + Math.random() * 10},
+            dip_dir: {value: 270},
+            slip: {value: 200 + Math.random() * 400}
+          }
         },
         fold: {
           type: "fold",
           parameters: {
-            name: "Fold",
-            pos: [200, 0, 700],
-            amplitude: 100,
-            wavelength: 10000
-          },
-          stochastic: {}
+            name: {value: "Fold"},
+            X: {value: 2000 + Math.random() * 6000},
+            Y: {value: 0},
+            Z: {value: 6000},
+            amplitude: {value: 100},
+            wavelength: {value: 10000}
+          }
         }
       },
     }
