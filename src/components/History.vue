@@ -16,7 +16,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import Event from '@/components/Events/Event.vue';
+import Event from '@/components/Events/EventContainer.vue';
 import AddEvent from '@/components/Events/AddEvent.vue';
 import DeleteEvent from "./Events/DeleteEvent";
 

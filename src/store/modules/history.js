@@ -80,7 +80,10 @@ const state = {
 };
   
   const getters = {
+    getEvent: (state) => (i) => state.events[i],
     getEvents: (state) => state.events,
+    getPram: (state) => (i, name) => state.events[i].parameters[name],
+    getStoch: (state) => (i, name) => state.events[i].stochastic[name],
     getRockDensities: (state) => state.rockDensities
   };
   
