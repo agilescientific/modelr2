@@ -76,6 +76,43 @@ const state = {
       stochastic: {}
     },
 
+  ],
+  events_: [
+    {
+      type: "stratigraphy",
+      parameters: {
+        num_layers: 18,
+        layer_names: {
+          value: [
+            'layer 1', 'layer 2', 'layer 3',
+            'layer 4', 'layer 5', 'layer 6',
+            'layer 7', 'layer 8', 'layer 9',
+            'layer 10', 'layer 11', 'layer 12',
+            'layer 13', 'layer 14', 'layer 15',
+            'layer 16', 'layer 17', 'layer 18'
+          ]
+        },
+        layer_thickness: {
+          value: [
+            2500, 150, 150, 150, 150, 150, 150,
+            150, 150, 150, 150, 150, 150, 150,
+            150, 150, 150, 150, 150
+          ]
+        },
+      }
+    },
+    {
+      type: "fault",
+      parameters: {
+        name: {value: "Fault C"},
+        X: {value: 9000},
+        Y: {value: 0},
+        Z: {value: 4000},
+        dip: {value: 60},
+        dip_dir: {value: 270},
+        slip: {value: 750}
+      }
+    },
   ]
 };
   
