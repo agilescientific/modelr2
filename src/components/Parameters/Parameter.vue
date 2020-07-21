@@ -16,7 +16,9 @@
     <!--  uncertainty parametrization  -->
   </v-row>
     <v-expand-transition>
-      <div v-show="isStochastic">Stochastic</div>
+      <div v-show="isStochastic">
+        {{ getStoch(eventIndex, name) }}
+      </div>
 <!--      <StochasticParameter v-show="isStochastic" />-->
     </v-expand-transition>
   </div>
@@ -24,6 +26,7 @@
 
 <script>
 import ParameterSlider from './ParameterSlider.vue';
+import { mapGetters } from 'vuex';
 // import StochasticParameter from "./StochasticParameter";
 
   export default {
@@ -32,10 +35,26 @@ import ParameterSlider from './ParameterSlider.vue';
     props: ['name', 'eventIndex', 'loc'],
     data() {
       return {
-        isStochastic: false
+        // isStochastic: false
       }
     },
-    computed: {}
+    computed: {
+      ...mapGetters('history', ['getStoch']),
+      isStochastic: function() {
+        return this.getStoch(this.eventIndex, this.name) !== undefined;
+      }
+    },
+    watch: {
+      isStochastic: function(newValue, oldValue) {
+        console.log(oldValue, "->" ,newValue)
+
+      }
+    },
+    methods: {
+      toggleStochastic() {
+
+      }
+    }
   }
 </script>
 
