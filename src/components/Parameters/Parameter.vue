@@ -19,24 +19,19 @@
     </v-col>
     <!--  uncertainty parametrization  -->
   </v-row>
-    {{ isUncertain }}
     <v-expand-transition>
-      <div v-show="isUncertain">
-        Stochastic Settings
-      </div>
-<!--      <StochasticParameter v-show="isStochastic" />-->
+        <StochasticParameter v-show="isUncertain" :eventIndex="eventIndex" :parameterName="parameterName" />
     </v-expand-transition>
   </div>
 </template>
 
 <script>
 import ParameterSlider from './ParameterSlider.vue';
-// import { mapMutations } from 'vuex';
-// import StochasticParameter from "./StochasticParameter";
+import StochasticParameter from "./StochasticParameter";
 
   export default {
     name: "Parameter",
-    components: {ParameterSlider},
+    components: {ParameterSlider, StochasticParameter},
     props: ['parameterName', 'eventIndex', 'loc'],
     data() {
       return {
