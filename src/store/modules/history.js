@@ -105,9 +105,9 @@ const state = {
       type: "fault",
       parameters: {
         name: {value: "Fault C"},
-        X: {value: 6000},
-        Y: {value: 0},
-        Z: {value: 4000},
+        X: {value: 6000, uncertain: false},
+        Y: {value: 0, uncertain: false},
+        Z: {value: 4000, uncertain: false},
         dip: {
           value: 60,
           uncertain: true,
@@ -115,7 +115,7 @@ const state = {
           scale: 10,
           skew: 2
         },
-        dip_dir: {value: 270},
+        dip_dir: {value: 270, uncertain: false},
         slip: {
           value: 750,
           uncertain: true,
@@ -181,7 +181,6 @@ const state = {
       state.events[payload.eventIndex].parameters[payload.parameterName][payload.key] = payload.value
     },
     TOGGLE_STOCHASTIC: (state, {value, eventIndex, parameterName}) => {
-      console.log(value, eventIndex, parameterName)
       if (value === true) {
         state.events[eventIndex].parameters[parameterName].uncertain = true
         state.events[eventIndex].parameters[parameterName].distribution = 'norm'
