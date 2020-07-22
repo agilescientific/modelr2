@@ -3,20 +3,25 @@
   <v-row>
     <!--  slider  -->
     <v-col>
-      <ParameterSlider :parameterName=parameterName :eventIndex=eventIndex :loc="loc" />
+      <ParameterSlider
+        :parameterName=parameterName
+        :eventIndex=eventIndex
+        :loc="loc"
+      />
     </v-col>
     <!--  uncertainty switch  -->
     <v-col class="my-auto">
       <v-switch
         dense
-        v-model="isStochastic"
+        v-model="isUncertain"
         class="ml-3 my-auto"
-      ></v-switch>
+      />
     </v-col>
     <!--  uncertainty parametrization  -->
   </v-row>
+    {{ isUncertain }}
     <v-expand-transition>
-      <div v-show="isStochastic">
+      <div v-show="isUncertain">
         Stochastic Settings
       </div>
 <!--      <StochasticParameter v-show="isStochastic" />-->
@@ -35,13 +40,12 @@ import ParameterSlider from './ParameterSlider.vue';
     props: ['parameterName', 'eventIndex', 'loc'],
     data() {
       return {
-        // isStochastic: false
       }
     },
     computed: {
-      isStochastic: {
+      isUncertain: {
         get() {
-          return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName]['uncertain']
+          return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName].uncertain
         },
         set(value) {
           this.$store.commit('history/TOGGLE_STOCHASTIC', {
@@ -49,8 +53,7 @@ import ParameterSlider from './ParameterSlider.vue';
             eventIndex: this.eventIndex,
             parameterName: this.parameterName
           })
-
-          // this.$store.state.history.events[this.eventIndex].parameters[this.name].uncertain = value
+          return value
         }
       }
     }
