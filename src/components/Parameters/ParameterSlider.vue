@@ -31,14 +31,14 @@ export default {
     }
   },
   computed: {
-    posLabel() {
-      return ["X", "Y", "Z"]
-    },
     extent() {
       return this.$store.state.modelExtent
     },
     min() {
       return {
+        X: this.extent[0],
+        Y: this.extent[2],
+        Z: this.extent[4],
         dip: 0,
         dip_dir: 0,
         slip: 0,
@@ -48,6 +48,9 @@ export default {
     },
     max() {
       return {
+        X: this.extent[1],
+        Y: this.extent[3],
+        Z: this.extent[5],
         dip: 90,
         dip_dir: 360,
         slip: this.extent[5],
