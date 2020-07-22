@@ -30,19 +30,26 @@ app.history = None
 history_default = [{
     "type": "stratigraphy",
     "parameters": {
-        "num_layers": 18,
-        "layer_names": [
+    "num_layers": {
+        "value": 18
+    },
+    "layer_names": {
+        "value": [
             'layer 1', 'layer 2', 'layer 3',
             'layer 4', 'layer 5', 'layer 6',
             'layer 7', 'layer 8', 'layer 9',
             'layer 10', 'layer 11', 'layer 12',
             'layer 13', 'layer 14', 'layer 15',
             'layer 16', 'layer 17', 'layer 18'
-        ],
-        "layer_thickness": [
-            2500, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150,
-            150, 150, 150, 150, 150, 150, 150, 150
         ]
+    },
+    "layer_thickness": {
+        "value": [
+            2500, 150, 150, 150, 150, 150, 150,
+            150, 150, 150, 150, 150, 150, 150,
+            150, 150, 150, 150, 150
+        ]
+    },
     }
 }]
 extent_default = [0, 10000, 0, 1000, 0, 5000]
@@ -105,11 +112,6 @@ class History(BaseModel):
 @app.post("/history")
 async def history(history: History):
     events = json.loads(history.history)
-    for event in events:
-        for name, vals in event.get('stochastic').items():
-            # ['norm', 60, 10]
-            dist = scipy.stats.__dict__.get(vals[0])(loc=vals[1], scale=vals[2])
-            event['parameters'][name] = dist
     app.rhist.history = events
 
 
