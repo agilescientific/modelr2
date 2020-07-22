@@ -105,12 +105,22 @@ const state = {
       type: "fault",
       parameters: {
         name: {value: "Fault C"},
-        X: {value: 9000},
+        X: {value: 6000},
         Y: {value: 0},
         Z: {value: 4000},
-        dip: {value: 60},
+        dip: {
+          value: 60,
+          uncertain: true,
+          distribution: 'norm',
+          scale: 10
+        },
         dip_dir: {value: 270},
-        slip: {value: 750}
+        slip: {
+          value: 750,
+          uncertain: true,
+          distribution: 'norm',
+          scale: 60
+        }
       }
     },
   ]
@@ -173,8 +183,7 @@ const state = {
       if (value === true) {
         state.events[eventIndex].parameters[parameterName].uncertain = true
         state.events[eventIndex].parameters[parameterName].distribution = 'norm'
-        let value = state.events[eventIndex].parameters[parameterName].value
-        state.events[eventIndex].parameters[parameterName].scale = value
+        state.events[eventIndex].parameters[parameterName].scale = state.events[eventIndex].parameters[parameterName].value
       } else {
         state.events[eventIndex].parameters[parameterName].uncertain = false
         delete state.events[eventIndex].parameters[parameterName].distribution
