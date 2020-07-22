@@ -43,23 +43,23 @@ export default {
           type: "fault",
           parameters: {
             name: {value: "Fault"},
-            X: {value: 2000 + Math.random() * 6000},
-            Y: {value: 0},
-            Z: {value: 6000},
-            dip: {value: 55 + Math.random() * 10},
-            dip_dir: {value: 270},
-            slip: {value: 200 + Math.random() * 400}
+            X: {value: 2000 + Math.random() * 6000, uncertain: false},
+            Y: {value: 0, uncertain: false},
+            Z: {value: 6000, uncertain: false},
+            dip: {value: 55 + Math.random() * 10, uncertain: false},
+            dip_dir: {value: 270, uncertain: false},
+            slip: {value: 200 + Math.random() * 400, uncertain: false}
           }
         },
         fold: {
           type: "fold",
           parameters: {
             name: {value: "Fold"},
-            X: {value: 2000 + Math.random() * 6000},
-            Y: {value: 0},
-            Z: {value: 6000},
-            amplitude: {value: 100},
-            wavelength: {value: 10000}
+            X: {value: 2000 + Math.random() * 6000, uncertain: false},
+            Y: {value: 0, uncertain: false},
+            Z: {value: 6000, uncertain: false},
+            amplitude: {value: 100, uncertain: false},
+            wavelength: {value: 10000, uncertain: false}
           }
         }
       },
