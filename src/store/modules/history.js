@@ -112,14 +112,16 @@ const state = {
           value: 60,
           uncertain: true,
           distribution: 'norm',
-          scale: 10
+          scale: 10,
+          skew: 2
         },
         dip_dir: {value: 270},
         slip: {
           value: 750,
           uncertain: true,
           distribution: 'norm',
-          scale: 60
+          scale: 60,
+          skew: 0
         }
       }
     },
