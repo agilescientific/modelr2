@@ -39,6 +39,36 @@ export default {
     return {
       eventType: '',
       events: {
+        fault: {
+          type: "fault",
+          parameters: {
+            name: {value: "Fault"},
+            X: {value: 2000 + Math.random() * 6000, uncertain: false},
+            Y: {value: 0, uncertain: false},
+            Z: {value: 6000, uncertain: false},
+            dip: {value: 55 + Math.random() * 10, uncertain: false},
+            dip_dir: {value: 270, uncertain: false},
+            slip: {value: 200 + Math.random() * 400, uncertain: false}
+          }
+        },
+        fault_curved: {
+          type: 'fault',
+          parameters: {
+            name: {value: 'Curved Fault'},
+            geometry: {value: 'Curved'},
+            X: {value: 5000, uncertain: false},
+            Y: {value: 0, uncertain: false},
+            Z: {value: 5000, uncertain: false},
+            dip: {value: 45, uncertain: false},
+            dip_dir: {value: 270, uncertain: false},
+            slip: {value: 400, uncertain: false},
+            radius: {value: 2000, uncertain: false},
+            xaxis: {value: 5000, uncertain: false},
+            yaxis: {value: 5000, uncertain: false},
+            zaxis: {value: 40000, uncertain: false},
+            amplitude: {value: 1000, uncertain: false}
+          }
+        },
         unconformity: {
           type: 'unconformity',
           parameters: {
@@ -48,7 +78,9 @@ export default {
             Z: {value: 3000, uncertain: false},
             dip_direction: {value: 90, uncertain: false},
             dip: {value: 0, uncertain: false},
-            num_layers: {value: 0}
+            num_layers: {value: 0, uncertain: false},
+            layer_names: {value: [], uncertain: false},
+            layer_thickness: {value: [], uncertain: false}
           }
         },
         tilt: {
@@ -61,18 +93,6 @@ export default {
             rotation: {value: 0, uncertain: false},
             plunge_direction: {value: 0, uncertain: false},
             plunge: {value: 0, uncertain: false}
-          }
-        },
-        fault: {
-          type: "fault",
-          parameters: {
-            name: {value: "Fault"},
-            X: {value: 2000 + Math.random() * 6000, uncertain: false},
-            Y: {value: 0, uncertain: false},
-            Z: {value: 6000, uncertain: false},
-            dip: {value: 55 + Math.random() * 10, uncertain: false},
-            dip_dir: {value: 270, uncertain: false},
-            slip: {value: 200 + Math.random() * 400, uncertain: false}
           }
         },
         fold: {

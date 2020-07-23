@@ -23,7 +23,11 @@ Vue.mixin({
         wavelength: 0,
         rotation: -90,
         plunge_direction: 0,
-        plunge: 0
+        plunge: 0,
+        radius: 0,
+        xaxis: 0,
+        yaxis: 0,
+        zaxis: 0
       }
     },
     maxValues() {
@@ -38,8 +42,11 @@ Vue.mixin({
         wavelength: Math.max(...this.extent) * 5,
         rotation: 90,
         plunge_direction: 360,
-        plunge: 90
-
+        plunge: 90,
+        radius: this.extent[1],
+        xaxis: this.extent[1] * 3,
+        yaxis: this.extent[3] * 5,
+        zaxis: this.extent[5] * 10
       }
     }
   }

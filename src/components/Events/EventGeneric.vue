@@ -6,6 +6,10 @@
     </v-row>
     <div v-for="(_, name) in getEvent(eventIndex).parameters" :key="name">
       <div v-if="name === 'name'"></div>
+      <div v-else-if="name === 'geometry'"></div>
+      <div v-else-if="name === 'num_layers'"></div>
+      <div v-else-if="name === 'layer_names'"></div>
+      <div v-else-if="name === 'layer_thickness'"></div>
       <div v-else>
         <Parameter :parameterName="name" :eventIndex="eventIndex" />
       </div>
