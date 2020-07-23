@@ -39,6 +39,18 @@ export default {
     return {
       eventType: '',
       events: {
+        tilt: {
+          type: 'tilt',
+          parameters: {
+            name: {value: 'Tilt'},
+            X: {value: 5000, uncertain: false},
+            Y: {value: 0, uncertain: false},
+            Z: {value: 3000, uncertain: false},
+            rotation: {value: 0, uncertain: false},
+            plunge_direction: {value: 0, uncertain: false},
+            plunge: {value: 0, uncertain: false}
+          }
+        },
         fault: {
           type: "fault",
           parameters: {

@@ -21,6 +21,9 @@ Vue.mixin({
         slip: 0,
         amplitude: 0,
         wavelength: 0,
+        rotation: -90,
+        plunge_direction: 0,
+        plunge: 0
       }
     },
     maxValues() {
@@ -33,6 +36,10 @@ Vue.mixin({
         slip: this.extent[5],
         amplitude: this.extent[5],
         wavelength: Math.max(...this.extent) * 5,
+        rotation: 90,
+        plunge_direction: 360,
+        plunge: 90
+
       }
     }
   }
