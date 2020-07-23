@@ -131,7 +131,8 @@ const state = {
   const getters = {
     getEvent: (state) => (i) => state.events[i],
     getEvents: (state) => state.events,
-    getPram: (state) => (i, name) => state.events[i].parameters[name],
+    getParameter: (state) => (i, name) => state.events[i].parameters[name],
+    getParameterValue: (state) => (i, name, key) => state.events[i].parameters[name][key],
   };
   
   const actions = {
@@ -140,21 +141,20 @@ const state = {
         history: JSON.stringify(state.events)
       })
     },
-    // TODO: can this be abstracted more to remove code repetition?
     updateEventParam({commit, dispatch, rootState}, payload) {
-      commit('setEventParam', payload)
+      commit('SET_EVENT_VALUE', payload)
       if (rootState.settings.previewAutoReload) {
         dispatch('preview/updatePreview', null, { root: true })
       }
     },
     updateEventInsert({commit, dispatch, rootState}, payload) {
-      commit('insertEvent', payload)
+      commit('INSERT_EVENT', payload)
       if (rootState.settings.previewAutoReload) {
         dispatch('preview/updatePreview', null, { root: true })
       }
     },
     updateEventDelete({commit, dispatch, rootState}, payload) {
-      commit('deleteEvent', payload)
+      commit('DELETE_EVENT', payload)
       if (rootState.settings.previewAutoReload) {
         dispatch('preview/updatePreview', null, { root: true })
       }
@@ -162,22 +162,13 @@ const state = {
   };
   
   const mutations = {
-    setHistory: (state, events) => (
-      state.events = events
-    ),
-    setEvent: (state, payload) => (
-      state.events[payload.n] = payload.event
-    ),
-    insertEvent: (state, payload) => {
+    INSERT_EVENT: (state, payload) => {
       state.events.splice(payload.index + 1, 0, payload.event)
     },
-    deleteEvent: (state, payload) => {
+    DELETE_EVENT: (state, payload) => {
       state.events.splice(payload.index, 1)
     },
-    setEventParamValue: (state, payload) => {
-      state.events[payload.eventIndex].parameters[payload.parameterName].value = payload.value
-    },
-    setEventParam: (state, payload) => {
+    SET_EVENT_VALUE: (state, payload) => {
       state.events[payload.eventIndex].parameters[payload.parameterName][payload.key] = payload.value
     },
     TOGGLE_STOCHASTIC: (state, {value, eventIndex, parameterName}) => {
