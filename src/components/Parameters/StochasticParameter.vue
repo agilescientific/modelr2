@@ -73,11 +73,7 @@
         },
         set(value) {
           this.$store.commit('history/SET_EVENT_VALUE', {
-            eventIndex: this.eventIndex,
-            parameterName: this.parameterName,
-            key: 'scale',
-            value: value
-          })
+            i: this.eventIndex, p: this.parameterName, key: 'scale', value: value})
         }
       },
       skew: {
@@ -86,11 +82,7 @@
         },
         set(value) {
           this.$store.commit('history/SET_EVENT_VALUE', {
-            eventIndex: this.eventIndex,
-            parameterName: this.parameterName,
-            key: 'skew',
-            value: value
-          })
+            i: this.eventIndex, p: this.parameterName, key: 'skew', value: value})
         }
       },
     }

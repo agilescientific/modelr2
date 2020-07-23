@@ -23,8 +23,8 @@ export default {
   methods: {
     updateModel() {
       let payload = {
-        eventIndex: this.eventIndex,
-        parameterName: this.parameterName,
+        i: this.eventIndex,
+        p: this.parameterName,
         key: 'value',
         value: this.value
       }
@@ -38,7 +38,7 @@ export default {
       },
       set(value) {
         this.$store.commit('history/SET_EVENT_VALUE', {
-          eventIndex: this.eventIndex, parameterName: this.parameterName, key: 'value', value: value
+          i: this.eventIndex, p: this.parameterName, key: 'value', value: value
         })
       }
     }

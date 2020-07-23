@@ -5,7 +5,9 @@ const state = {
     {
       type: "stratigraphy",
       parameters: {
-        num_layers: {value: 18},
+        num_layers: {
+          value: 18
+        },
         layer_names: {
           value: [
             'layer 1', 'layer 2', 'layer 3',
@@ -105,7 +107,7 @@ const state = {
       state.events.splice(payload.index, 1)
     },
     SET_EVENT_VALUE: (state, payload) => {
-      state.events[payload.eventIndex].parameters[payload.parameterName][payload.key] = payload.value
+      state.events[payload.i].parameters[payload.p][payload.key] = payload.value
     },
     TOGGLE_STOCHASTIC: (state, {value, eventIndex, parameterName}) => {
       if (value === true) {

@@ -52,10 +52,7 @@ import StochasticParameter from "./StochasticParameter";
         },
         set(value) {
           this.$store.commit('history/TOGGLE_STOCHASTIC', {
-            value: value,
-            eventIndex: this.eventIndex,
-            parameterName: this.parameterName
-          })
+            value: value, eventIndex: this.eventIndex, parameterName: this.parameterName})
         }
       }
     }
