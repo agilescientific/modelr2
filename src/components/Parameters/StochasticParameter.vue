@@ -17,7 +17,7 @@
           dense
           label="σ"
           min="0.1"
-          :max="value / 5"
+          :max="30"
           step="0.1"
           v-model="scale"
           thumb-label
@@ -60,8 +60,9 @@
     },
     data() {
       return {
-        x: linspace(30, 90, 20).map(x => Math.round(x)),
-        y: undefined
+        x: linspace(30, 90, 51),
+        y: undefined,
+        sigma_max: this.value * 0.5,
       }
     },
     computed: {
@@ -71,7 +72,7 @@
           return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName].scale
         },
         set(value) {
-          this.$store.commit('history/setEventParam', {
+          this.$store.commit('history/SET_EVENT_VALUE', {
             eventIndex: this.eventIndex,
             parameterName: this.parameterName,
             key: 'scale',
@@ -84,7 +85,7 @@
           return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName].skew
         },
         set(value) {
-          this.$store.commit('history/setEventParam', {
+          this.$store.commit('history/SET_EVENT_VALUE', {
             eventIndex: this.eventIndex,
             parameterName: this.parameterName,
             key: 'skew',

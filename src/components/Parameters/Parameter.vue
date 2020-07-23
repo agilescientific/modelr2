@@ -34,8 +34,16 @@ import StochasticParameter from "./StochasticParameter";
     components: {ParameterSlider, StochasticParameter},
     props: ['parameterName', 'eventIndex', 'loc'],
     data() {
-      return {
-      }
+      return {}
+    },
+    methods: {
+      // toggleUncertainty: function() {
+      //   this.$store.commit('history/TOGGLE_STOCHASTIC', {
+      //     value: !this.isUncertain,
+      //     eventIndex: this.eventIndex,
+      //     parameterName: this.parameterName
+      //   })
+      // }
     },
     computed: {
       isUncertain: {
@@ -48,7 +56,6 @@ import StochasticParameter from "./StochasticParameter";
             eventIndex: this.eventIndex,
             parameterName: this.parameterName
           })
-          return value
         }
       }
     }

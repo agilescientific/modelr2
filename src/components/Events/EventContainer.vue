@@ -17,9 +17,9 @@
 
 <script>
 import { mapState } from 'vuex';
-
 import EventGeneric from "./EventGeneric";
 import EventStratigraphy from "./EventStratigraphy";
+
 export default {
   name: 'Event',
   props: ['eventIndex'],
@@ -31,9 +31,6 @@ export default {
     ...mapState('history', {
       event(state) {return state.events[this.eventIndex]}
     })
-    // event: function () {
-    //   return this.$store.state.history.events[this.eventIndex];
-    // }
   }
 }
 </script>

@@ -2,8 +2,8 @@
   <div>
     <div>
       <v-slider
-        :min="min[parameterName]"
-        :max="max[parameterName]"
+        :min="minValues[parameterName]"
+        :max="maxValues[parameterName]"
         v-model="value"
         thumb-label
         dense
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Parameter',
   props: ['parameterName', 'eventIndex', 'loc'],
@@ -31,39 +32,12 @@ export default {
     }
   },
   computed: {
-    extent() {
-      return this.$store.state.modelExtent
-    },
-    min() {
-      return {
-        X: this.extent[0],
-        Y: this.extent[2],
-        Z: this.extent[4],
-        dip: 0,
-        dip_dir: 0,
-        slip: 0,
-        amplitude: 0,
-        wavelength: 0,
-      }
-    },
-    max() {
-      return {
-        X: this.extent[1],
-        Y: this.extent[3],
-        Z: this.extent[5],
-        dip: 90,
-        dip_dir: 360,
-        slip: this.extent[5],
-        amplitude: this.extent[5],
-        wavelength: Math.max(...this.extent) * 5,
-      }
-    },
     value: {
       get() {
         return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName].value
       },
       set(value) {
-        this.$store.commit('history/setEventParam', {
+        this.$store.commit('history/SET_EVENT_VALUE', {
           eventIndex: this.eventIndex, parameterName: this.parameterName, key: 'value', value: value
         })
       }
