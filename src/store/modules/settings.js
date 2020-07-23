@@ -1,6 +1,6 @@
 const state = {
     previewAutoReload: true,
-    previewSeismic: true,
+    previewSeismic: false,
     previewNSamples: 1
 }
     
