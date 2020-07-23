@@ -1,35 +1,25 @@
 <template>
   <div>
     <v-sparkline
-      :value="getPdf(x, value, scale)"
-      :label="x"
-      :show-labels="false"
-      :fill="true"
-      type="trend"
-      :padding="12"
+      :value="getPdf(getX(), value, scale)" :label="getX()"
+      :show-labels="false" :fill="true" type="trend"
+      :padding="0"
       :smooth="20"
-      :auto-draw-duration="0"
-      :auto-draw="false"
+      :auto-draw-duration="0" :auto-draw="false"
     ></v-sparkline>
     <v-row>
       <v-col>
+
         <v-slider
-          dense
-          label="σ"
-          min="0.1"
-          :max="30"
-          step="0.1"
-          v-model="scale"
-          thumb-label
+          v-bind:value="scale" label="σ" @click="setScale()"
+          min="0.1" max="100" step="0.1"
+          thumb-label dense
         ></v-slider>
       </v-col>
       <v-col>
         <v-slider
-          dense
-          label="α"
-          v-model="skew"
-          thumb-label
-          disabled
+          v-model="skew" label="α"
+          thumb-label disabled dense
         ></v-slider>
       </v-col>
     </v-row>
@@ -37,6 +27,7 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex';
   function linspace(a,b,n) {
     if(typeof n === "undefined") n = Math.max(Math.round(b-a)+1,1);
     if (n < 2) { return n===1?[a]:[]; }
@@ -56,26 +47,41 @@
     methods: {
       getPdf: function(x, mean, stdev) {
         return x.map(x => normalPdf(x, mean, stdev))
+      },
+      getX: function() {
+        return linspace(30, 90, 51)
+      },
+      setScale: function() {
+        console.log("flubidubi")
+        this.$store.commit('history/SET_EVENT_VALUE', {
+          i: this.eventIndex, p: this.parameterName, key: 'scale', value: this.scale
+        })
       }
     },
     data() {
       return {
-        x: linspace(30, 90, 51),
+        x: undefined,
         y: undefined,
         sigma_max: this.value * 0.5,
       }
     },
     computed: {
-      value: function() {return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName].value},
-      scale: {
-        get() {
-          return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName].scale
-        },
-        set(value) {
-          this.$store.commit('history/SET_EVENT_VALUE', {
-            i: this.eventIndex, p: this.parameterName, key: 'scale', value: value})
+      ...mapState({
+        scale (state) {
+          return state.history.events[this.eventIndex].parameters[this.parameterName].scale
         }
-      },
+      }),
+      value: function() {return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName].value},
+      // scale: {
+      //   get() {
+      //     console.log()
+      //     return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName].scale
+      //   },
+      //   set(value) {
+      //     this.$store.commit('history/SET_EVENT_VALUE', {
+      //       i: this.eventIndex, p: this.parameterName, key: 'scale', value: value})
+      //   }
+      // },
       skew: {
         get() {
           return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName].skew

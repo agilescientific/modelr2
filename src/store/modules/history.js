@@ -1,4 +1,5 @@
 import axios from "axios";
+import Vue from 'vue';
 
 const state = {
   events: [
@@ -56,10 +57,7 @@ const state = {
         },
         slip: {
           value: 750,
-          uncertain: true,
-          distribution: 'norm',
-          scale: 60,
-          skew: 0
+          uncertain: false,
         }
       }
     },
@@ -101,24 +99,39 @@ const state = {
   
   const mutations = {
     INSERT_EVENT: (state, payload) => {
-      state.events.splice(payload.index + 1, 0, payload.event)
+      state.events.splice(payload.index + 1, 0, payload.event);
     },
     DELETE_EVENT: (state, payload) => {
-      state.events.splice(payload.index, 1)
+      state.events.splice(payload.index, 1);
     },
-    SET_EVENT_VALUE: (state, payload) => {
-      state.events[payload.i].parameters[payload.p][payload.key] = payload.value
+    SET_EVENT_PARAM: (state, {i, p, value}) => {
+      // Overwrite the entire event parameter object
+      state.events[i].parameters[p] = value;
+      // Vue.set(state.events[i].parameters, p, value)
+    },
+    SET_EVENT_VALUE: (state, {i, p, key, value}) => {
+      // Overwrite the value of a specific parameter setting
+      // let param = state.events[i].parameters[p];
+      // param[key] = value
+      // state.events[i].parameters[p] = param;
+      Vue.set(state.events[i].parameters[p], key, value)
+      // state.events[payload.i].parameters[payload.p][payload.key] = payload.value;
     },
     TOGGLE_STOCHASTIC: (state, {value, eventIndex, parameterName}) => {
+      // Toggles stochastic properties for given event parameter
+      let param = state.events[eventIndex].parameters[parameterName];
+
       if (value === true) {
-        state.events[eventIndex].parameters[parameterName].uncertain = true
-        state.events[eventIndex].parameters[parameterName].distribution = 'norm'
-        state.events[eventIndex].parameters[parameterName].scale = state.events[eventIndex].parameters[parameterName].value
+        param.uncertain = true;
+        param.distribution = 'norm';
+        param.scale = 10;
       } else {
-        state.events[eventIndex].parameters[parameterName].uncertain = false
-        delete state.events[eventIndex].parameters[parameterName].distribution
-        delete state.events[eventIndex].parameters[parameterName].scale
+        param.uncertain = false;
+        param.distribution = undefined;
+        param.scale = undefined;
       }
+      // state.events[eventIndex].parameters[parameterName] = param;
+      Vue.set(state.events[eventIndex].parameters, parameterName, param)
     }
   };
   

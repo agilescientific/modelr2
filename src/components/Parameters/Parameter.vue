@@ -7,6 +7,7 @@
         :parameterName=parameterName
         :eventIndex=eventIndex
         :loc="loc"
+        setting="value"
       />
     </v-col>
     <!--  uncertainty switch  -->
@@ -20,31 +21,25 @@
     <!--  uncertainty parametrization  -->
   </v-row>
     <v-expand-transition>
-        <StochasticParameter v-show="isUncertain" :eventIndex="eventIndex" :parameterName="parameterName" />
+      <v-row v-show="isUncertain">
+        <v-slider label="σ" dsense v-model="scale"></v-slider>
+      </v-row>
     </v-expand-transition>
+<!--    <v-expand-transition>-->
+<!--        <StochasticParameter v-show="isUncertain" :eventIndex="eventIndex" :parameterName="parameterName" />-->
+<!--    </v-expand-transition>-->
   </div>
 </template>
 
 <script>
 import ParameterSlider from './ParameterSlider.vue';
-import StochasticParameter from "./StochasticParameter";
+// import StochasticParameter from "./StochasticParameter";
 
   export default {
     name: "Parameter",
-    components: {ParameterSlider, StochasticParameter},
+    components: {ParameterSlider},
     props: ['parameterName', 'eventIndex', 'loc'],
-    data() {
-      return {}
-    },
-    methods: {
-      // toggleUncertainty: function() {
-      //   this.$store.commit('history/TOGGLE_STOCHASTIC', {
-      //     value: !this.isUncertain,
-      //     eventIndex: this.eventIndex,
-      //     parameterName: this.parameterName
-      //   })
-      // }
-    },
+    methods: {},
     computed: {
       isUncertain: {
         get() {
@@ -53,6 +48,15 @@ import StochasticParameter from "./StochasticParameter";
         set(value) {
           this.$store.commit('history/TOGGLE_STOCHASTIC', {
             value: value, eventIndex: this.eventIndex, parameterName: this.parameterName})
+        }
+      },
+      scale: {
+        get() {
+          return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName].scale
+        },
+        set(value) {
+          this.$store.commit('history/SET_EVENT_VALUE', {
+            i: this.eventIndex, p: this.parameterName, key: 'scale', value: value})
         }
       }
     }

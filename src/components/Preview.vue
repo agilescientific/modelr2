@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'Preview',
@@ -67,6 +67,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({events: 'history/getEvents'}),
     seed: {
       get() {
         return this.$store.state.preview.seed
@@ -76,9 +77,9 @@ export default {
         this.updatePreview()
       }
     },
-    events() {
-      return this.$store.state.history.events
-    },
+    // events() {
+    //   return this.$store.state.history.events
+    // },
     settings() {
       return this.$store.state.settings
     },
