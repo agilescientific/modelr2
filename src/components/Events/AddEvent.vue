@@ -39,6 +39,18 @@ export default {
     return {
       eventType: '',
       events: {
+        unconformity: {
+          type: 'unconformity',
+          parameters: {
+            name: {value: 'Unconformity'},
+            X: {value: 5000, uncertain: false},
+            Y: {value: 0, uncertain: false},
+            Z: {value: 3000, uncertain: false},
+            dip_direction: {value: 90, uncertain: false},
+            dip: {value: 0, uncertain: false},
+            num_layers: {value: 0}
+          }
+        },
         tilt: {
           type: 'tilt',
           parameters: {
