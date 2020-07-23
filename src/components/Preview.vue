@@ -6,12 +6,17 @@
       <div class="d-flex flex-row align-center">
         <v-btn class="ml-4" small @click="updatePreview()">Recompute</v-btn>
         <v-switch v-model="previewAutoReload" class="ml-3" label="Auto-Update"></v-switch>
-        <v-switch v-model="previewSeismic" class="ml-3" label="Seismic FM"></v-switch>
+        <v-switch v-model="previewSeismic" class="ml-3" label="Seismic FM" disabled></v-switch>
       </div>
       <v-card-text>
         <v-row>
           <v-col>
-            <v-text-field dense v-model="seed" type="number" label="Random Seed"></v-text-field>
+            <v-text-field
+              dense
+              v-model="seed"
+              type="number"
+              label="Random Seed"
+            ></v-text-field>
           </v-col>
           <v-col></v-col>
           <v-col></v-col>
@@ -40,14 +45,19 @@
           </v-col>
         </v-row>
       </v-card-text>
+      <v-card>
+        <v-card-text>
+          <code>
+            {{ events }}
+          </code>
+        </v-card-text>
+      </v-card>
      </v-card>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-// import axios from 'axios';
-// import {drawSection} from "../store";
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'Preview',
@@ -57,6 +67,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({events: 'history/getEvents'}),
     seed: {
       get() {
         return this.$store.state.preview.seed
@@ -65,9 +76,6 @@ export default {
         this.$store.state.preview.seed = value
         this.updatePreview()
       }
-    },
-    events() {
-      return this.$store.state.history.events
     },
     settings() {
       return this.$store.state.settings
@@ -99,26 +107,6 @@ export default {
   },
   methods: {
     ...mapActions({updatePreview: 'preview/updatePreview'})
-    // computeSection() {
-    //   axios.post(
-    //     'http://localhost:8000/history',
-    //     {
-    //       history: JSON.stringify(this.$store.state.history.events)
-    //     }).then(
-    //       axios.get('http://localhost:8000/sample/42/y').then(
-    //         (response) => {
-    //           console.log(response)
-    //           drawSection(
-    //               'plotCanvas1',
-    //               response.data['section'],
-    //               [200, 100],
-    //               'viridis',
-    //               20,
-    //               false
-    //             )
-    //         }
-    //       ))
-    // }
   }
 };
 </script>

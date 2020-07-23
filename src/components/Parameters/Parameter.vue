@@ -1,49 +1,65 @@
 <template>
   <div>
   <v-row>
+    <!--  slider  -->
     <v-col>
-      <ParameterSlider :parameterName=parameterName :eventIndex=eventIndex />
+      <ParameterSlider
+        :parameterName=parameterName
+        :eventIndex=eventIndex
+        :loc="loc"
+        setting="value"
+      />
     </v-col>
+    <!--  uncertainty switch  -->
     <v-col class="my-auto">
       <v-switch
         dense
-        v-model="isStochastic"
+        v-model="isUncertain"
         class="ml-3 my-auto"
-      ></v-switch>
+      />
     </v-col>
+    <!--  uncertainty parametrization  -->
   </v-row>
-    <v-expand-transition>
-      <StochasticParameter v-show="isStochastic" />
-    </v-expand-transition>
+  <v-expand-transition>
+    <v-row v-show="isUncertain">
+      <v-col>
+      <v-slider label="σ" dsense v-model="scale"></v-slider>
+      </v-col>
+    </v-row>
+  </v-expand-transition>
   </div>
 </template>
 
 <script>
 import ParameterSlider from './ParameterSlider.vue';
-import StochasticParameter from "./StochasticParameter";
 
   export default {
     name: "Parameter",
-    components: {
-      StochasticParameter,
-      ParameterSlider
-    },
-    data() {
-      return {
-        // isStochastic: false
-      }
-    },
-    props: ['parameterName', 'eventIndex'],
+    components: {ParameterSlider},
+    props: ['parameterName', 'eventIndex', 'loc'],
+    methods: {},
     computed: {
-      isStochastic: {
+      isUncertain: {
         get() {
-          let stochastic = this.$store.state.history.events[this.eventIndex].stochastic[this.parameterName]
-          return stochastic !== undefined;
+          return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName].uncertain
+        },
+        set(value) {
+          this.$store.commit('history/TOGGLE_STOCHASTIC', {
+            value: value, eventIndex: this.eventIndex, parameterName: this.parameterName})
         }
-
+      },
+      scale: {
+        get() {
+          return this.$store.state.history.events[this.eventIndex].parameters[this.parameterName].scale
+        },
+        set(value) {
+          this.$store.commit('history/SET_EVENT_VALUE', {
+            i: this.eventIndex, p: this.parameterName, key: 'scale', value: value})
+        }
       }
     }
   }
+
 </script>
 
 <style scoped>

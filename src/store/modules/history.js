@@ -1,87 +1,74 @@
 import axios from "axios";
+import Vue from 'vue';
 
 const state = {
   events: [
     {
       type: "stratigraphy",
       parameters: {
-        num_layers: 18,
-        layer_names: [
-          'layer 1', 'layer 2', 'layer 3',
-          'layer 4', 'layer 5', 'layer 6',
-          'layer 7', 'layer 8', 'layer 9',
-          'layer 10', 'layer 11', 'layer 12',
-          'layer 13', 'layer 14', 'layer 15',
-          'layer 16', 'layer 17', 'layer 18'
-        ],
-        layer_thickness: [2500, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150],
-        lithology: [
-            "Sandstone", "Sandstone", "Shale", 'Coal', 'Sandstone', 'Sandstone', 'Sandstone', 'Sandstone', 'Sandstone',
-            "Sandstone", "Sandstone", "Shale", 'Coal', 'Sandstone', 'Sandstone', 'Sandstone', 'Sandstone', 'Sandstone'
-        ],
-        density: [
-            2600, 2600, 2450, 1300, 2600, 2600, 2600, 2600, 2600,
-            2600, 2600, 2450, 1300, 2600, 2600, 2600, 2600, 2600
-        ]
-      },
-      stochastic: {}
-    },
-    {
-      type: "fold",
-      parameters: {
-        name: "Fold A",
-        pos: [200, 0, 700],
-        amplitude: 100,
-        wavelength: 10000
-      },
-      stochastic: {}
-    },
-    {
-      type: "fault",
-      parameters: {
-        name: "Fault B",
-        pos: [1000, 0, 6000],
-        dip: 50,
-        dip_dir: 90,
-        slip: 750
-      },
-      stochastic: {
-        dip: ['norm', 50, 5],
-        slip: ['norm', 650, 75]
+        num_layers: {
+          value: 18
+        },
+        layer_names: {
+          value: [
+            'layer 1', 'layer 2', 'layer 3',
+            'layer 4', 'layer 5', 'layer 6',
+            'layer 7', 'layer 8', 'layer 9',
+            'layer 10', 'layer 11', 'layer 12',
+            'layer 13', 'layer 14', 'layer 15',
+            'layer 16', 'layer 17', 'layer 18'
+          ]
+        },
+        layer_thickness: {
+          value: [
+            2500, 150, 150, 150, 150, 150, 150,
+            150, 150, 150, 150, 150, 150, 150,
+            150, 150, 150, 150, 150
+          ]
+        },
       }
     },
     {
       type: "fault",
       parameters: {
-        name: "Fault C",
-        pos: [9000, 0, 5000],
-        dip: 60,
-        dip_dir: 270,
-        slip: 750
-      },
-      stochastic: {
-        dip: ['norm', 60, 5],
-        slip: ['norm', 750, 100]
+        name: {value: "Fault C"},
+        X: {
+          value: 6000,
+          uncertain: false
+        },
+        Y: {
+          value: 0,
+          uncertain: false
+        },
+        Z: {
+          value: 4000,
+          uncertain: false
+        },
+        dip: {
+          value: 60,
+          uncertain: true,
+          distribution: 'norm',
+          scale: 10,
+          skew: 2
+        },
+        dip_dir: {
+          value: 270,
+          uncertain: false
+        },
+        slip: {
+          value: 750,
+          uncertain: false,
+        }
       }
     },
-    {
-      type: "fault",
-      parameters: {
-        name: "Fault D",
-        pos: [9250, 0, 6000],
-        dip: 60,
-        dip_dir: 270,
-        slip: 250
-      },
-      stochastic: {}
-    },
-
   ]
 };
   
   const getters = {
+    getEvent: (state) => (i) => state.events[i],
     getEvents: (state) => state.events,
-    getRockDensities: (state) => state.rockDensities
+    getParameter: (state) => (i, name) => state.events[i].parameters[name],
+    getParameterValue: (state) => (i, name, key) => state.events[i].parameters[name][key],
   };
   
   const actions = {
@@ -90,21 +77,20 @@ const state = {
         history: JSON.stringify(state.events)
       })
     },
-    // TODO: can this be abstracted more to remove code repetition?
     updateEventParam({commit, dispatch, rootState}, payload) {
-      commit('setEventParam', payload)
+      commit('SET_EVENT_VALUE', payload)
       if (rootState.settings.previewAutoReload) {
         dispatch('preview/updatePreview', null, { root: true })
       }
     },
     updateEventInsert({commit, dispatch, rootState}, payload) {
-      commit('insertEvent', payload)
+      commit('INSERT_EVENT', payload)
       if (rootState.settings.previewAutoReload) {
         dispatch('preview/updatePreview', null, { root: true })
       }
     },
     updateEventDelete({commit, dispatch, rootState}, payload) {
-      commit('deleteEvent', payload)
+      commit('DELETE_EVENT', payload)
       if (rootState.settings.previewAutoReload) {
         dispatch('preview/updatePreview', null, { root: true })
       }
@@ -112,24 +98,41 @@ const state = {
   };
   
   const mutations = {
-    setHistory: (state, events) => (
-      state.events = events
-    ),
-    setEvent: (state, payload) => (
-      state.events[payload.n] = payload.event
-    ),
-    insertEvent: (state, payload) => {
-      state.events.splice(payload.index + 1, 0, payload.event)
+    INSERT_EVENT: (state, payload) => {
+      state.events.splice(payload.index + 1, 0, payload.event);
     },
-    deleteEvent: (state, payload) => {
-      state.events.splice(payload.index, 1)
+    DELETE_EVENT: (state, payload) => {
+      state.events.splice(payload.index, 1);
     },
-    setEventParam: (state, payload) => {
-      state.events[payload.n].parameters[payload.key] = payload.value
+    SET_EVENT_PARAM: (state, {i, p, value}) => {
+      // Overwrite the entire event parameter object
+      state.events[i].parameters[p] = value;
+      // Vue.set(state.events[i].parameters, p, value)
     },
-    appendEvent: (state, event) => (
-      state.events.push(event)
-    )
+    SET_EVENT_VALUE: (state, {i, p, key, value}) => {
+      // Overwrite the value of a specific parameter setting
+      // let param = state.events[i].parameters[p];
+      // param[key] = value
+      // state.events[i].parameters[p] = param;
+      Vue.set(state.events[i].parameters[p], key, value)
+      // state.events[payload.i].parameters[payload.p][payload.key] = payload.value;
+    },
+    TOGGLE_STOCHASTIC: (state, {value, eventIndex, parameterName}) => {
+      // Toggles stochastic properties for given event parameter
+      let param = state.events[eventIndex].parameters[parameterName];
+
+      if (value === true) {
+        param.uncertain = true;
+        param.distribution = 'norm';
+        param.scale = 10;
+      } else {
+        param.uncertain = false;
+        param.distribution = undefined;
+        param.scale = undefined;
+      }
+      // state.events[eventIndex].parameters[parameterName] = param;
+      Vue.set(state.events[eventIndex].parameters, parameterName, param)
+    }
   };
   
   export default {
