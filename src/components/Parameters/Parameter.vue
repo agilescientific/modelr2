@@ -20,20 +20,18 @@
     </v-col>
     <!--  uncertainty parametrization  -->
   </v-row>
-    <v-expand-transition>
-      <v-row v-show="isUncertain">
-        <v-slider label="σ" dsense v-model="scale"></v-slider>
-      </v-row>
-    </v-expand-transition>
-<!--    <v-expand-transition>-->
-<!--        <StochasticParameter v-show="isUncertain" :eventIndex="eventIndex" :parameterName="parameterName" />-->
-<!--    </v-expand-transition>-->
+  <v-expand-transition>
+    <v-row v-show="isUncertain">
+      <v-col>
+      <v-slider label="σ" dsense v-model="scale"></v-slider>
+      </v-col>
+    </v-row>
+  </v-expand-transition>
   </div>
 </template>
 
 <script>
 import ParameterSlider from './ParameterSlider.vue';
-// import StochasticParameter from "./StochasticParameter";
 
   export default {
     name: "Parameter",

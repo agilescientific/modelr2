@@ -77,9 +77,6 @@ export default {
         this.updatePreview()
       }
     },
-    // events() {
-    //   return this.$store.state.history.events
-    // },
     settings() {
       return this.$store.state.settings
     },
