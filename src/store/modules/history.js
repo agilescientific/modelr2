@@ -118,6 +118,12 @@ const state = {
         dispatch('preview/updatePreview', null, { root: true })
       }
     },
+    updateEvent({commit, dispatch, rootState}, payload) {
+      commit('SET_EVENT', payload)
+      if (rootState.settings.previewAutoReload) {
+        dispatch('preview/updatePreview', null, { root: true })
+      }
+    },
     updateEventInsert({commit, dispatch, rootState}, payload) {
       commit('INSERT_EVENT', payload)
       if (rootState.settings.previewAutoReload) {
@@ -138,6 +144,9 @@ const state = {
     },
     DELETE_EVENT: (state, payload) => {
       state.events.splice(payload.index, 1);
+    },
+    SET_EVENT: (state, {i, parameters}) => {
+      state.events[i].parameters = parameters;
     },
     SET_EVENT_PARAM: (state, {i, p, value}) => {
       // Overwrite the entire event parameter object
