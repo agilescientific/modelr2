@@ -20,24 +20,22 @@
     </v-col>
     <!--  uncertainty parametrization  -->
   </v-row>
+
   <v-expand-transition>
-    <v-row v-show="isUncertain">
-      <v-col>
-        <v-row>
+    <v-row class="px-0" v-show="isUncertain">
+      <v-col >
           <v-slider
             label="σ" dsense v-model="scale" thumb-label
-            step="0.1" min="3" :max="this.maxValues[this.parameterName] / 5"
+            step="0.1" min="1" :max="this.maxValues[this.parameterName] / 5"
           ></v-slider>
-        </v-row>
-        <v-row>
-          <v-slider label="α" disabled></v-slider>
-        </v-row>
+          <v-slider dense label="α" disabled></v-slider>
       </v-col>
-      <v-col>
-        <v-sparkline
+      <v-col  style="border: 0px solid red">
+        <v-sparkline class="distplot"
           :value="getPdf(getX(), value, scale)" :label="getX()"
-          :show-labels="false" :fill="true" type="trend"
-          :padding="0"
+          :show-labels="false" :fill="false" type="trend"
+          :padding="2"
+          line-width="2"
           :smooth="20"
           :auto-draw-duration="0" :auto-draw="false"
         ></v-sparkline>
@@ -113,5 +111,8 @@ import ParameterSlider from './ParameterSlider.vue';
 </script>
 
 <style scoped>
-
+  .distplot {
+    border-left: 2px solid lightgray;
+    border-right: 2px solid lightgray;
+  }
 </style>
