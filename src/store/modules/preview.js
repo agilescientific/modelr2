@@ -6,9 +6,9 @@ const state = {
   direction: 'y',
   position: 'center',
   seed: 42,
-  canvas: 'canvasPreview1',
+  canvas: 'canvasPreview',
   sectionShape: [200, 100],
-  sectionCmap: 'viridis'
+  sectionCmap: 'salinity'
 }
 
 const mutations = {
@@ -44,7 +44,7 @@ const actions = {
           state.section,
           state.sectionShape,
           state.sectionCmap,
-          22,
+          rootState.history.events[0].parameters.num_layers.value,
           false
         )
       }
@@ -66,7 +66,7 @@ const actions = {
       'history/updateHistory', null, {root: true}
     ).then(() => {
       dispatch(
-        'getSectionPlotSection'
+        'getPreviewSection'
       )
     }
     )

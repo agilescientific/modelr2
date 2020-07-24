@@ -2,17 +2,22 @@
   <div>
     <v-card class="mx-auto">
       <v-card-title class="primary--text">Model Preview</v-card-title>
-      <v-card-subtitle>Preview model samples.</v-card-subtitle>
-      <div class="d-flex flex-row align-center">
-        <v-btn
-          class="ml-4"
-          small
-          @click="handlePreviews()"
-        >Recompute</v-btn>
-        <v-switch v-model="previewAutoReload" class="ml-3" label="Auto-Update"></v-switch>
-        <v-switch v-model="previewSeismic" class="ml-3" label="Seismic FM" disabled></v-switch>
-      </div>
-      <v-card-text>
+<!--      <v-card-subtitle></v-card-subtitle>-->
+      <v-card-text class="py-0">
+        <v-row>
+          <v-col cols="5">
+            <canvas id="canvasPreview"></canvas>
+          </v-col>
+          <v-col></v-col>
+        </v-row>
+      </v-card-text>
+<!--      <div class="d-flex flex-row align-center">-->
+<!--        <v-switch v-model="previewAutoReload" class="ml-3" label="Auto-Update"></v-switch>-->
+<!--        <v-switch v-model="previewSeismic" class="ml-3" label="Seismic FM" disabled></v-switch>-->
+<!--      </div>-->
+      <v-card-title class="primary--text pt-0">Sample Preview</v-card-title>
+      <v-card-subtitle>Preview stochastic model samples.</v-card-subtitle>
+      <v-card-text class="my-0 py-0">
         <v-row>
           <v-col>
             <v-text-field
@@ -30,28 +35,35 @@
               v-model="previewNSamples"
               dense
               ticks="always"
-              tick-size="4"
+              tick-size="3"
               thumb-label="always"
-              :thumb-size="20"
+              :thumb-size="26"
             ></v-slider>
           </v-col>
-          <v-col></v-col>
+          <v-col>
+            <v-btn
+              class="ml-4 primary"
+              dense
+              small
+              @click="handlePreviews()"
+            >Sample</v-btn>
+          </v-col>
         </v-row>
       </v-card-text>
-      <v-card-text>
+      <v-card-text class="py-0">
         <v-row class="">
           <v-col v-for="i in previewNSamples" :key="i" cols="3">
             <canvas :id="'canvasPreview'+i"></canvas>
           </v-col>
         </v-row>
       </v-card-text>
-      <v-card>
-        <v-card-text>
-          <code>
-            {{ events }}
-          </code>
-        </v-card-text>
-      </v-card>
+<!--      <v-card>-->
+<!--        <v-card-text>-->
+<!--          <code>-->
+<!--            {{ events }}-->
+<!--          </code>-->
+<!--        </v-card-text>-->
+<!--      </v-card>-->
      </v-card>
   </div>
 </template>
