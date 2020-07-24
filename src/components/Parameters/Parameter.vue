@@ -1,47 +1,46 @@
 <template>
   <div>
-  <v-row>
-    <!--  slider  -->
-    <v-col>
-      <ParameterSlider
-        :parameterName=parameterName
-        :eventIndex=eventIndex
-        :loc="loc"
-        setting="value"
-      />
-    </v-col>
-    <!--  uncertainty switch  -->
-    <v-col class="my-auto">
-      <v-switch
-        dense
-        v-model="isUncertain"
-        class="ml-3 my-auto"
-      />
-    </v-col>
-    <!--  uncertainty parametrization  -->
-  </v-row>
-
-  <v-expand-transition>
-    <v-row class="px-0" v-show="isUncertain">
-      <v-col >
-          <v-slider
-            label="σ" dsense v-model="scale" thumb-label
-            step="0.1" min="1" :max="this.maxValues[this.parameterName] / 5"
-          ></v-slider>
-          <v-slider dense label="α" disabled></v-slider>
+    <v-row>
+      <!--  slider  -->
+      <v-col>
+        <ParameterSlider
+          :parameterName=parameterName
+          :eventIndex=eventIndex
+          :loc="loc"
+          setting="value"
+        />
       </v-col>
-      <v-col  style="border: 0px solid red">
-        <v-sparkline class="distplot"
-          :value="getPdf(getX(), value, scale)" :label="getX()"
-          :show-labels="false" :fill="false" type="trend"
-          :padding="2"
-          line-width="2"
-          :smooth="20"
-          :auto-draw-duration="0" :auto-draw="false"
-        ></v-sparkline>
+      <!--  uncertainty switch  -->
+      <v-col class="my-auto">
+        <v-switch
+          dense
+          v-model="isUncertain"
+          class="ml-3 my-auto"
+        />
       </v-col>
     </v-row>
-  </v-expand-transition>
+    <!--  uncertainty parametrization  -->
+    <v-expand-transition>
+      <v-row class="px-0" v-show="isUncertain">
+        <v-col >
+            <v-slider
+              label="σ" dsense v-model="scale" thumb-label
+              step="0.1" min="1" :max="this.maxValues[this.parameterName] / 5"
+            ></v-slider>
+            <v-slider dense label="α" disabled></v-slider>
+        </v-col>
+        <v-col>
+          <v-sparkline class="distplot"
+            :value="getPdf(getX(), value, scale)" :label="getX()"
+            :show-labels="false" :fill="false" type="trend"
+            :padding="2"
+            line-width="2"
+            :smooth="20"
+            :auto-draw-duration="0" :auto-draw="false"
+          ></v-sparkline>
+        </v-col>
+      </v-row>
+    </v-expand-transition>
   </div>
 </template>
 
