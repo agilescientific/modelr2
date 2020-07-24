@@ -9,7 +9,7 @@ const state = {
   canvas: 'canvasPreview',
   sectionShape: [200, 100],
   sectionCmap: 'salinity',
-  loading: false,
+  loading: 0,
 }
 
 const mutations = {
@@ -24,7 +24,6 @@ const actions = {
       rootState.fastAPIurl + 'sample/' + seed + "/" + direction
     ).then((response) => {
       let section = response.data.section
-
       drawSection(
         canvas,
         section,
@@ -33,6 +32,10 @@ const actions = {
         rootState.history.events[0].parameters.num_layers.value,
         false
       )
+      state.loading--
+      if (state.loading === 1) {
+        state.loading = false
+      }
     })
   },
 
@@ -53,15 +56,15 @@ const actions = {
     )
   },
   updatePreviews({state, dispatch}, {seeds, directions, canvases}) {
-    state.loading = true;
-    // let remaining = seeds.length;
+    let remaining = seeds.length;
     dispatch(
       'history/updateHistory', null, {root: true}
     ).then(() => {
-      for (let i = 0; i < seeds.length; i += 1) {
+      for (let i = 1; i <= seeds.length; i += 1) {
+        state.loading++;
         dispatch('getSectionPlotSection',
-          {seed: seeds[i], direction: directions[i], canvas: canvases[i]}
-          )
+          {seed: seeds[i], direction: directions[i], canvas: canvases[i], counter: remaining}
+        )
       }
     })
   },

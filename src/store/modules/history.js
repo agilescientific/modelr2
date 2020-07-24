@@ -36,36 +36,36 @@ const state = {
         }
       }
     },
-    {
-      type: "fault",
-      parameters: {
-        name: {value: "Fault C"},
-        X: {
-          value: 6000,
-          uncertain: false
-        },
-        Y: {
-          value: 0,
-          uncertain: false
-        },
-        Z: {
-          value: 4000,
-          uncertain: false
-        },
-        dip: {
-          value: 60,
-          uncertain: false,
-        },
-        dip_dir: {
-          value: 270,
-          uncertain: false
-        },
-        slip: {
-          value: 750,
-          uncertain: false,
-        }
-      }
-    },
+    // {
+    //   type: "fault",
+    //   parameters: {
+    //     name: {value: "Fault C"},
+    //     X: {
+    //       value: 6000,
+    //       uncertain: false
+    //     },
+    //     Y: {
+    //       value: 0,
+    //       uncertain: false
+    //     },
+    //     Z: {
+    //       value: 4000,
+    //       uncertain: false
+    //     },
+    //     dip: {
+    //       value: 60,
+    //       uncertain: false,
+    //     },
+    //     dip_dir: {
+    //       value: 270,
+    //       uncertain: false
+    //     },
+    //     slip: {
+    //       value: 750,
+    //       uncertain: false,
+    //     }
+    //   }
+    // },
   ],
   minValues: {
     X: extent[0],
