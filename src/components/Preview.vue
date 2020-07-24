@@ -4,7 +4,11 @@
       <v-card-title class="primary--text">Model Preview</v-card-title>
       <v-card-subtitle>Preview model samples.</v-card-subtitle>
       <div class="d-flex flex-row align-center">
-        <v-btn class="ml-4" small @click="updatePreview()">Recompute</v-btn>
+        <v-btn
+          class="ml-4"
+          small
+          @click="handlePreviews()"
+        >Recompute</v-btn>
         <v-switch v-model="previewAutoReload" class="ml-3" label="Auto-Update"></v-switch>
         <v-switch v-model="previewSeismic" class="ml-3" label="Seismic FM" disabled></v-switch>
       </div>
@@ -18,13 +22,11 @@
               label="Random Seed"
             ></v-text-field>
           </v-col>
-          <v-col></v-col>
-          <v-col></v-col>
           <v-col>
             <v-slider
               label="# Samples"
               min="1"
-              max="3"
+              max="12"
               v-model="previewNSamples"
               dense
               ticks="always"
@@ -33,15 +35,13 @@
               :thumb-size="20"
             ></v-slider>
           </v-col>
+          <v-col></v-col>
         </v-row>
       </v-card-text>
       <v-card-text>
-        <v-row v-for="i in previewNSamples" :key="i">
-          <v-col>
+        <v-row class="">
+          <v-col v-for="i in previewNSamples" :key="i" cols="3">
             <canvas :id="'canvasPreview'+i"></canvas>
-          </v-col>
-          <v-col>
-            <canvas :id="'plotSeismic'+i"></canvas>
           </v-col>
         </v-row>
       </v-card-text>
@@ -88,14 +88,14 @@ export default {
         this.$store.state.settings.previewSeismic = value
       }
     },
-      previewNSamples: {
-        get() {
-            return this.$store.state.settings.previewNSamples
-        },
-          set(value) {
-            this.$store.state.settings.previewNSamples = value
-          }
+    previewNSamples: {
+      get() {
+          return this.$store.state.settings.previewNSamples
       },
+      set(value) {
+        this.$store.state.settings.previewNSamples = value
+      }
+    },
     previewAutoReload: {
       get() {
         return this.$store.state.settings.previewAutoReload
@@ -106,7 +106,22 @@ export default {
     }
   },
   methods: {
-    ...mapActions({updatePreview: 'preview/updatePreview'})
+    handlePreviews: function() {
+      let seeds = [];
+      let directions = [];
+      let canvases = [];
+      for (let i = 0; i <= this.previewNSamples; i += 1) {
+        seeds.push(Math.round(Math.random()*1000))
+        directions.push('y')
+        canvases.push('canvasPreview'+i)
+      }
+      this.updatePreviews({seeds, directions, canvases})
+    }
+    ,
+    ...mapActions({
+      updatePreview: 'preview/updatePreview',
+      updatePreviews: 'preview/updatePreviews'
+    })
   }
 };
 </script>
