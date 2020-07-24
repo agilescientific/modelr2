@@ -6,6 +6,8 @@ import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
 
+export const extent = [0, 10000, 0, 1000, 0, 5000]
+
 Vue.mixin({
   computed: {
     extent() {

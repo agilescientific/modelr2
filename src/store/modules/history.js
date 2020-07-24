@@ -1,5 +1,6 @@
 import axios from "axios";
 import Vue from 'vue';
+const extent = [0, 10000, 0, 1000, 0, 5000]
 
 const state = {
   events: [
@@ -61,7 +62,41 @@ const state = {
         }
       }
     },
-  ]
+  ],
+  minValues: {
+    X: extent[0],
+    Y: extent[2],
+    Z: extent[4],
+    dip: 0,
+    dip_dir: 0,
+    slip: 0,
+    amplitude: 0,
+    wavelength: 0,
+    rotation: -90,
+    plunge_direction: 0,
+    plunge: 0,
+    radius: 0,
+    xaxis: 0,
+    yaxis: 0,
+    zaxis: 0
+  },
+  maxValues: {
+    X: extent[1],
+    Y: extent[3],
+    Z: extent[5],
+    dip: 90,
+    dip_dir: 360,
+    slip: extent[5],
+    amplitude: extent[5],
+    wavelength: Math.max(...extent) * 5,
+    rotation: 90,
+    plunge_direction: 360,
+    plunge: 90,
+    radius: extent[1],
+    xaxis: extent[1] * 3,
+    yaxis: extent[3] * 5,
+    zaxis: extent[5] * 10
+  }
 };
   
   const getters = {
@@ -107,15 +142,10 @@ const state = {
     SET_EVENT_PARAM: (state, {i, p, value}) => {
       // Overwrite the entire event parameter object
       state.events[i].parameters[p] = value;
-      // Vue.set(state.events[i].parameters, p, value)
     },
     SET_EVENT_VALUE: (state, {i, p, key, value}) => {
       // Overwrite the value of a specific parameter setting
-      // let param = state.events[i].parameters[p];
-      // param[key] = value
-      // state.events[i].parameters[p] = param;
       Vue.set(state.events[i].parameters[p], key, value)
-      // state.events[payload.i].parameters[payload.p][payload.key] = payload.value;
     },
     TOGGLE_STOCHASTIC: (state, {value, eventIndex, parameterName}) => {
       // Toggles stochastic properties for given event parameter
@@ -124,7 +154,7 @@ const state = {
       if (value === true) {
         param.uncertain = true;
         param.distribution = 'norm';
-        param.scale = 10;
+        param.scale = state.maxValues[parameterName] / 9;
       } else {
         param.uncertain = false;
         param.distribution = undefined;
