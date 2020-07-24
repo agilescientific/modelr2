@@ -4,9 +4,10 @@
       <v-col>
         <LayerThicknessSlider :eventIndex="eventIndex" :layerIndex="index" />
       </v-col>
-<!--      <v-col class="my-0 py-0">-->
+      <v-col class="my-0 py-0">
+        <v-select dense label="Lithology" :items="['Sandstone', 'Limestone', 'Shale']" v-model="lithology[index]"></v-select>
 <!--        <LayerLithology :eventIndex="eventIndex" :layerIndex="index" />-->
-<!--      </v-col>-->
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -26,6 +27,14 @@ export default {
     event: function () {
       return this.$store.state.history.events[this.eventIndex];
     },
+    lithology: {
+      get() {
+        return this.$store.state.history.events[this.eventIndex].parameters.lithology.value
+      },
+      set(value) {
+        return this.$store.state.history.events[this.eventIndex].parameters.lithology.value = value
+      }
+    }
   }
 }
 </script>

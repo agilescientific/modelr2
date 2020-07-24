@@ -8,7 +8,8 @@ const state = {
   seed: 42,
   canvas: 'canvasPreview',
   sectionShape: [200, 100],
-  sectionCmap: 'salinity'
+  sectionCmap: 'salinity',
+  loading: false,
 }
 
 const mutations = {
@@ -23,6 +24,7 @@ const actions = {
       rootState.fastAPIurl + 'sample/' + seed + "/" + direction
     ).then((response) => {
       let section = response.data.section
+
       drawSection(
         canvas,
         section,
@@ -50,7 +52,9 @@ const actions = {
       }
     )
   },
-  updatePreviews({dispatch}, {seeds, directions, canvases}) {
+  updatePreviews({state, dispatch}, {seeds, directions, canvases}) {
+    state.loading = true;
+    // let remaining = seeds.length;
     dispatch(
       'history/updateHistory', null, {root: true}
     ).then(() => {

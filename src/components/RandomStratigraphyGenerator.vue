@@ -48,7 +48,7 @@
           thumb-label
           dense
           min="1"
-          :max="extent[5] / 15"
+          :max="extent[5] / 10"
           v-model="thicknessBounds"
         ></v-range-slider>
       </v-col>
@@ -74,11 +74,12 @@
     data() {
       return {
           thicknessOptions: ["Uniform"],
-          nLayers: [16, 22],
-          thicknessBounds: [100, 150],
+          nLayers: [22, 29],
+          thicknessBounds: [200, 275],
           num_layers: undefined,
           layer_thickness: undefined,
           layer_names: undefined,
+          lithologies: undefined,
       }
     },
     methods: {
@@ -99,20 +100,24 @@
         // Generate layer thicknesses and names for Stratigraphy event
         let thicknesses = [];
         let names = [];
+        let lithologies = [];
         let min = this.thicknessBounds[0];
         let max = this.thicknessBounds[1];
         for (let i = 0; i <= this.num_layers; i += 1) {
           thicknesses.push(getRndInteger(min, max));
           names.push("Layer "+i);
+          lithologies.push(['Sandstone', 'Shale', 'Limestone'][getRndInteger(0,2)])
         }
         this.layer_thickness = thicknesses;
         this.layer_names = names;
+        this.lithologies = lithologies;
       },
       genEvent: function() {
         let parameters = {};
         parameters.num_layers = {value: this.num_layers};
         parameters.layer_names = {value: this.layer_names};
         parameters.layer_thickness = {value: this.layer_thickness};
+        parameters.lithology = {value: this.lithologies};
         return parameters
       }
     }

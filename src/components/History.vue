@@ -1,7 +1,10 @@
 <template>
   <div>
     <v-card class="mx-auto">
-      <v-card-title class="primary--text">History</v-card-title>
+      <v-card-title class="primary--text">
+        History
+        <v-btn style="position: absolute; right: 0" x-small class="mr-5">Export</v-btn>
+      </v-card-title>
       <v-card-subtitle>Define an uncertain geomodel history.</v-card-subtitle>
       <v-expansion-panels :multiple="true" :hover="true">
         <v-expansion-panel v-for="(event, eventIndex) in history" :key="eventIndex">
@@ -11,6 +14,7 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </v-card>
+
   </div>
 </template>
 

@@ -27,6 +27,13 @@ const state = {
             150, 150, 150, 150, 150
           ]
         },
+        lithology: {
+          value: [
+            'Sandstone', 'Limestone', 'Shale', 'Sandstone', 'Limestone', 'Shale', 'Sandstone',
+            'Sandstone', 'Limestone', 'Shale', 'Sandstone', 'Limestone', 'Shale', 'Limestone',
+            'Sandstone', 'Limestone', 'Shale', 'Sandstone', 'Limestone'
+          ]
+        }
       }
     },
     {
@@ -47,10 +54,7 @@ const state = {
         },
         dip: {
           value: 60,
-          uncertain: true,
-          distribution: 'norm',
-          scale: 10,
-          skew: 2
+          uncertain: false,
         },
         dip_dir: {
           value: 270,

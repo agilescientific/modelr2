@@ -6,7 +6,6 @@
       :items="rockNames"
       v-model="names[layerIndex]"
       label="Lithology"
-      @change="densities[layerIndex] = rockDensities[names[layerIndex]]"
       dense
   ></v-select>
   </v-col>

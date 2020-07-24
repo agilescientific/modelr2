@@ -46,7 +46,17 @@
               dense
               small
               @click="handlePreviews()"
-            >Sample</v-btn>
+            >
+              <v-progress-circular
+                v-show="loading"
+              indeterminate
+              color="white"
+              class="mr-2"
+              :size="15"
+              ></v-progress-circular>
+              Sample
+            </v-btn>
+
           </v-col>
         </v-row>
       </v-card-text>
@@ -57,13 +67,13 @@
           </v-col>
         </v-row>
       </v-card-text>
-<!--      <v-card>-->
-<!--        <v-card-text>-->
-<!--          <code>-->
-<!--            {{ events }}-->
-<!--          </code>-->
-<!--        </v-card-text>-->
-<!--      </v-card>-->
+      <v-card>
+        <v-card-text>
+          <code>
+            {{ events }}
+          </code>
+        </v-card-text>
+      </v-card>
      </v-card>
   </div>
 </template>
@@ -75,10 +85,14 @@ export default {
   name: 'Preview',
   data() {
     return {
-      section: []
+      section: [],
+
     }
   },
   computed: {
+    loading: function() {
+      return this.$store.state.preview.loading
+    },
     ...mapGetters({events: 'history/getEvents'}),
     seed: {
       get() {
