@@ -2,19 +2,26 @@
   <div>
     <v-card class="mx-auto">
       <v-card-title class="primary--text">Model Preview</v-card-title>
-<!--      <v-card-subtitle></v-card-subtitle>-->
+<!--      <v-card-subtitle>Live-updating model section.</v-card-subtitle>-->
       <v-card-text class="py-0">
         <v-row>
           <v-col cols="5">
             <canvas id="canvasPreview"></canvas>
           </v-col>
-          <v-col></v-col>
+          <v-col>
+            <v-select dense :items="sectionAxisOptions" v-model="direction" label="Section axis"></v-select>
+            <v-slider
+                @click="updatePreview()"
+                dense
+                v-model="position"
+                :min="getExtent[0]"
+                :max="getExtent[1]"
+                label="Section position"
+                thumb-label="always"
+            ></v-slider>
+          </v-col>
         </v-row>
       </v-card-text>
-<!--      <div class="d-flex flex-row align-center">-->
-<!--        <v-switch v-model="previewAutoReload" class="ml-3" label="Auto-Update"></v-switch>-->
-<!--        <v-switch v-model="previewSeismic" class="ml-3" label="Seismic FM" disabled></v-switch>-->
-<!--      </div>-->
       <v-card-title class="primary--text pt-0">Sample Preview</v-card-title>
       <v-card-subtitle>Preview stochastic model samples.</v-card-subtitle>
       <v-card-text class="my-0 py-0">
@@ -79,16 +86,25 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import {extent} from "@/main";
 
 export default {
   name: 'Preview',
   data() {
     return {
-      section: [],
-
+      sectionAxisOptions: ['x', 'y'],
     }
   },
   computed: {
+    getExtent: function() {
+      if (this.direction === 'y') {
+        return [extent[0], extent[1]]
+      } else if (this.direction === 'x') {
+        return [extent[2], extent[3]]
+      } else{
+        return undefined
+      }
+    },
     loading: function() {
       return this.$store.state.preview.loading
     },
@@ -100,6 +116,23 @@ export default {
       set(value) {
         this.$store.state.preview.seed = value
         this.updatePreview()
+      }
+    },
+    direction: {
+      get() {
+        return this.$store.state.preview.direction
+      },
+      set(value) {
+        this.$store.state.preview.direction = value
+        this.updatePreview()
+      }
+    },
+    position: {
+      get() {
+        return this.$store.state.preview.position
+      },
+      set(value) {
+        this.$store.state.preview.position = value
       }
     },
     settings() {
@@ -133,14 +166,12 @@ export default {
   methods: {
     handlePreviews: function() {
       let seeds = [];
-      let directions = [];
       let canvases = [];
       for (let i = 0; i <= this.previewNSamples; i += 1) {
         seeds.push(Math.round(Math.random()*1000))
-        directions.push('y')
         canvases.push('canvasPreview'+i)
       }
-      this.updatePreviews({seeds, directions, canvases})
+      this.updatePreviews({seeds, canvases})
     }
     ,
     ...mapActions({

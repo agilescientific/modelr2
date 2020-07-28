@@ -121,22 +121,31 @@ async def model(seed: int):
     return {"model": [], "seed": seed}
 
 
-@app.get("/sample/{seed}/{section}")
+@app.get("/sample/{seed}/{direction}")
 async def section(
         seed: int,
-        section: Section,
+        direction: Section,
         position: int = None
 ):
     exp = get_sample_exp(seed)
     if not position:
         position = 'center'
     tmp_out = exp.get_section(
-        direction=section.value,
+        direction=direction.value,
         position=position
     )
-    section, _ = tmp_out.get_section_voxels()
-    section = np.flip(section, axis=0).astype(int).tolist()
-    return {'section': section, 'seed': seed, 'position': position}
+    section = tmp_out.block
+    if direction.value == 'y':
+        section = np.flip(section[:, 0, :].T, axis=0).astype(int)
+    elif direction.value == 'x':
+        section = np.flip(section[0, :, :].T, axis=0).astype(int)
+    shape = section.shape
+    return {
+        'seed': seed,
+        'position': position,
+        'shape': shape,
+        'section': section.tolist(),
+    }
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
