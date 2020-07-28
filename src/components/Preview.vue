@@ -43,20 +43,19 @@
           <v-col>
             <v-btn
               class="ml-4 primary"
-              dense
-              small
-              @click="handlePreviews()"
+              dense small @click="handlePreviews()"
             >
-              <v-progress-circular
-                v-show="loading"
-              indeterminate
-              color="white"
-              class="mr-2"
-              :size="15"
-              ></v-progress-circular>
+              <v-fade-transition>
+                <v-progress-circular
+                  v-show="loading"
+                  indeterminate
+                  color="white"
+                  class="mr-2"
+                  :size="15"
+                ></v-progress-circular>
+              </v-fade-transition>
               Sample
             </v-btn>
-
           </v-col>
         </v-row>
       </v-card-text>
@@ -67,13 +66,13 @@
           </v-col>
         </v-row>
       </v-card-text>
-      <v-card>
-        <v-card-text>
-          <code>
-            {{ events }}
-          </code>
-        </v-card-text>
-      </v-card>
+<!--      <v-card>-->
+<!--        <v-card-text>-->
+<!--          <code>-->
+<!--            {{ events }}-->
+<!--          </code>-->
+<!--        </v-card-text>-->
+<!--      </v-card>-->
      </v-card>
   </div>
 </template>
