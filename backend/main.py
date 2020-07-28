@@ -100,9 +100,9 @@ class Section(str, Enum):
 init_pynoddy(extent_default)
 
 
-@app.get("/")
-async def root():
-    return {"message": "Hello API!"}
+# @app.get("/")
+# async def root():
+#     return {"message": "Hello API!"}
 
 
 class History(BaseModel):
@@ -110,19 +110,24 @@ class History(BaseModel):
 
 
 @app.post("/history")
-async def history(history: History):
+async def set_probabilistic_history(history: History):
     events = json.loads(history.history)
     app.rhist.history = events
 
 
-@app.get("/sample/{seed}")
-async def model(seed: int):
-    # compute block model
-    return {"model": [], "seed": seed}
+@app.get("/history/{seed}")
+async def sample_history(seed: int):
+    """[summary]"""
+    pass
+
+
+@app.get("/sample/{seed}/{x}/{y}")
+async def sample_1d_borehole(seed: int, x: int, y: int):
+    pass
 
 
 @app.get("/sample/{seed}/{direction}")
-async def section(
+async def sample_2d_section(
         seed: int,
         direction: Section,
         position: int = None
@@ -146,6 +151,13 @@ async def section(
         'shape': shape,
         'section': section.tolist(),
     }
+
+
+@app.get("/sample/{seed}")
+async def sample_3d_model(seed: int):
+    # compute block model
+    return {"model": [], "seed": seed}
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
