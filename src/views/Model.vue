@@ -1,16 +1,13 @@
 <template>
   <div class="model">
-    <v-row>
-      
+    <v-row class="container-sticky">
       <v-col>
         <history />
-<!--        <convolution class="mt-5" />-->
       </v-col>
-      <v-col>
-        <preview />
+      <v-col class="preview-sticky">
+        <preview class="preview-sticky"/>
       </v-col>
     </v-row>
-    
   </div>
 </template>
 
@@ -29,3 +26,15 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.container-sticky {
+  align-items: flex-start;
+}
+.preview-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+</style>
