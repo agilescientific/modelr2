@@ -1,6 +1,22 @@
 <template>
   <div>
     <v-row>
+      <v-col class="my-auto py-0" cols="4">
+        <v-switch v-model="uncertain" dense label="Uncertain Event"></v-switch>
+      </v-col>
+      <v-col class="my-auto py-0 pt-5" cols="6">
+        <v-slider :disabled="!uncertain" dense min="0" max="100" value="100" label="Probability of Occurence" thumb-label="always"></v-slider>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col class="my-auto py-0" cols="4">
+        <v-switch v-model="family" dense label="Probabilistic Event Family"></v-switch>
+      </v-col>
+      <v-col class="my-auto py-0 pt-5" cols="6">
+        <v-range-slider :disabled="!family" dense min="0" max="10" v-model="nEvents" label="# of Events" thumb-label="always" ticks="always"></v-range-slider>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col>Parameter</v-col>
       <v-col class="">Uncertain</v-col>
     </v-row>
@@ -24,6 +40,13 @@
     name: "EventGeneric",
     components: {Parameter},
     props: ['eventIndex'],
+    data() {
+      return {
+        uncertain: false,
+        family: false,
+        nEvents: [1,3]
+      }
+    },
     computed: {
       ...mapGetters('history', ['getEvent'])
     }
