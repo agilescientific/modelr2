@@ -7,7 +7,7 @@
       </v-card-title>
       <v-card-subtitle>Define an uncertain geomodel history.</v-card-subtitle>
       <v-expansion-panels :multiple="true" :hover="true">
-        <v-expansion-panel v-for="(event, eventIndex) in history" :key="eventIndex">
+        <v-expansion-panel v-for="(_, eventIndex) in history" :key="eventIndex">
           <Event :eventIndex="eventIndex" />
           <DeleteEvent v-if="eventIndex > 0" :eventIndex="eventIndex" />
           <AddEvent :eventIndex="eventIndex" />
@@ -20,8 +20,8 @@
 
 <script>
 import { mapState } from 'vuex';
-import Event from '@/components/Events/EventContainer.vue';
-import AddEvent from '@/components/Events/AddEvent.vue';
+import Event from './Events/EventContainer.vue';
+import AddEvent from './Events/AddEvent.vue';
 import DeleteEvent from "./Events/DeleteEvent";
 
 export default {
