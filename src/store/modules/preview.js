@@ -20,14 +20,14 @@ const mutations = {
 
 const actions = {
   getSectionPlotSection({state, rootState}, {seed, direction, canvas}) {
-    axios.get(
-      rootState.fastAPIurl + 'sample/' + seed + "/" + direction
-    ).then((response) => {
-      let section = response.data.section
+    let url = rootState.fastAPIurl + 'sample/' + seed + "/" + direction;
+    // console.log(url)
+    axios.get(url).then((response) => {
+      console.log(response)
       drawSection(
         canvas,
-        section,
-        [200, 100],
+        response.data.section,
+        state.sectionShape,
         state.sectionCmap,
         rootState.history.events[0].parameters.num_layers.value,
         false
@@ -38,43 +38,25 @@ const actions = {
       }
     })
   },
-
-  getPreviewSection({state, commit, rootState}) {
-    axios.get(
-      rootState.fastAPIurl + 'sample/' + state.seed + "/" + state.direction
-    ).then((response) => {
-        commit('UPDATE_SECTION', {section: response.data.section})
-        drawSection(
-          state.canvas,
-          state.section,
-          state.sectionShape,
-          state.sectionCmap,
-          rootState.history.events[0].parameters.num_layers.value,
-          false
-        )
-      }
-    )
-  },
   updatePreviews({state, dispatch}, {seeds, directions, canvases}) {
-    let remaining = seeds.length;
     dispatch(
       'history/updateHistory', null, {root: true}
     ).then(() => {
-      for (let i = 1; i <= seeds.length; i += 1) {
+      for (let i = 1; i < seeds.length; i += 1) {
         state.loading++;
         dispatch('getSectionPlotSection',
-          {seed: seeds[i], direction: directions[i], canvas: canvases[i], counter: remaining}
+          {seed: seeds[i], direction: directions[i], canvas: canvases[i]}
         )
       }
     })
   },
-  updatePreview({dispatch}) {
+  updatePreview({state, dispatch}) {
     dispatch(
       'history/updateHistory', null, {root: true}
     ).then(() => {
-      dispatch(
-        'getPreviewSection'
-      )
+        dispatch('getSectionPlotSection',
+          {seed: state.seeds, direction: state.direction, canvas: 'canvasPreview'}
+        )
     }
     )
   }
