@@ -103,7 +103,8 @@ export default {
             Y: {value: 0, uncertain: false},
             Z: {value: 6000, uncertain: false},
             amplitude: {value: 100, uncertain: false},
-            wavelength: {value: 10000, uncertain: false}
+            wavelength: {value: 10000, uncertain: false},
+            dip_dir: {value: 90, uncertain: false}
           }
         }
       },
