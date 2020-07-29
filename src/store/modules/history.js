@@ -8,30 +8,21 @@ const state = {
       type: "stratigraphy",
       parameters: {
         num_layers: {
-          value: 18
+          value: 1
         },
         layer_names: {
           value: [
-            'layer 1', 'layer 2', 'layer 3',
-            'layer 4', 'layer 5', 'layer 6',
-            'layer 7', 'layer 8', 'layer 9',
-            'layer 10', 'layer 11', 'layer 12',
-            'layer 13', 'layer 14', 'layer 15',
-            'layer 16', 'layer 17', 'layer 18'
+            'Layer 1'
           ]
         },
         layer_thickness: {
           value: [
-            2500, 150, 150, 150, 150, 150, 150,
-            150, 150, 150, 150, 150, 150, 150,
-            150, 150, 150, 150, 150
+            2500
           ]
         },
         lithology: {
           value: [
-            'Sandstone', 'Limestone', 'Shale', 'Sandstone', 'Limestone', 'Shale', 'Sandstone',
-            'Sandstone', 'Limestone', 'Shale', 'Sandstone', 'Limestone', 'Shale', 'Limestone',
-            'Sandstone', 'Limestone', 'Shale', 'Sandstone', 'Limestone'
+            'Sandstone'
           ]
         }
       }
@@ -134,7 +125,8 @@ const state = {
     },
     SET_EVENT_VALUE: (state, {i, p, key, value}) => {
       // Overwrite the value of a specific parameter setting
-      state.events[i].parameters[p][key] = value;
+      // state.events[i].parameters[p][key] = value;
+      Vue.set(state.events[i].parameters[p], key, value)
     },
     TOGGLE_STOCHASTIC: (state, {value, eventIndex, parameterName}) => {
       // Toggles stochastic properties for given event parameter
