@@ -1,16 +1,6 @@
 <template>
   <div>
     <v-row>
-      <v-col></v-col>
-      <v-col>
-      </v-col>
-      <v-col>
-        <v-btn class="primary" small @click="genSample()">
-          Sample Stratigraphy
-        </v-btn>
-      </v-col>
-    </v-row>
-    <v-row>
       <v-col>
         Number of Layers
         <span class="grey--text">
@@ -35,14 +25,6 @@
           scipy.stats.uniform({{ thicknessBounds[0] }}, {{ thicknessBounds[1] - thicknessBounds[0]}})
         </span>
       </v-col>
-<!--      <v-col>-->
-<!--        <v-select-->
-<!--          dense-->
-<!--          :items="thicknessOptions"-->
-<!--          label="Distribution Type"-->
-<!--          :value="thicknessOptions[0]"-->
-<!--        ></v-select>-->
-<!--      </v-col>-->
       <v-col>
         <v-range-slider
           thumb-label
@@ -54,7 +36,9 @@
       </v-col>
       <v-col>{{ layer_thickness }}</v-col>
     </v-row>
-
+    <v-btn dense class="primary" small @click="genSample()">
+      Sample Stratigraphy
+    </v-btn>
 
   </div>
 </template>
