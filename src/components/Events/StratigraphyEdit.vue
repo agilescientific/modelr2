@@ -5,8 +5,11 @@
         <LayerThicknessSlider :eventIndex="eventIndex" :layerIndex="index" />
       </v-col>
       <v-col class="my-0 py-0">
-        <v-select dense label="Lithology" :items="['Sandstone', 'Limestone', 'Shale']" v-model="lithology[index]"></v-select>
-<!--        <LayerLithology :eventIndex="eventIndex" :layerIndex="index" />-->
+        <v-select dense label="Lithology" :items="lithOptions" v-model="lithology[index]"></v-select>
+      </v-col>
+      <v-col cols="1"><div :style="{'backgorund-color': '#000000'}">.</div></v-col>
+      <v-col>
+        <v-btn @click="deleteLayer(index)" :icon="true"><span class="material-icons">delete_outline</span></v-btn>
       </v-col>
     </v-row>
   </div>
@@ -27,6 +30,10 @@ export default {
     event: function () {
       return this.$store.state.history.events[this.eventIndex];
     },
+    lithOptions: function() {
+      let currentLibrary = this.$store.state.rockLibrary.currentLibrary
+      return this.$store.state.rockLibrary.libraries[currentLibrary].map(x => x.name)
+    },
     lithology: {
       get() {
         return this.$store.state.history.events[this.eventIndex].parameters.lithology.value
@@ -34,6 +41,14 @@ export default {
       set(value) {
         return this.$store.state.history.events[this.eventIndex].parameters.lithology.value = value
       }
+    }
+  },
+  methods: {
+    deleteLayer: function(index) {
+      this.$store.commit(
+          'history/DELETE_LAYER',
+          {eventIndex: this.eventIndex, layerIndex: index}
+      )
     }
   }
 }

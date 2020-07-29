@@ -145,6 +145,12 @@ const state = {
       }
       // state.events[eventIndex].parameters[parameterName] = param;
       Vue.set(state.events[eventIndex].parameters, parameterName, param)
+    },
+    DELETE_LAYER: (state, {eventIndex, layerIndex}) => {
+      console.log("hello")
+      state.events[eventIndex].parameters.layer_names.value.splice(layerIndex, 1)
+      state.events[eventIndex].parameters.layer_thickness.value.splice(layerIndex, 1)
+      state.events[eventIndex].parameters.lithology.value.splice(layerIndex, 1)
     }
   };
   
