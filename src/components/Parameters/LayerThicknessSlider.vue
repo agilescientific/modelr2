@@ -3,7 +3,7 @@
     :dense="true"
     class="text-capitalize py-0 mx-0"
     min="0"
-    :max="extent[5]"
+    :max="extent[5] / 2"
     v-model="thicknesses[layerIndex]"
     :label="layerName"
     @click="updateModel()"
@@ -17,7 +17,7 @@ export default {
   props: ['layerIndex', 'eventIndex'],
   methods: {
     updateModel() {
-      let payload = {i: this.eventIndex, p: this.parameterName, key: 'value', value: this.value}
+      let payload = {i: this.eventIndex, p: 'layer_thickness', key: 'value', value: this.thicknesses}
       this.$store.dispatch('history/updateEventParam', payload)
     }
   },
@@ -27,16 +27,9 @@ export default {
         return this.$store.state.history.events[this.eventIndex].parameters.layer_names.value[this.layerIndex]
       }
     },
-    thicknesses: {
-      get() {
+    thicknesses: function() {
         return this.$store.state.history.events[this.eventIndex].parameters.layer_thickness.value
-      },
-      set(value) {
-        this.$store.dispatch('history/updateEventParam', {
-          i: this.eventIndex, p: "layer_thickness", key: 'value', value: value
-        })
       }
     }
   }
-}
 </script>

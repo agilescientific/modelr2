@@ -134,7 +134,7 @@ const state = {
     },
     SET_EVENT_VALUE: (state, {i, p, key, value}) => {
       // Overwrite the value of a specific parameter setting
-      Vue.set(state.events[i].parameters[p], key, value)
+      state.events[i].parameters[p][key] = value;
     },
     TOGGLE_STOCHASTIC: (state, {value, eventIndex, parameterName}) => {
       // Toggles stochastic properties for given event parameter
