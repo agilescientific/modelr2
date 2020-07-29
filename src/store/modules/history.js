@@ -109,6 +109,12 @@ const state = {
       if (rootState.settings.previewAutoReload) {
         dispatch('preview/updatePreview', null, { root: true })
       }
+    },
+    updateLayerDelete({commit, dispatch, rootState}, payload) {
+      commit('DELETE_LAYER', payload)
+      if (rootState.settings.previewAutoReload) {
+        dispatch('preview/updatePreview', null, { root: true })
+      }
     }
   };
   
@@ -147,10 +153,10 @@ const state = {
       Vue.set(state.events[eventIndex].parameters, parameterName, param)
     },
     DELETE_LAYER: (state, {eventIndex, layerIndex}) => {
-      console.log("hello")
-      state.events[eventIndex].parameters.layer_names.value.splice(layerIndex, 1)
-      state.events[eventIndex].parameters.layer_thickness.value.splice(layerIndex, 1)
-      state.events[eventIndex].parameters.lithology.value.splice(layerIndex, 1)
+      state.events[eventIndex].parameters.num_layers.value -= 1;
+      state.events[eventIndex].parameters.layer_names.value.splice(layerIndex, 1);
+      state.events[eventIndex].parameters.layer_thickness.value.splice(layerIndex, 1);
+      state.events[eventIndex].parameters.lithology.value.splice(layerIndex, 1);
     }
   };
   

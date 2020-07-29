@@ -7,9 +7,11 @@
       <v-col class="my-0 py-0">
         <v-select dense label="Lithology" :items="lithOptions" v-model="lithology[index]"></v-select>
       </v-col>
-      <v-col cols="1"><div :style="{'backgorund-color': '#000000'}">.</div></v-col>
-      <v-col>
-        <v-btn @click="deleteLayer(index)" :icon="true"><span class="material-icons">delete_outline</span></v-btn>
+      <v-col cols="1" class="my-0 py-0"><div :style="{'backgorund-color': '#000000'}">.</div></v-col>
+      <v-col cols="1" class="my-0 py-0">
+        <v-btn small @click="deleteLayer(index)" :icon="true">
+          <span class="material-icons">delete_outline</span>
+        </v-btn>
       </v-col>
     </v-row>
   </div>
@@ -45,8 +47,8 @@ export default {
   },
   methods: {
     deleteLayer: function(index) {
-      this.$store.commit(
-          'history/DELETE_LAYER',
+      this.$store.dispatch(
+          'history/updateLayerDelete',
           {eventIndex: this.eventIndex, layerIndex: index}
       )
     }
