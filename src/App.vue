@@ -3,6 +3,21 @@
     <v-app-bar app>
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       <v-toolbar-title>AppName</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn small color="primary" @click="historyToClipboard()">Export History</v-btn>
+      <v-snackbar v-model="snackbar">
+        History copied to clipboard.
+        <template v-slot:action="{ attrs }">
+          <v-btn
+              color="pink"
+              text
+              v-bind="attrs"
+              @click="snackbar = false"
+          >
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
     </v-app-bar>
 
     <v-navigation-drawer
@@ -63,11 +78,27 @@ export default {
   },
   data: () => ({
     drawer: false,
+    snackbar: false,
   }),
     computed: {
       routes() {
           return this.$router.options.routes
       }
     }
+    ,
+  methods: {
+    getHistory: function() {
+      return JSON.stringify(this.$store.state.history.events, null, 4)
+    },
+    historyToClipboard: function() {
+      let dummy = document.createElement("textarea");
+      document.body.appendChild(dummy);
+      dummy.value = this.getHistory();
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
+      this.snackbar = true;
+    }
+  }
 };
 </script>
