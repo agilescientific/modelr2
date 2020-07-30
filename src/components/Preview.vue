@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-card class="mx-auto">
-      <v-card-title class="primary--text">Model Preview</v-card-title>
-<!--      <v-card-subtitle>Live-updating model section.</v-card-subtitle>-->
+      <v-card-title class="primary--text">Model & Sample Preview</v-card-title>
+      <v-card-subtitle>Live-updating model section preview and stochastic sampling preview.</v-card-subtitle>
       <v-card-text class="py-0">
         <v-row>
           <v-col cols="5">
@@ -19,21 +19,18 @@
                 label="Section position"
                 thumb-label="always"
             ></v-slider>
-          </v-col>
-        </v-row>
-      </v-card-text>
-      <v-card-title class="primary--text pt-0">Sample Preview</v-card-title>
-      <v-card-subtitle>Preview stochastic model samples.</v-card-subtitle>
-      <v-card-text class="my-0 py-0">
-        <v-row>
-          <v-col>
             <v-text-field
-              dense
-              v-model="seed"
-              type="number"
-              label="Random Seed"
+                dense
+                v-model="seed"
+                type="number"
+                label="Random Seed"
             ></v-text-field>
           </v-col>
+        </v-row>
+        <v-divider></v-divider>
+      </v-card-text>
+      <v-card-text class="my-0 py-0">
+        <v-row>
           <v-col>
             <v-slider
               label="# Samples"
