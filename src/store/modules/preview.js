@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import {drawSection} from "../index";
 
 const state = {
   section: undefined,
@@ -56,24 +55,19 @@ const actions = {
         console.log(liths.value)
       }
     })
+
     let {ctx, buffer8, data, imageData} = prepareCanvas(canvas, shape);
-    let v = undefined;
-    let c = undefined;
+    let layer_id = undefined;
+    let color = undefined;
     for (let x = 0; x < shape[0]; x += 1) {
       for (let y = 0; y < shape[1]; y += 1) {
-        v = section[y][x]
-        // v is layer id in section array
-        // have to link this back to layer
-        // console.log(v)
-        let lithology = lithologies[v - 1]
-
-        c = colors[lithology]
-
+        layer_id = section[y][x]
+        color = colors[lithologies[layer_id - 1]]
         data[y * shape[0] + x] =
-          (c.a * 255 << 24) |    // alpha
-          (c.b<< 16) |          // blue
-          (c.g <<  8) |          // green
-           c.r;                  // red
+          (color.a * 255 << 24) |    // alpha
+          (color.b << 16) |          // blue
+          (color.g <<  8) |          // green
+           color.r;                  // red
       }
     }
     imageData.data.set(buffer8);
@@ -82,14 +76,6 @@ const actions = {
   getSectionPlotSection({state, dispatch, rootState}, {seed, direction, canvas}) {
     let url = rootState.fastAPIurl + 'sample/' + seed + "/" + direction + "?position="+state.position
     axios.get(url).then((response) => {
-      // drawSection(
-      //   canvas,
-      //   response.data.section,
-      //   response.data.shape.reverse(),
-      //   state.sectionCmap,
-      //   rootState.history.events[0].parameters.num_layers.value,
-      //   false
-      // )
       let section = response.data.section
       let shape = response.data.shape.reverse()
       dispatch('drawSection2', {canvas, section, shape})
