@@ -6,11 +6,21 @@
         :max="maxValues[parameterName]"
         v-model="value"
         thumb-label
+        color="grey darken-3"
+        track-color="grey darken-3"
         dense
         @click="updateModel()"
-        :label="parameterName"
         class="text-capitalize"
-      ></v-slider>
+      >
+<!--        <template v-slot:prepend>-->
+<!--          <div>-->
+<!--            {{ minValues[parameterName] }}-->
+<!--          </div>-->
+<!--        </template>-->
+<!--        <template v-slot:append>{{ maxValues[parameterName] }}-->
+<!--        </template>-->
+      </v-slider>
+
     </div>
   </div>
 </template>

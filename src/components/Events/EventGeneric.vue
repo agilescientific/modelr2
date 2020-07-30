@@ -17,14 +17,15 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>Parameter</v-col>
-      <v-col class="">Uncertain</v-col>
+      <v-col>Parameter and Uncertainty</v-col>
+<!--      <v-col class="">Uncertainty</v-col>-->
     </v-row>
     <div v-if="getEvent(eventIndex).type === 'unconformity'">
       <v-card flat>
         <RandomStratigraphyGenerator :eventIndex="eventIndex" />
       </v-card>
     </div>
+
     <div v-for="(_, name) in getEvent(eventIndex).parameters" :key="name">
       <div v-if="name === 'name'"></div>
       <div v-else-if="name === 'geometry'"></div>
@@ -34,8 +35,10 @@
       <div v-else-if="name === 'lithology'"></div>
       <div v-else-if="name === 'lithologies'"></div>
       <div v-else>
-        <Parameter :parameterName="name" :eventIndex="eventIndex" />
+        <v-divider></v-divider>
+        <Parameter class="parameter" :parameterName="name" :eventIndex="eventIndex" />
       </div>
+
     </div>
   </div>
 </template>
@@ -62,5 +65,7 @@
 </script>
 
 <style scoped>
-
+.parameter {
+  border-bottom: 0px solid grey
+}
 </style>
