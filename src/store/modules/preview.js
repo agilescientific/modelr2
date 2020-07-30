@@ -41,20 +41,29 @@ const convertHexToRGBA = (hexCode, opacity) => {
   return {r: r, g: g, b: b, a: opacity / 100}
 };
 
-const actions = {
-  drawSection2({rootState}, {canvas, section, shape}) {
-    let current = rootState.rockLibrary.currentLibrary;
-    let colors = {};
-    rootState.rockLibrary.libraries[current].map(x => colors[x.name] = convertHexToRGBA(x.color, 100));
+function getColors(rootState) {
+  // Get colors of currently selected library
+  let current = rootState.rockLibrary.currentLibrary;
+  let colors = {};
+  rootState.rockLibrary.libraries[current].map(x => colors[x.name] = convertHexToRGBA(x.color, 100));
+  return colors
+}
 
-    let lithologies = [];
-    rootState.history.events.forEach((event) => {
-      let liths = event.parameters.lithology
-      if (liths !== undefined) {
-        lithologies.push(...liths.value)
-        console.log(liths.value)
-      }
-    })
+function getLithologies(rootState) {
+  let lithologies = [];
+  rootState.history.events.forEach((event) => {
+    let liths = event.parameters.lithology
+    if (liths !== undefined) {
+      lithologies.push(...liths.value)
+    }
+  })
+  return lithologies
+}
+
+const actions = {
+  drawSection({rootState}, {canvas, section, shape}) {
+    let colors = getColors(rootState);
+    let lithologies = getLithologies(rootState);
 
     let {ctx, buffer8, data, imageData} = prepareCanvas(canvas, shape);
     let layer_id = undefined;
@@ -73,18 +82,20 @@ const actions = {
     imageData.data.set(buffer8);
     ctx.putImageData(imageData, 0, 0);
   },
+
   getSectionPlotSection({state, dispatch, rootState}, {seed, direction, canvas}) {
     let url = rootState.fastAPIurl + 'sample/' + seed + "/" + direction + "?position="+state.position
     axios.get(url).then((response) => {
       let section = response.data.section
       let shape = response.data.shape.reverse()
-      dispatch('drawSection2', {canvas, section, shape})
+      dispatch('drawSection', {canvas, section, shape})
       state.loading--
       if (state.loading <= 1) {
         state.loading = false
       }
     })
   },
+
   updatePreviews({state, dispatch}, {seeds, canvases}) {
     dispatch(
       'history/updateHistory', null, {root: true}
