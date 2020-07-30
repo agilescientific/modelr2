@@ -62,7 +62,7 @@ export default {
   components: {
   },
   data: () => ({
-    drawer: false
+    drawer: false,
   }),
     computed: {
       routes() {
