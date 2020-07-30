@@ -20,12 +20,19 @@
       <v-col>Parameter</v-col>
       <v-col class="">Uncertain</v-col>
     </v-row>
+    <div v-if="getEvent(eventIndex).type === 'unconformity'">
+      <v-card flat>
+        <RandomStratigraphyGenerator :eventIndex="eventIndex" />
+      </v-card>
+    </div>
     <div v-for="(_, name) in getEvent(eventIndex).parameters" :key="name">
       <div v-if="name === 'name'"></div>
       <div v-else-if="name === 'geometry'"></div>
       <div v-else-if="name === 'num_layers'"></div>
       <div v-else-if="name === 'layer_names'"></div>
       <div v-else-if="name === 'layer_thickness'"></div>
+      <div v-else-if="name === 'lithology'"></div>
+      <div v-else-if="name === 'lithologies'"></div>
       <div v-else>
         <Parameter :parameterName="name" :eventIndex="eventIndex" />
       </div>
@@ -35,10 +42,11 @@
 
 <script>
   import Parameter from "../Parameters/Parameter";
+  import RandomStratigraphyGenerator from "@/components/RandomStratigraphyGenerator";
   import {mapGetters} from "vuex";
   export default {
     name: "EventGeneric",
-    components: {Parameter},
+    components: {Parameter, RandomStratigraphyGenerator},
     props: ['eventIndex'],
     data() {
       return {

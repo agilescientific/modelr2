@@ -66,7 +66,7 @@ export function drawSection(canvasId, section, shape, cmap, ncolors, norm) {
   let colormap = require('colormap');
   let colors = colormap({
     colormap: cmap,  // TODO: get colormap from state
-    nshades: ncolors + 1, // TODO: get nlayers for cmap from state
+    nshades: ncolors * 2, // TODO: get nlayers for cmap from state
     format: 'rgba',
     alpha: 1
   })

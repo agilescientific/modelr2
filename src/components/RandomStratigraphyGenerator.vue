@@ -49,12 +49,9 @@
     // generates random integer between min and max (inclusive)
     return Math.floor(Math.random() * (max - min + 1) ) + min;
   }
-  // function getRndUniform(min, max) {
-  //   // generates random integer between min and max (inclusive)
-  //   return Math.random() * (max - min + 1) + min;
-  // }
   export default {
     name: "RandomStratigraphyGenerator",
+    props: ['eventIndex'],
     data() {
       return {
           thicknessOptions: ["Uniform"],
@@ -63,7 +60,7 @@
           num_layers: undefined,
           layer_thickness: undefined,
           layer_names: undefined,
-          lithologies: undefined,
+          lithology: undefined,
       }
     },
     methods: {
@@ -71,8 +68,12 @@
         // Generate Stratigraphy event sample
         this.genNumLayers()
         this.genLayers()
-        let parameters = this.genEvent()
-        this.$store.dispatch('history/updateEvent', {i: 0, parameters: parameters})
+        let newParameters = this.genEvent()
+        let parameters = this.$store.state.history.events[this.eventIndex].parameters
+        for (const property in newParameters) {
+          parameters[property] = newParameters[property]
+        }
+        this.$store.dispatch('history/updateEvent', {i: this.eventIndex, parameters: parameters})
       },
       genNumLayers: function() {
         // Generate number of layers based on range slider
@@ -84,24 +85,24 @@
         // Generate layer thicknesses and names for Stratigraphy event
         let thicknesses = [];
         let names = [];
-        let lithologies = [];
+        let lithology = [];
         let min = this.thicknessBounds[0];
         let max = this.thicknessBounds[1];
         for (let i = 0; i <= this.num_layers; i += 1) {
           thicknesses.push(getRndInteger(min, max));
           names.push("Layer "+i);
-          lithologies.push(['Sandstone', 'Shale', 'Limestone'][getRndInteger(0,2)])
+          lithology.push(['Sandstone', 'Shale', 'Limestone', 'Black Shale', 'Coal'][getRndInteger(0,4)])
         }
         this.layer_thickness = thicknesses;
         this.layer_names = names;
-        this.lithologies = lithologies;
+        this.lithology = lithology;
       },
       genEvent: function() {
         let parameters = {};
         parameters.num_layers = {value: this.num_layers};
         parameters.layer_names = {value: this.layer_names};
         parameters.layer_thickness = {value: this.layer_thickness};
-        parameters.lithology = {value: this.lithologies};
+        parameters.lithology = {value: this.lithology};
         return parameters
       }
     }

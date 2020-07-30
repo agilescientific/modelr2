@@ -30,10 +30,24 @@
     props: ['index', 'libraryName'],
     data() {
       return {
-        overlay: false
+        overlay: false,
+        type: 'rgba',
       }
     },
     computed: {
+      // color: {
+      //   get() {
+      //     return this.$store.state.rockLibrary.libraries[this.libraryName][this.index].color
+      //   },
+      //   set(value) {
+      //     console.log(value)
+      //     if (value.rgba !== undefined) {
+      //       this.$store.state.rockLibrary.libraries[this.libraryName][this.index].color = value.rgba
+      //     } else {
+      //       this.$store.state.rockLibrary.libraries[this.libraryName][this.index].color = value
+      //     }
+      //   }
+      // },
       rock: {
         get() {
           return this.$store.state.rockLibrary.libraries[this.libraryName][this.index]

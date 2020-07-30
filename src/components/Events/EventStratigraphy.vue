@@ -8,7 +8,7 @@
   <v-tabs-items v-model="tab">
     <v-tab-item :key="1" value="tab1">
       <v-card flat>
-        <RandomStratigraphyGenerator />
+        <RandomStratigraphyGenerator :eventIndex="0" />
       </v-card>
     </v-tab-item>
     <v-tab-item :key="2" value="tab2">
