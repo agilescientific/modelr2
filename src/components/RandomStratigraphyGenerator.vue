@@ -1,5 +1,10 @@
 <template>
   <div>
+    <v-select
+        label="Rock Library"
+        :items="Object.keys(libraries)"
+        v-model="currentLibrary"
+    ></v-select>
     <v-row>
       <v-col>Number of Layers</v-col>
       <v-col>
@@ -53,6 +58,19 @@
           lithology: undefined,
       }
     },
+    computed: {
+      libraries: function() {
+        return this.$store.state.rockLibrary.libraries
+      },
+      currentLibrary: {
+        get() {
+          return this.$store.state.rockLibrary.currentLibrary
+        },
+        set(value) {
+          this.$store.state.rockLibrary.currentLibrary= value
+        }
+      }
+    },
     methods: {
       genSample: function() {
         // Generate Stratigraphy event sample
@@ -78,10 +96,11 @@
         let lithology = [];
         let min = this.thicknessBounds[0];
         let max = this.thicknessBounds[1];
+        let lithPool = this.libraries[this.currentLibrary].map(x => x.name)
         for (let i = 0; i <= this.num_layers; i += 1) {
           thicknesses.push(getRndInteger(min, max));
           names.push("Layer "+i);
-          lithology.push(['Sandstone', 'Shale', 'Limestone', 'Black Shale', 'Coal'][getRndInteger(0,4)])
+          lithology.push(lithPool[getRndInteger(0, lithPool.length - 1)])
         }
         this.layer_thickness = thicknesses;
         this.layer_names = names;

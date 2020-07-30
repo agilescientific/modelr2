@@ -1,7 +1,7 @@
 const state = {
-  currentLibrary: 'mars',
+  currentLibrary: 'Mars',
   libraries: {
-    mars: [
+    Mars: [
       {
           name: 'Sandstone',
           density: 2600,
@@ -31,6 +31,38 @@ const state = {
           name: 'Limestone',
           density: 2550,
           color: '#149EF8'
+      },
+    ],
+    Jupiter: [
+      {
+        name: 'Graywacke',
+        density: 2600,
+        color: '#69CF9C',
+      },
+      {
+        name: 'Chert',
+        density: 2450,
+        color: '#AAC2C8'
+      },
+      {
+        name: 'Black Shale',
+        density: 2450,
+        color: '#DBFEBC'
+      },
+      {
+        name: 'Peat',
+        density: 1650,
+        color: '#FFCC99'
+      },
+      {
+        name: 'Phonolite',
+        density: 1300,
+        color: '#5F391F'
+      },
+      {
+        name: 'Amphibole Schist',
+        density: 2550,
+        color: '#B6B6CE'
       },
     ],
   }
