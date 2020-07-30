@@ -17,7 +17,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>Parameter and Uncertainty</v-col>
+      <v-col>Parameters and Uncertainty</v-col>
 <!--      <v-col class="">Uncertainty</v-col>-->
     </v-row>
     <div v-if="getEvent(eventIndex).type === 'unconformity'">

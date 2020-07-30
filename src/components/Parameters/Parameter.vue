@@ -3,7 +3,6 @@
     <v-row>
       <v-col cols="2" class="text-capitalize">{{ parameterName }}      </v-col>
       <v-col>
-        <!--        <v-expand-transition>-->
         <div v-show="isUncertain">
             <v-sparkline
                 v-show="isUncertain"
@@ -23,7 +22,6 @@
           setting="value"
         />
       </v-col>
-      <!--  uncertainty switch  -->
       <v-col cols="1">
         <v-switch
             dense

@@ -112,6 +112,12 @@ const state = {
       if (rootState.settings.previewAutoReload) {
         dispatch('preview/updatePreview', null, { root: true })
       }
+    },
+    updateLayerAdd({commit, dispatch, rootState}, payload) {
+      commit('ADD_LAYER', payload)
+      if (rootState.settings.previewAutoReload) {
+        dispatch('preview/updatePreview', null, { root: true })
+      }
     }
   };
   
@@ -155,6 +161,12 @@ const state = {
       state.events[eventIndex].parameters.layer_names.value.splice(layerIndex, 1);
       state.events[eventIndex].parameters.layer_thickness.value.splice(layerIndex, 1);
       state.events[eventIndex].parameters.lithology.value.splice(layerIndex, 1);
+    },
+    ADD_LAYER: (state, {eventIndex, layerIndex}) => {
+      state.events[eventIndex].parameters.num_layers.value += 1;
+      state.events[eventIndex].parameters.layer_names.value.splice(layerIndex, 0, "New Layer");
+      state.events[eventIndex].parameters.layer_thickness.value.splice(layerIndex, 0, 100);
+      state.events[eventIndex].parameters.lithology.value.splice(layerIndex, 0, 'Sandstone');
     }
   };
   

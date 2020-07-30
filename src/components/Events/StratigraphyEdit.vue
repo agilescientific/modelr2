@@ -1,20 +1,22 @@
 <template>
   <div>
-    <v-row v-for="(_, index) in event.parameters.layer_names.value" :key="index">
-      <v-col>
-        <LayerThicknessSlider :eventIndex="eventIndex" :layerIndex="index" />
-      </v-col>
-      <v-col class="my-0 py-0">
-        <v-select dense label="Lithology" :items="lithOptions" v-model="lithology[index]"></v-select>
-      </v-col>
-      <v-col cols="1" class="my-0 py-0"><div :style="{'backgorund-color': '#000000'}">.</div></v-col>
-      <v-col cols="1" class="my-0 py-0">
-        <v-btn small @click="deleteLayer(index)" :icon="true">
+    <div v-for="(_, index) in event.parameters.layer_names.value" :key="index" >
+      <v-divider></v-divider>
+      <div class="d-flex justify-space-around pt-5">
+        <LayerThicknessSlider :style="{width: '100px'}" :eventIndex="eventIndex" :layerIndex="index" />
+        <v-select class="ml-3" :style="{width: '200px'}" dense label="Lithology" :items="lithOptions" v-model="lithology[index]"></v-select>
+        <v-btn class="ml-3" small @click="deleteLayer(index)" :icon="true">
           <span class="material-icons">delete_outline</span>
         </v-btn>
-      </v-col>
-    </v-row>
+        <v-btn small @click="addLayer(index)" :icon="true">
+          <span class="material-icons">add</span>
+        </v-btn>
+      </div>
+
+    </div>
+
   </div>
+
 </template>
 
 <script>
@@ -49,6 +51,12 @@ export default {
     deleteLayer: function(index) {
       this.$store.dispatch(
           'history/updateLayerDelete',
+          {eventIndex: this.eventIndex, layerIndex: index}
+      )
+    },
+    addLayer: function(index) {
+      this.$store.dispatch(
+        'history/updateLayerAdd',
           {eventIndex: this.eventIndex, layerIndex: index}
       )
     }

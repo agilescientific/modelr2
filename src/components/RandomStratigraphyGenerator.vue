@@ -9,14 +9,15 @@
       </v-col>
       <v-col>
         <v-range-slider
-          thumb-label
+          thumb-label="always"
           dense
           min="1"
           max="50"
           v-model="nLayers"
+
         ></v-range-slider>
       </v-col>
-      <v-col>{{ num_layers }}</v-col>
+<!--      <v-col>{{ num_layers }}</v-col>-->
     </v-row>
     <v-row>
       <v-col>
@@ -27,14 +28,14 @@
       </v-col>
       <v-col>
         <v-range-slider
-          thumb-label
+          thumb-label="always"
           dense
           min="1"
           :max="extent[5] / 10"
           v-model="thicknessBounds"
         ></v-range-slider>
       </v-col>
-      <v-col>{{ layer_thickness }}</v-col>
+<!--      <v-col>{{ layer_thickness }}</v-col>-->
     </v-row>
     <v-btn dense class="primary" small @click="genSample()">
       Sample Stratigraphy
