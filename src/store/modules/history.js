@@ -3,6 +3,7 @@ import Vue from 'vue';
 const extent = [0, 10000, 0, 1000, 0, 5000]
 
 const state = {
+  extent: [0, 10000, 0, 1000, 0, 5000],
   events: [
     {
       type: "stratigraphy",
@@ -74,7 +75,12 @@ const state = {
   const actions = {
     updateHistory({state, rootState}) {
       return axios.post(rootState.fastAPIurl + 'history', {
-        history: JSON.stringify(state.events)
+        history: {history: JSON.stringify(state.events)},
+        extent: {
+          x: state.extent[0], X: state.extent[1],
+          y: state.extent[2], Y: state.extent[3],
+          z: state.extent[4], Z: state.extent[5]
+        }
       })
     },
     updateEventParam({commit, dispatch, rootState}, payload) {

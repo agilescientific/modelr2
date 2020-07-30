@@ -62,6 +62,8 @@ def init_pynoddy(extent: List[float]):
         extent (List[float]): x,X,y,Y,z,Z.
     """
     app.rhist = rh.RandomHistory(extent)
+    app.extent = (extent[1], extent[3], extent[5])
+    app.origin = (extent[0], extent[2], extent[4])
     if not app.history:
         app.history = history_default
     app.rhist.history = app.history
@@ -72,11 +74,14 @@ def parse_events(
         fistory_fn: str = None
 ) -> pynoddy.experiment.Experiment:
     nh = pynoddy.history.NoddyHistory()
+    
     for event_type, properties in events:
         nh.add_event(event_type, properties)
     fistory_fn = fistory_fn if fistory_fn else "temp.his"
     nh.write_history(fistory_fn)
     exp = pynoddy.experiment.Experiment(fistory_fn)
+    exp.set_extent(*app.extent)
+    exp.set_origin(*app.origin)
     return exp
 
 
@@ -85,11 +90,9 @@ def get_sample_exp(seed: int) -> pynoddy.experiment.Experiment:
     return parse_events(events_sample)
 
 
-class Event(BaseModel):
-    type: str
-    name: Optional[str]
-    parameters: dict
 
+
+init_pynoddy(extent_default)
 
 class Section(str, Enum):
     x = "x"
@@ -97,22 +100,26 @@ class Section(str, Enum):
     z = "z"
 
 
-init_pynoddy(extent_default)
-
-
-# @app.get("/")
-# async def root():
-#     return {"message": "Hello API!"}
-
-
 class History(BaseModel):
     history: str
 
 
+class Extent(BaseModel):
+    x: int
+    X: int
+    y: int
+    Y: int
+    z: int
+    Z: int
+
+
 @app.post("/history")
-async def set_probabilistic_history(history: History):
+async def set_probabilistic_history(history: History, extent: Extent = None):
     events = json.loads(history.history)
     app.rhist.history = events
+    if extent:
+        app.origin = (extent.x, extent.y, extent.Z)
+        app.extent = (extent.X, extent.Y, extent.z + extent.Z)
 
 
 @app.get("/history/{seed}")
