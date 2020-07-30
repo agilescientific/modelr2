@@ -1,41 +1,30 @@
 <template>
   <div>
     <v-row>
-      <v-col>
-        Number of Layers
-        <span class="grey--text">
-          scipy.stats.randint({{ nLayers[0] }}, {{ nLayers[1] + 1}})
-        </span>
-      </v-col>
+      <v-col>Number of Layers</v-col>
       <v-col>
         <v-range-slider
           thumb-label="always"
+          thumb-size="26"
           dense
           min="1"
           max="50"
           v-model="nLayers"
-
         ></v-range-slider>
       </v-col>
-<!--      <v-col>{{ num_layers }}</v-col>-->
     </v-row>
     <v-row>
-      <v-col>
-        Layer Thickness
-        <span class="grey--text">
-          scipy.stats.uniform({{ thicknessBounds[0] }}, {{ thicknessBounds[1] - thicknessBounds[0]}})
-        </span>
-      </v-col>
+      <v-col>Layer Thickness</v-col>
       <v-col>
         <v-range-slider
           thumb-label="always"
+          thumb-size="30"
           dense
           min="1"
           :max="extent[5] / 10"
           v-model="thicknessBounds"
         ></v-range-slider>
       </v-col>
-<!--      <v-col>{{ layer_thickness }}</v-col>-->
     </v-row>
     <v-btn dense class="primary" small @click="genSample()">
       Sample Stratigraphy

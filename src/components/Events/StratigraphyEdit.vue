@@ -4,7 +4,15 @@
       <v-divider></v-divider>
       <div class="d-flex justify-space-around pt-5">
         <LayerThicknessSlider :style="{width: '100px'}" :eventIndex="eventIndex" :layerIndex="index" />
-        <v-select class="ml-3" :style="{width: '200px'}" dense label="Lithology" :items="lithOptions" v-model="lithology[index]"></v-select>
+        <v-select
+          class="ml-3"
+          @change="updatePreview()"
+          :style="{width: '200px'}"
+          dense
+          label="Lithology"
+          :items="lithOptions"
+          v-model="lithology[index]"
+        ></v-select>
         <v-btn class="ml-3" small @click="deleteLayer(index)" :icon="true">
           <span class="material-icons">delete_outline</span>
         </v-btn>
@@ -32,6 +40,7 @@ export default {
   },
   computed: {
     event: function () {
+      console.log("lel")
       return this.$store.state.history.events[this.eventIndex];
     },
     lithOptions: function() {
@@ -43,11 +52,15 @@ export default {
         return this.$store.state.history.events[this.eventIndex].parameters.lithology.value
       },
       set(value) {
-        return this.$store.state.history.events[this.eventIndex].parameters.lithology.value = value
+        this.$store.state.history.events[this.eventIndex].parameters.lithology.value = value
+
       }
     }
   },
   methods: {
+    updatePreview: function() {
+      this.$store.dispatch('preview/updatePreview')
+    },
     deleteLayer: function(index) {
       this.$store.dispatch(
           'history/updateLayerDelete',
