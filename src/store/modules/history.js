@@ -6,25 +6,29 @@ const state = {
   extent: [0, 10000, 0, 1000, 0, 5000],
   events: [
     {
-      type: "stratigraphy",
+    type: "stratigraphy",
       parameters: {
         num_layers: {
-          value: 1
+          value: 1,
+          uncertain: false,
+          distribution: 'uniform',
+          low: undefined,
+          high: undefined
         },
         layer_names: {
           value: [
             'Layer 1'
-          ]
+          ],
         },
         layer_thickness: {
           value: [
             2500
-          ]
+          ],
         },
         lithology: {
           value: [
             'Sandstone'
-          ]
+          ],
         }
       }
     },
@@ -75,7 +79,8 @@ const state = {
   const actions = {
     updateHistory({state, rootState}) {
       return axios.post(rootState.fastAPIurl + 'history', {
-        history: {history: JSON.stringify(state.events)},
+        history: JSON.stringify(state.events),
+        rock_library: JSON.stringify(rootState.rockLibrary.libraries[rootState.rockLibrary.currentLibrary]),
         extent: {
           x: state.extent[0], X: state.extent[1],
           y: state.extent[2], Y: state.extent[3],
