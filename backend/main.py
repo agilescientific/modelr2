@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import fastapi
 from fastapi.middleware.cors import CORSMiddleware
 from enum import Enum
 import sys
@@ -8,7 +9,7 @@ sys.path.append("../../pynoddy/")
 sys.path.append("../../randomhistory")
 import randomhistory as rh
 import pynoddy
-from typing import List, Optional
+from typing import List, Optional, Union, Dict
 import pynoddy.experiment
 import json
 import numpy as np
@@ -69,39 +70,37 @@ def init_pynoddy(extent: List[float]):
     app.rhist.history = app.history
 
 
-def parse_events(
-        events: list,
-        fistory_fn: str = None
-) -> pynoddy.experiment.Experiment:
-    nh = pynoddy.history.NoddyHistory()
-    
-    for event_type, properties in events:
-        nh.add_event(event_type, properties)
-    fistory_fn = fistory_fn if fistory_fn else "temp.his"
-    nh.write_history(fistory_fn)
-    exp = pynoddy.experiment.Experiment(fistory_fn)
-    exp.set_extent(*app.extent)
-    exp.set_origin(*app.origin)
-    return exp
-
-
 def get_sample_exp(seed: int) -> pynoddy.experiment.Experiment:
     events_sample = app.rhist.sample_events(seed=seed)
     return parse_events(events_sample)
 
 
+def parse_events(
+        events: list,
+        fistory_fn: str = None
+) -> pynoddy.experiment.Experiment:
+    nh = pynoddy.history.NoddyHistory()
+    lithologies = []
+    for event_type, properties in events:
+        nh.add_event(event_type, properties)
+        if event_type == 'stratigraphy':
+            lithologies.append(properties.get('lithology'))
+    fistory_fn = fistory_fn if fistory_fn else "temp.his"
+    nh.write_history(fistory_fn)
+    exp = pynoddy.experiment.Experiment(fistory_fn)
+    exp.lithologies = lithologies
+    exp.set_extent(*app.extent)
+    exp.set_origin(*app.origin)
+    return exp
 
 
 init_pynoddy(extent_default)
+
 
 class Section(str, Enum):
     x = "x"
     y = "y"
     z = "z"
-
-
-class History(BaseModel):
-    history: str
 
 
 class Extent(BaseModel):
@@ -112,19 +111,31 @@ class Extent(BaseModel):
     z: int
     Z: int
 
+# class Event(BaseModel):
+#     type: str
+#     paramters: dict
+
+# class History(BaseModel):
+#     events: List[Event]
+
+
+class Model(BaseModel):
+    extent: Extent
+    history: str
+    rock_library: str = None
+
 
 @app.post("/history")
-async def set_probabilistic_history(history: History, extent: Extent = None):
-    events = json.loads(history.history)
+async def set_probabilistic_history(model: Model):
+    events = json.loads(model.history)
     app.rhist.history = events
-    if extent:
-        app.origin = (extent.x, extent.y, extent.Z)
-        app.extent = (extent.X, extent.Y, extent.z + extent.Z)
+    app.rhist.rock_library = json.loads(model.rock_library)
+    app.origin = (model.extent.x, model.extent.y, model.extent.Z)
+    app.extent = (model.extent.X, model.extent.Y, model.extent.z + model.extent.Z)
 
 
 @app.get("/history/{seed}")
 async def sample_history(seed: int):
-    """[summary]"""
     pass
 
 
@@ -140,6 +151,7 @@ async def sample_2d_section(
         position: int = None
 ):
     exp = get_sample_exp(seed)
+    
     if not position:
         position = 'center'
     tmp_out = exp.get_section(
@@ -156,6 +168,7 @@ async def sample_2d_section(
         'seed': seed,
         'position': position,
         'shape': shape,
+        'lithologies': app.rhist.rock_sample,
         'section': section.tolist(),
     }
 

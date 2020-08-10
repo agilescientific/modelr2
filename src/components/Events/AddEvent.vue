@@ -62,7 +62,6 @@ export default {
             dip: {value: 45, uncertain: false},
             dip_dir: {value: 270, uncertain: false},
             slip: {value: 400, uncertain: false},
-            // radius: {value: 2000, uncertain: false},
             xaxis: {value: 5000, uncertain: false},
             yaxis: {value: 5000, uncertain: false},
             zaxis: {value: 40000, uncertain: false},

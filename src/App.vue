@@ -4,7 +4,7 @@
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       <v-toolbar-title>AppName</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn small color="primary" @click="historyToClipboard()">Export History</v-btn>
+      <v-btn small color="primary" @click="historyToClipboard()">Export Probabilistic History</v-btn>
       <v-snackbar v-model="snackbar">
         History copied to clipboard.
         <template v-slot:action="{ attrs }">

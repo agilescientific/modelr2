@@ -10,10 +10,10 @@ const state = {
       parameters: {
         num_layers: {
           value: 1,
-          uncertain: false,
+          uncertain: true,
           distribution: 'uniform',
-          low: undefined,
-          high: undefined
+          low: 22,
+          high: 25
         },
         layer_names: {
           value: [
@@ -21,9 +21,11 @@ const state = {
           ],
         },
         layer_thickness: {
-          value: [
-            2500
-          ],
+          value: [2500],
+          uncertain: true,
+          distribution: 'uniform',
+          low: 150,
+          high: 275,
         },
         lithology: {
           value: [

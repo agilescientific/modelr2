@@ -31,7 +31,7 @@
         ></v-range-slider>
       </v-col>
     </v-row>
-    <v-btn dense class="primary" small @click="genSample()">
+    <v-btn dense class="primary" small @click="setStochasticStratigraphy()">
       Sample Stratigraphy
     </v-btn>
 
@@ -72,6 +72,33 @@
       }
     },
     methods: {
+      setStochasticStratigraphy: function() {
+        let parameters = {
+          num_layers: {
+            uncertain: true,
+            distribution: 'uniform',
+            low: this.nLayers[0],
+            high: this.nLayers[1]
+          },
+          layer_thickness: {
+            uncertain: true,
+            distribution: 'uniform',
+            low: this.thicknessBounds[0],
+            high: this.thicknessBounds[1],
+          },
+          layer_names: {
+            value: []
+          },
+          lithology: {
+            value: []
+          }
+        }
+
+        this.$store.dispatch(
+            'history/updateEvent',
+            {i: this.eventIndex, parameters: parameters
+            })
+      },
       genSample: function() {
         // Generate Stratigraphy event sample
         this.genNumLayers()

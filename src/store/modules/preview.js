@@ -49,29 +49,16 @@ function getColors(rootState) {
   return colors
 }
 
-function getLithologies(rootState) {
-  let lithologies = [];
-  rootState.history.events.forEach((event) => {
-    let liths = event.parameters.lithology
-    if (liths !== undefined) {
-      lithologies.push(...liths.value)
-    }
-  })
-  return lithologies
-}
-
 const actions = {
-  drawSection({rootState}, {canvas, section, shape}) {
+  drawSection({rootState}, {canvas, section, shape, sampled_lith}) {
     let colors = getColors(rootState);
-    let lithologies = getLithologies(rootState);
-
     let {ctx, buffer8, data, imageData} = prepareCanvas(canvas, shape);
     let layer_id = undefined;
     let color = undefined;
     for (let x = 0; x < shape[0]; x += 1) {
       for (let y = 0; y < shape[1]; y += 1) {
         layer_id = section[y][x]
-        color = colors[lithologies[layer_id - 1]]
+        color = colors[sampled_lith[layer_id - 1]]
         data[y * shape[0] + x] =
           (color.a * 255 << 24) |    // alpha
           (color.b << 16) |          // blue
@@ -88,7 +75,8 @@ const actions = {
     axios.get(url).then((response) => {
       let section = response.data.section
       let shape = response.data.shape.reverse()
-      dispatch('drawSection', {canvas, section, shape})
+      let sampled_lith = response.data.lithologies
+      dispatch('drawSection', {canvas, section, shape, sampled_lith})
       state.loading--
       if (state.loading <= 1) {
         state.loading = false
@@ -112,7 +100,6 @@ const actions = {
     dispatch(
       'history/updateHistory', null, {root: true}
     ).then(() => {
-        // state.loading++;
         dispatch('getSectionPlotSection',
           {seed: state.seed, direction: state.direction, canvas: 'canvasPreview'}
         )
