@@ -27,7 +27,6 @@
     >
       {{ event }}
     </v-btn>
-
   </v-speed-dial>
 </template>
 

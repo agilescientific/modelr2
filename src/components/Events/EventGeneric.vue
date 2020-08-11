@@ -10,7 +10,7 @@
           dense
           min="0" max="1"
           v-model="event.probability"
-          @click="updateEventUncertainty()"
+          @click="updateEvent()"
           step="0.05"
           label="Probability of Occurence"
           thumb-label="always">
@@ -30,7 +30,9 @@
           label="# of Events"
           thumb-size="20"
           thumb-label="always"
-          ticks="always">
+          ticks="always"
+          @click="updateEvent()"
+        >
         </v-range-slider>
       </v-col>
     </v-row>
@@ -79,9 +81,8 @@
       },
     },
     methods: {
-      updateEventUncertainty() {
+      updateEvent() {
         this.$store.commit('history/SET_EVENT', {i: this.eventIndex, event: this.event})
-
       }
     }
   }
