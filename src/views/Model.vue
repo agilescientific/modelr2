@@ -1,7 +1,7 @@
 <template>
   <div class="model">
     <v-row class="container-sticky">
-      <v-col xs="12" sm="12" lg="6">
+      <v-col cols="12" sm="12" lg="6">
         <history />
       </v-col>
       <v-col class="preview-sticky">
