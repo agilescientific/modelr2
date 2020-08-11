@@ -14,6 +14,8 @@ import pynoddy.experiment
 import json
 import numpy as np
 import scipy.stats
+import os
+from uvicorn.config import logger as logging
 app = FastAPI()
 
 origins = [
@@ -79,16 +81,24 @@ def parse_events(
         events: list,
         fistory_fn: str = None
 ) -> pynoddy.experiment.Experiment:
+    logging.debug("--- EVENT PARSING ---")
     nh = pynoddy.history.NoddyHistory()
-    lithologies = []
+
     for event_type, properties in events:
+        if not properties.get('name'):
+            properties['name'] = str(np.random.randn())
+
+        logging.debug(f"--- {event_type}")
+        for pname, prop in properties.items():
+            if type(prop) is list:
+                prop = [prop[0], "...", prop[-1]]
+            logging.debug(f"{pname}: {prop}")
+
         nh.add_event(event_type, properties)
-        if event_type == 'stratigraphy':
-            lithologies.append(properties.get('lithology'))
+
     fistory_fn = fistory_fn if fistory_fn else "temp.his"
     nh.write_history(fistory_fn)
     exp = pynoddy.experiment.Experiment(fistory_fn)
-    exp.lithologies = lithologies
     exp.set_extent(*app.extent)
     exp.set_origin(*app.origin)
     return exp
@@ -164,6 +174,9 @@ async def sample_2d_section(
     elif direction.value == 'x':
         section = np.flip(section[0, :, :].T, axis=0).astype(int)
     shape = section.shape
+    logging.debug("--- 2D SECTION ---")
+    logging.debug(f"Section horizons: {np.unique(section)}")
+    logging.debug(f"Lithologies: {app.rhist.rock_sample}")
     return {
         'seed': seed,
         'position': position,

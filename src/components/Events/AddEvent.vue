@@ -77,9 +77,9 @@ export default {
             Z: {value: 3000, uncertain: false},
             dip_direction: {value: 90, uncertain: false},
             dip: {value: 0, uncertain: false},
-            num_layers: {value: 1, uncertain: false},
+            num_layers: {value: 1, uncertain: true, distribution: 'uniform', low: 5, high: 10},
             layer_names: {value: ['Unconformity 1'], uncertain: false},
-            layer_thickness: {value: [1], uncertain: false},
+            layer_thickness: {value: [1], uncertain: true, distribution: 'uniform', low: 150, high: 250},
             lithology: {value: ['Sandstone'], uncertain: false}
           }
         },
