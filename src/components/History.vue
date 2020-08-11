@@ -21,7 +21,6 @@
 <!--      </v-card-text>-->
       <v-card-title class="primary--text">
         History
-        <v-btn style="position: absolute; right: 0" x-small class="mr-5">Export</v-btn>
       </v-card-title>
       <v-card-subtitle>Define an uncertain geomodel history.</v-card-subtitle>
       <v-expansion-panels :multiple="true" :hover="true">
