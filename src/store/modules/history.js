@@ -90,14 +90,20 @@ const state = {
         }
       })
     },
-    updateEventParam({commit, dispatch, rootState}, payload) {
-      commit('SET_EVENT_VALUE', payload)
+    updateEvent({commit, dispatch, rootState}, payload) {
+      commit('SET_EVENT', payload)
       if (rootState.settings.previewAutoReload) {
         dispatch('preview/updatePreview', null, { root: true })
       }
     },
-    updateEvent({commit, dispatch, rootState}, payload) {
-      commit('SET_EVENT', payload)
+    updateEventParameters({commit, dispatch, rootState}, payload) {
+      commit('SET_EVENT_PARAMS', payload)
+      if (rootState.settings.previewAutoReload) {
+        dispatch('preview/updatePreview', null, { root: true })
+      }
+    },
+    updateEventParam({commit, dispatch, rootState}, payload) {
+      commit('SET_EVENT_VALUE', payload)
       if (rootState.settings.previewAutoReload) {
         dispatch('preview/updatePreview', null, { root: true })
       }
@@ -135,7 +141,11 @@ const state = {
     DELETE_EVENT: (state, payload) => {
       state.events.splice(payload.index, 1);
     },
-    SET_EVENT: (state, {i, parameters}) => {
+    SET_EVENT: (state, payload) => {
+      Vue.set(state.events, payload.i, payload.event)
+      // state.events[payload.i] = payload.event;
+    },
+    SET_EVENT_PARAMS: (state, {i, parameters}) => {
       state.events[i].parameters = parameters;
     },
     SET_EVENT_PARAM: (state, {i, p, value}) => {

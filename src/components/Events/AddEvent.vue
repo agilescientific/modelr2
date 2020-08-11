@@ -41,6 +41,10 @@ export default {
       events: {
         fault: {
           type: "fault",
+          uncertain: false,
+          probability: 0.9,
+          event_family: false,
+          nEvents: [1,3],
           parameters: {
             name: {value: "Fault"},
             X: {value: 2000 + Math.random() * 6000, uncertain: false},
@@ -53,6 +57,10 @@ export default {
         },
         fault_curved: {
           type: 'fault',
+          uncertain: false,
+          probability: 0.9,
+          event_family: false,
+          nEvents: [1,3],
           parameters: {
             name: {value: 'Curved Fault'},
             geometry: {value: 'Curved'},
@@ -70,6 +78,10 @@ export default {
         },
         unconformity: {
           type: 'unconformity',
+          uncertain: false,
+          probability: 0.9,
+          event_family: false,
+          nEvents: [1,3],
           parameters: {
             name: {value: 'Unconformity'},
             X: {value: 5000, uncertain: false},
@@ -85,6 +97,10 @@ export default {
         },
         tilt: {
           type: 'tilt',
+          uncertain: false,
+          probability: 0.9,
+          event_family: false,
+          nEvents: [1,3],
           parameters: {
             name: {value: 'Tilt'},
             X: {value: 5000, uncertain: false},
@@ -97,6 +113,10 @@ export default {
         },
         fold: {
           type: "fold",
+          uncertain: false,
+          probability: 0.9,
+          event_family: false,
+          nEvents: [1,3],
           parameters: {
             name: {value: "Fold"},
             X: {value: 2000 + Math.random() * 6000, uncertain: false},

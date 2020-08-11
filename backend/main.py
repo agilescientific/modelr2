@@ -121,13 +121,6 @@ class Extent(BaseModel):
     z: int
     Z: int
 
-# class Event(BaseModel):
-#     type: str
-#     paramters: dict
-
-# class History(BaseModel):
-#     events: List[Event]
-
 
 class Model(BaseModel):
     extent: Extent
@@ -146,6 +139,16 @@ async def set_probabilistic_history(model: Model):
 
 @app.get("/history/{seed}")
 async def sample_history(seed: int):
+    pass
+
+
+@app.get("/rocklibrary/")
+async def rock_library():
+    pass
+
+
+@app.get("/rocklibrary/{name}")
+async def rock_library_name(name: str):
     pass
 
 
