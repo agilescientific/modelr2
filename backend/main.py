@@ -3,15 +3,15 @@ from fastapi.middleware.cors import CORSMiddleware
 import sys
 import uvicorn
 sys.path.append("../../randomhistory")
-import randomhistory as rh
 sys.path.append("../../pynoddy/")
+import randomhistory as rh
 import pynoddy
 import pynoddy.experiment
 import json
 import numpy as np
 from uvicorn.config import logger as logging
 from typing import List, Optional, Union, Dict
-from backend.models import Section, Model
+from models import Section, Model
 app = FastAPI()
 
 origins = [
@@ -103,9 +103,6 @@ def parse_events(
 init_pynoddy(extent_default)
 
 
-
-
-
 @app.post("/history")
 async def set_probabilistic_history(model: Model):
     events = json.loads(model.history)
@@ -115,9 +112,11 @@ async def set_probabilistic_history(model: Model):
     app.extent = (model.extent.X, model.extent.Y, model.extent.z + model.extent.Z)
 
 
-@app.get("/history/{seed}")
+@app.get("/events/{seed}")
 async def sample_history(seed: int):
-    pass
+    exp = get_sample_exp(seed)
+    events = exp.events
+    return events
 
 
 @app.get("/rocklibrary/")
@@ -132,7 +131,13 @@ async def rock_library_name(name: str):
 
 @app.get("/sample/{seed}/{x}/{y}")
 async def sample_1d_borehole(seed: int, x: int, y: int):
-    pass
+    exp = get_sample_exp(seed)
+    return {
+        'seed': seed,
+        'x': x,
+        'y': y,
+        'model': exp.get_drillhole_data(x, y).tolist()
+        }
 
 
 @app.get("/sample/{seed}/{direction}")
