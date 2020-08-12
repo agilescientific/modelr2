@@ -1,21 +1,17 @@
 from fastapi import FastAPI
-import fastapi
 from fastapi.middleware.cors import CORSMiddleware
-from enum import Enum
 import sys
-from pydantic import BaseModel
 import uvicorn
-sys.path.append("../../pynoddy/")
 sys.path.append("../../randomhistory")
 import randomhistory as rh
+sys.path.append("../../pynoddy/")
 import pynoddy
-from typing import List, Optional, Union, Dict
 import pynoddy.experiment
 import json
 import numpy as np
-import scipy.stats
-import os
 from uvicorn.config import logger as logging
+from typing import List, Optional, Union, Dict
+from backend.models import Section, Model
 app = FastAPI()
 
 origins = [
@@ -107,25 +103,7 @@ def parse_events(
 init_pynoddy(extent_default)
 
 
-class Section(str, Enum):
-    x = "x"
-    y = "y"
-    z = "z"
 
-
-class Extent(BaseModel):
-    x: int
-    X: int
-    y: int
-    Y: int
-    z: int
-    Z: int
-
-
-class Model(BaseModel):
-    extent: Extent
-    history: str
-    rock_library: str = None
 
 
 @app.post("/history")
