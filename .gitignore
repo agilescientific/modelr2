@@ -2,6 +2,11 @@
 node_modules
 /dist
 
+*.g00
+*.g01
+*.g02
+*.g12
+
 # noddy
 *.his
 noddyBatchProgress.txt
