@@ -1,12 +1,20 @@
 <template>
   <div>
+    <p class="mb-10 grey--text text--darken-3">Simulate random stratigraphy by sampling from a library of rocks.</p>
     <v-select
         label="Rock Library"
         :items="Object.keys(libraries)"
         v-model="currentLibrary"
     ></v-select>
+    <v-select
+        label="Model"
+        :items="['Discrete uniform distribution']"
+        v-model="currentModel"
+        disabled
+    >
+    </v-select>
     <v-row>
-      <v-col>Number of Layers</v-col>
+      <v-col cols="4">Number of Layers</v-col>
       <v-col>
         <v-range-slider
           thumb-label="always"
@@ -20,7 +28,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>Layer Thickness</v-col>
+      <v-col cols="4">Layer Thicknesses</v-col>
       <v-col>
         <v-range-slider
           thumb-label="always"
@@ -33,6 +41,7 @@
         ></v-range-slider>
       </v-col>
     </v-row>
+    <v-switch label="Lock"></v-switch>
   </div>
 </template>
 <script>
@@ -41,13 +50,14 @@
     props: ['eventIndex'],
     data() {
       return {
-          thicknessOptions: ["Uniform"],
-          nLayers: [22, 29],
-          thicknessBounds: [200, 275],
-          num_layers: undefined,
-          layer_thickness: undefined,
-          layer_names: undefined,
-          lithology: undefined,
+        currentModel: 'Discrete uniform distribution',
+        thicknessOptions: ["Uniform"],
+        nLayers: [22, 29],
+        thicknessBounds: [200, 275],
+        num_layers: undefined,
+        layer_thickness: undefined,
+        layer_names: undefined,
+        lithology: undefined,
       }
     },
     computed: {

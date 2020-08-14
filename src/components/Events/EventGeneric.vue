@@ -1,10 +1,11 @@
 <template>
   <div>
+    <p class="text-body-1 mt-5">Event Uncertainty</p>
     <v-row>
-      <v-col class="my-auto py-0" cols="4">
-        <v-switch v-model="event.uncertain" dense label="Uncertain Event"></v-switch>
+      <v-col class="my-auto py-0" cols="5">
+        <v-switch v-model="event.uncertain" dense label="Probabilistic Event"></v-switch>
       </v-col>
-      <v-col class="my-auto py-0 pt-5" cols="6">
+      <v-col class="my-auto py-0 pt-5">
         <v-slider
           :disabled="!event.uncertain"
           dense
@@ -12,22 +13,22 @@
           v-model="event.probability"
           @click="updateEvent()"
           step="0.05"
-          label="Probability of Occurence"
+          label=""
           thumb-label="always">
         </v-slider>
       </v-col>
     </v-row>
     <v-row>
-      <v-col class="my-auto py-0" cols="4">
+      <v-col class="my-auto py-0" cols="5">
         <v-switch v-model="event.event_family" dense label="Probabilistic Event Family"></v-switch>
       </v-col>
-      <v-col class="my-auto py-0 pt-5" cols="6">
+      <v-col class="my-auto py-0 pt-5">
         <v-range-slider
           :disabled="!event.event_family"
           dense
           min="0" max="10"
           v-model="event.nEvents"
-          label="# of Events"
+          label=""
           thumb-size="20"
           thumb-label="always"
           ticks="always"
@@ -36,9 +37,7 @@
         </v-range-slider>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col>Parameters and Uncertainty</v-col>
-    </v-row>
+    <p class="text-body-1 mt-5">Event Parameters</p>
     <div v-if="getEvent(eventIndex).type === 'unconformity'">
       <v-card flat>
         <RandomStratigraphyGenerator :eventIndex="eventIndex" />

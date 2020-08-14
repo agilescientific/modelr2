@@ -1,7 +1,16 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="2" class="text-capitalize">{{ parameterName }}      </v-col>
+      <v-col cols="2" class="text-capitalize">
+<!--        {{ parameterName }}-->
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <span v-bind="attrs" v-on="on">{{ parameterName }}</span>
+          </template>
+          <span>{{ tooltips[parameterName] }}</span>
+        </v-tooltip>
+
+      </v-col>
       <v-col>
         <div v-show="isUncertain">
             <v-sparkline
@@ -22,24 +31,23 @@
           setting="value"
         />
       </v-col>
-      <v-col cols="1">
+      <v-col>
         <v-switch
             dense
+            v-bind="attrs" v-on="on"
             v-model="isUncertain"
             class="ml-3 my-auto"
         />
-      </v-col>
-      <v-col>
         <div v-show="isUncertain">
+          <span class="ml-2 font-weight-light text-sm-body-2">Standard deviation:</span>
+          <span class="ml-2">{{ scale }}</span>
           <v-slider
-              label="σ" dsense v-model="scale" thumb-label :vertical="false"
+              label="" dsense v-model="scale" :vertical="false"
               step="0.1" min="1" :max="this.maxValues[this.parameterName] / 5"
           ></v-slider>
         </div>
       </v-col>
     </v-row>
-    <!--  uncertainty parametrization  -->
-
   </div>
 </template>
 
@@ -78,6 +86,18 @@ export default {
           501
       )
     },
+  },
+  data() {
+    return {
+      tooltips: {
+        "X": "Event position along the X axis [m]",
+        "Y": "Event position along the Y axis [m]",
+        "Z": "Event position along the Z axis [m]",
+        "dip": "Dip angle of the event [°]",
+        "dip_dir": "Dip direction of the event [°]",
+        "slip": "Amount of fault slip [m]"
+      }
+    }
   },
   computed: {
     isUncertain: {

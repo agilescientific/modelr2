@@ -1,11 +1,19 @@
 <template>
   <v-container>
-    <p class="font-weight-light text-body-1">
-      Define an uncertain geomodel history by randomly generating a stratigraphic layer cake
-      and deform it by adding geological events.
-    </p>
-   <v-btn x-small color="primary" class="mr-2" @click="historyToClipboard()">Import</v-btn>
-   <v-btn x-small color="primary" @click="historyToClipboard()">Export</v-btn>
+    <v-row>
+      <v-col class="font-weight-light text-body-1 pl-10 pr-10" cols="8">
+         Define an uncertain geomodel history by randomly generating a stratigraphic layer cake
+         and deform it by adding geological events.
+      </v-col>
+      <v-col>
+        <v-row>
+          <v-col>
+            <v-btn x-small color="primary" class="mr-2" @click="historyToClipboard()">Import</v-btn>
+            <v-btn x-small color="primary" @click="historyToClipboard()">Export</v-btn>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
 <!--      <v-card-title class="primary&#45;&#45;text">-->
 <!--        Model settings-->
 <!--      </v-card-title>-->
@@ -37,8 +45,7 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <v-container></v-container>
-    <v-expansion-panels :multiple="true" :hover="true">
+    <v-expansion-panels :multiple="true" :hover="true" class="mt-10">
       <v-expansion-panel v-for="(_, eventIndex) in history" :key="eventIndex">
         <Event :eventIndex="eventIndex" />
         <DeleteEvent v-if="eventIndex > 0" :eventIndex="eventIndex" />
