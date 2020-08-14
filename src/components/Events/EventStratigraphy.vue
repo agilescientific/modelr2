@@ -1,9 +1,8 @@
 <template>
-<div>
+<div class="mx-0">
   <v-tabs grow v-model="tab" x-small class="mb-10">
     <v-tab href="#tab1" class="text-overline pa-0">Random Generator</v-tab>
     <v-tab href="#tab2" class="text-overline pa-0">Manual</v-tab>
-    <v-tab href="#tab3" class="text-overline pa-0">Load</v-tab>
   </v-tabs>
   <v-tabs-items v-model="tab">
     <v-tab-item :key="1" value="tab1">
@@ -13,13 +12,6 @@
     </v-tab-item>
     <v-tab-item :key="2" value="tab2">
       <StratigraphyEdit :eventIndex="eventIndex" />
-    </v-tab-item>
-    <v-tab-item :key="3" value="tab3">
-      <v-card flat>
-        Paste JSON
-        <v-textarea></v-textarea>
-        <v-btn class="primary small">Load</v-btn>
-      </v-card>
     </v-tab-item>
   </v-tabs-items>
 </div>

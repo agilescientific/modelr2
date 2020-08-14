@@ -1,11 +1,11 @@
 <template>
   <div>
     <v-expansion-panel-header 
-      color="primary--text"
+      color="black--text grey lighten-3"
       class="text-capitalize"
     >
       <template>
-        {{ event.type }}<span class="ml-2 grey--text text--lighten-1">{{ eventIndex }}</span>
+        {{ event.type }}
       </template>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
