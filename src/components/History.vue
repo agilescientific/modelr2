@@ -1,6 +1,11 @@
 <template>
-  <div>
-    <v-card class="mx-auto">
+  <v-container>
+    <p class="font-weight-light text-body-1">
+      Define an uncertain geomodel history by randomly generating a stratigraphic layer cake
+      and deform it by adding geological events.
+    </p>
+   <v-btn x-small color="primary" class="mr-2" @click="historyToClipboard()">Import</v-btn>
+   <v-btn x-small color="primary" @click="historyToClipboard()">Export</v-btn>
 <!--      <v-card-title class="primary&#45;&#45;text">-->
 <!--        Model settings-->
 <!--      </v-card-title>-->
@@ -19,20 +24,28 @@
 <!--          <v-col cols="2"><v-text-field dense class="extent" v-model="extent[5]" label="Z" type="number"></v-text-field></v-col>-->
 <!--        </v-row>-->
 <!--      </v-card-text>-->
-      <v-card-title class="primary--text">
-        History
-      </v-card-title>
-      <v-card-subtitle>Define an uncertain geomodel history.</v-card-subtitle>
-      <v-expansion-panels :multiple="true" :hover="true">
-        <v-expansion-panel v-for="(_, eventIndex) in history" :key="eventIndex">
-          <Event :eventIndex="eventIndex" />
-          <DeleteEvent v-if="eventIndex > 0" :eventIndex="eventIndex" />
-          <AddEvent :eventIndex="eventIndex" />
-        </v-expansion-panel>
-      </v-expansion-panels>
-    </v-card>
-
-  </div>
+    <v-snackbar v-model="snackbar">
+      Model copied to clipboard.
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            color="pink"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-container></v-container>
+    <v-expansion-panels :multiple="true" :hover="true">
+      <v-expansion-panel v-for="(_, eventIndex) in history" :key="eventIndex">
+        <Event :eventIndex="eventIndex" />
+        <DeleteEvent v-if="eventIndex > 0" :eventIndex="eventIndex" />
+        <AddEvent :eventIndex="eventIndex" />
+      </v-expansion-panel>
+    </v-expansion-panels>
+  </v-container>
 </template>
 
 <script>
@@ -61,6 +74,24 @@ export default {
         this.$store.dispatch('preview/updatePreview')
       }
     }
+  },
+  data: () => ({
+    drawer: false,
+    snackbar: false,
+  }),
+  methods: {
+    getHistory: function() {
+      return JSON.stringify(this.$store.state.history.events, null, 4)
+    },
+    historyToClipboard: function() {
+      let dummy = document.createElement("textarea");
+      document.body.appendChild(dummy);
+      dummy.value = this.getHistory();
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
+      this.snackbar = true;
+    }
   }
 
 
@@ -68,7 +99,7 @@ export default {
 </script>
 
 <style scoped>
-.extent {
-  margin: 0;
+.textbox {
+
 }
 </style>
