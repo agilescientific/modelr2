@@ -34,9 +34,11 @@
     <v-footer padless light class="white">
       <v-card flat tile class="text-center mx-auto white">
         <v-card-text>
-          <v-btn icon>
-            <v-icon>mdi-twitter</v-icon>
-          </v-btn>
+          <a href="https://twitter.com/agilegeo">
+            <v-btn icon>
+              <v-icon>mdi-twitter</v-icon>
+            </v-btn>
+          </a>
           <v-btn icon>
             <v-icon>mdi-linkedin</v-icon>
           </v-btn>
