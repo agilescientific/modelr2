@@ -12,8 +12,11 @@ import numpy as np
 from uvicorn.config import logger as logging
 from typing import List, Optional, Union, Dict
 from models import Section, Model
+
 app = FastAPI()
 
+
+# allow cross-origin communication
 origins = [
     'http://localhost:8080'
 ]
@@ -30,23 +33,16 @@ history_default = [{
     "type": "stratigraphy",
     "parameters": {
     "num_layers": {
-        "value": 18
+        "value": 1
     },
     "layer_names": {
         "value": [
-            'layer 1', 'layer 2', 'layer 3',
-            'layer 4', 'layer 5', 'layer 6',
-            'layer 7', 'layer 8', 'layer 9',
-            'layer 10', 'layer 11', 'layer 12',
-            'layer 13', 'layer 14', 'layer 15',
-            'layer 16', 'layer 17', 'layer 18'
+            'layer 1'
         ]
     },
     "layer_thickness": {
         "value": [
-            2500, 150, 150, 150, 150, 150, 150,
-            150, 150, 150, 150, 150, 150, 150,
-            150, 150, 150, 150, 150
+            2500
         ]
     },
     }
@@ -68,15 +64,19 @@ def init_pynoddy(extent: List[float]):
     app.rhist.history = app.history
 
 
-def get_sample_exp(seed: int) -> pynoddy.experiment.Experiment:
-    events_sample = app.rhist.sample_events(seed=seed)
-    return parse_events(events_sample)
-
-
-def parse_events(
-        events: list,
-        fistory_fn: str = None
+def sample_experiment(
+    seed: int, 
+    fistory_fn: str = None
 ) -> pynoddy.experiment.Experiment:
+    """Sample events and parse them into pynoddy Experiment object.
+
+    Args:
+        seed (int): Random seed.
+
+    Returns:
+        pynoddy.experiment.Experiment: Parametrized pynoddy Experiment object.
+    """
+    events = app.rhist.sample_events(seed=seed)
     logging.debug("--- EVENT PARSING ---")
     nh = pynoddy.history.NoddyHistory()
 
@@ -103,8 +103,16 @@ def parse_events(
 init_pynoddy(extent_default)
 
 
+##  #########################################
+##  Routes
+##  #########################################
 @app.post("/history")
 async def set_probabilistic_history(model: Model):
+    """Set or update front-end parametrization in RandomHistory object.
+
+    Args:
+        model (Model): Model parametrization.
+    """
     events = json.loads(model.history)
     app.rhist.history = events
     app.rhist.rock_library = json.loads(model.rock_library)
@@ -113,25 +121,30 @@ async def set_probabilistic_history(model: Model):
 
 
 @app.get("/events/{seed}")
-async def sample_history(seed: int):
-    exp = get_sample_exp(seed)
+async def sample_experiment_events(seed: int):
+    exp = sample_experiment(seed)
     events = exp.events
     return events
 
 
+# @app.get("/history/{seed}")
+# async def sample_history(seed: int):
+#     exp = sample_experiment(seed)
+#     history = ""
+#     for event in exp.events.values():
+#         print(event.property_lines)
+#     # return {'history': history}
+    
+
+
 @app.get("/rocklibrary/")
-async def rock_library():
-    pass
-
-
-@app.get("/rocklibrary/{name}")
-async def rock_library_name(name: str):
-    pass
+async def get_current_rock_library():
+    return {'library': app.rhist.rock_library}
 
 
 @app.get("/sample/{seed}/{x}/{y}")
 async def sample_1d_borehole(seed: int, x: int, y: int):
-    exp = get_sample_exp(seed)
+    exp = sample_experiment(seed)
     return {
         'seed': seed,
         'x': x,
@@ -146,7 +159,7 @@ async def sample_2d_section(
         direction: Section,
         position: int = None
 ):
-    exp = get_sample_exp(seed)
+    exp = sample_experiment(seed)
     
     if not position:
         position = 'center'
