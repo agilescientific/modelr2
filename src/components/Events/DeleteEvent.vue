@@ -1,10 +1,10 @@
 <template>
   <v-btn
-    color="white red--text text--lighten-4"
+    color="grey lighten-3 red--text text--lighten-2"
     class="elevation-0"
-    x-small
+    small
     absolute
-    :style="{'margin-right': '105px', 'margin-top': '12px', 'right': 0, 'top': 0}"
+    :style="{'margin-right': '105px', 'margin-top': '10px', 'margin-right': '9px', 'right': 0, 'top': 0}"
     @click="deleteEvent()"
   >
     <v-icon>mdi-delete-forever</v-icon>

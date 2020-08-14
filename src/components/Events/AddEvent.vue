@@ -13,8 +13,7 @@
       <v-btn
         color="grey lighten-3"
         class="elevation-0"
-        fab
-        x-small
+        small
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
@@ -22,7 +21,8 @@
     <v-btn
       v-for="event in Object.keys(events)" :key="event"
       small
-      color="grey lighten-3"
+      color="white"
+      class="elevation-1"
       @click="insertEvent(event)"
     >
       {{ event }}
@@ -142,7 +142,7 @@ export default {
 
 <style scoped>
 .speeddial {
-  margin-top: -9px;
+  margin-top: -6px;
   box-shadow: 0px 0px white;
 }
 </style>
