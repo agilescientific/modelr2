@@ -2,14 +2,12 @@
   <div>
     <v-row>
       <v-col cols="2" class="text-capitalize">
-<!--        {{ parameterName }}-->
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <span v-bind="attrs" v-on="on">{{ parameterName }}</span>
           </template>
           <span>{{ tooltips[parameterName] }}</span>
         </v-tooltip>
-
       </v-col>
       <v-col>
         <div v-show="isUncertain">

@@ -1,16 +1,27 @@
 <template>
-  <v-text-field
-    v-model="rock[property]"
-    type="number"
-    dense
-    :label="property | capitalize"
-  ></v-text-field>
+  <div>
+    <v-text-field
+        v-model="rock[property]"
+        dense
+        :suffix="suffixes[property]"
+        filled
+        :label="property | capitalize"
+    ></v-text-field>
+  </div>
 </template>
 
 <script>
 export default {
   name: "RockProperty",
   props: ['index', 'libraryName', 'property'],
+  data() {
+    return {
+      suffixes: {
+        density: "kg/m³",
+        vp: "m/s",
+      }
+    }
+  },
   computed: {
     rock: {
       get() {
@@ -32,5 +43,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

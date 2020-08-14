@@ -1,12 +1,24 @@
 <template>
   <div>
     <v-divider></v-divider>
-    <div class="text-sm-subtitle-2 my-3">
-      <v-btn @click="overlay = !overlay" class="mr-2 elevation-0" x-small :color="rock.color"></v-btn>
-      {{ rock.name }}
-    </div>
+    <v-row class="text-sm-subtitle-2 my-3">
+      <v-col>
+        <v-btn @click="overlay = !overlay" class="mr-2 elevation-0" x-small :color="rock.color"></v-btn>
+        {{ rock.name }}
+      </v-col>
+      <v-spacer></v-spacer>
+      <v-col cols="1">
+        <v-btn
+            color="white red--text text--lighten-3"
+            class="elevation-0"
+            x-small
+        >
+          <v-icon>mdi-delete-forever</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
     <v-row no-gutters>
-      <v-col cols="2" v-for="(_, property) in rock" :key="property">
+      <v-col v-for="(_, property) in rock" :key="property">
         <RockProperty
           v-if="property !== 'name' && property !== 'color'"
           :index="index"

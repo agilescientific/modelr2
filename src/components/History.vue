@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mt-5">
     <v-row>
       <v-col class="font-weight-light text-body-1 pl-10 pr-10" cols="8">
          Define an uncertain geomodel history by randomly generating a stratigraphic layer cake

@@ -1,24 +1,24 @@
 const state = {
-  currentLibrary: 'Mars',
+  currentLibrary: 'North Sea',
   libraries: {
-    Mars: [
+    'North Sea': [
       {
         name: 'Sandstone',
         density: 2600,
         color: '#CDFFD9',
-        vp: 5300,
+        vp: 2700,
       },
       {
         name: 'Shale',
         density: 2450,
         color: '#ACE4C8',
-        vp: 5200,
+        vp: 2500,
       },
       {
         name: 'Black Shale',
         density: 2450,
         color: '#DBFEBC',
-        vp: 5100,
+        vp: 2300,
       },
       {
         name: 'Evaporite',
@@ -36,7 +36,7 @@ const state = {
         name: 'Limestone',
         density: 2550,
         color: '#149EF8',
-        vp: 5700,
+        vp: 2450,
       },
     ],
     Jupiter: [

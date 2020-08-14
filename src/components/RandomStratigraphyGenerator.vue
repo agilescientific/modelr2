@@ -1,6 +1,14 @@
 <template>
   <div>
-    <p class="mb-10 grey--text text--darken-3">Simulate random stratigraphy by sampling from a library of rocks.</p>
+    <v-row>
+      <v-col cols="9">
+        <p class="mb-10 font-weight-light text-body-1">
+          Select a rock library and settings for the probabilistic simulation
+          of stratigraphic layer cake models.
+        </p>
+      </v-col>
+    </v-row>
+
     <v-select
         label="Rock Library"
         :items="Object.keys(libraries)"

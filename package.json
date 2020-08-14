@@ -19,6 +19,7 @@
     "vue-apexcharts": "^1.6.0",
     "vue-d3-charts": "^0.2.8",
     "vue-router": "^3.2.0",
+    "vuelidate": "^0.7.5",
     "vuetify": "^2.2.11",
     "vuex": "^3.4.0"
   },
