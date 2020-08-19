@@ -2,8 +2,8 @@
   <v-speed-dial
     v-model="eventType"
     class="mr-12 speeddial"
-    :open-on-hover="false"
-    direction="left"
+    :open-on-hover="true"
+    direction="top"
     :top="true"
     :right="true"
     absolute
@@ -21,8 +21,8 @@
     <v-btn
       v-for="event in Object.keys(events)" :key="event"
       small
-      color="white"
-      class="elevation-1"
+      color="secondary"
+      class="elevation-10"
       @click="insertEvent(event)"
     >
       {{ event }}
