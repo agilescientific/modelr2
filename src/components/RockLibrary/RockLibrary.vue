@@ -17,16 +17,21 @@
     <v-container class="mt-10">
       <v-select :items="Object.keys(libraries)" v-model="selectedLibrary" label="Rock Library"></v-select>
     </v-container>
-
+    <v-expansion-panels>
+      <v-expansion-panel>
+        <v-expansion-panel-header>Add Rock</v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <AddRock />
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
     <v-card-text>
       <div
           v-for="(rock, index) in libraries[selectedLibrary]" :key="index"
           class="elevation-0"
       >
         <Rock :index="index" :libraryName="selectedLibrary" />
-        <!--      <v-divider class="my-2"></v-divider>-->
       </div>
-<!--      <Library :libraryName="selectedLibrary"></Library>-->
     </v-card-text>
   </v-container>
 </template>
@@ -35,10 +40,12 @@
   import Rock from '@/components/RockLibrary/Rock.vue';
   import { validationMixin } from 'vuelidate';
   import { required } from 'vuelidate/lib/validators';
+  import AddRock from "@/components/RockLibrary/AddRock";
 
   export default {
     mixins: [validationMixin],
     components: {
+      AddRock,
       Rock,
     },
     data() {

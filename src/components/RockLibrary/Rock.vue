@@ -1,6 +1,5 @@
 <template>
   <div>
-    <v-divider></v-divider>
     <v-row class="text-sm-subtitle-2 my-3">
       <v-col>
         <v-btn @click="overlay = !overlay" class="mr-2 elevation-0" x-small :color="rock.color"></v-btn>
@@ -18,7 +17,7 @@
       </v-col>
     </v-row>
     <v-row no-gutters>
-      <v-col v-for="(_, property) in rock" :key="property">
+      <v-col v-for="(_, property) in rock.properties" :key="property" class="mx-2">
         <RockProperty
           v-if="property !== 'name' && property !== 'color'"
           :index="index"

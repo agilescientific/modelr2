@@ -28,7 +28,7 @@
 
 import Preview from '@/components/Preview.vue'
 import History from '@/components/History.vue'
-import RockLibrary from "@/views/RockLibrary";
+import RockLibrary from "@/components/RockLibrary/RockLibrary";
 // import Convolution from "../components/Convolution";
 
 export default {

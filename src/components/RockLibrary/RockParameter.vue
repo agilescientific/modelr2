@@ -1,17 +1,22 @@
 <template>
-    <v-text-field
-        v-model="rock.properties[property].value"
-        dense
-        :suffix="suffixes[property]"
-        filled
-        :label="property | capitalize"
-    ></v-text-field>
+  <v-row>
+    <v-col cols="3" class="text-capitalize">
+      {{ property }}
+    </v-col>
+    <v-col cols="4">
+      <v-text-field
+          v-model="rock.properties[property].value"
+          dense
+          :suffix="suffixes[property]"
+          filled
+      ></v-text-field>
+    </v-col>
+  </v-row>
 </template>
-
 <script>
 export default {
-  name: "RockProperty",
-  props: ['index', 'libraryName', 'property'],
+  name: "RockParameter",
+  props: ['libraryName', 'property', 'index'],
   data() {
     return {
       suffixes: {
@@ -39,6 +44,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-</style>
