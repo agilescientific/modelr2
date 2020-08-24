@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-divider></v-divider>
     <v-row class="text-sm-subtitle-2 my-3">
       <v-col>
         <v-btn @click="overlay = !overlay" class="mr-2 elevation-0" x-small :color="rock.color"></v-btn>

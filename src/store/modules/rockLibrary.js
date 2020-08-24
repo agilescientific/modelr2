@@ -156,11 +156,11 @@ const actions = {
 };
 
 const mutations = {
-  ADD_ROCK: (state, {name, density, vp}) => {
+  ADD_ROCK: (state, {name, density, vp, color}) => {
     state.libraries[state.currentLibrary].push(
         {
           name: name,
-          color: "#d93946",
+          color: color,
           properties: {
             density: {
               value: density,
