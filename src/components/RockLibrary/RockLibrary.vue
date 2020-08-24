@@ -19,7 +19,7 @@
     </v-container>
     <v-expansion-panels>
       <v-expansion-panel>
-        <v-expansion-panel-header>Add Rock</v-expansion-panel-header>
+        <v-expansion-panel-header  class="grey lighten-3">Add Rock</v-expansion-panel-header>
         <v-expansion-panel-content>
           <AddRock />
         </v-expansion-panel-content>

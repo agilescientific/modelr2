@@ -1,5 +1,5 @@
 <template>
-    <v-form ref="form">
+    <v-form ref="form" class="text-right">
       <v-text-field
           label="Name"
           v-model="name"
