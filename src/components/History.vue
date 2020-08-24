@@ -14,24 +14,6 @@
         </v-row>
       </v-col>
     </v-row>
-<!--      <v-card-title class="primary&#45;&#45;text">-->
-<!--        Model settings-->
-<!--      </v-card-title>-->
-<!--      <v-card-text>-->
-<!--        Model extent in meters.-->
-<!--        <v-row>-->
-<!--          <v-col cols="2"><v-text-field dense class="extent" v-model="extent[0]" label="x" type="number"></v-text-field></v-col>-->
-<!--          <v-col cols="2"><v-text-field dense class="extent" v-model="extent[1]" label="X" type="number"></v-text-field></v-col>-->
-<!--        </v-row>-->
-<!--        <v-row>-->
-<!--          <v-col cols="2"><v-text-field dense class="extent" v-model="extent[2]" label="y" type="number"></v-text-field></v-col>-->
-<!--          <v-col cols="2"><v-text-field dense class="extent" v-model="extent[3]" label="Y" type="number"></v-text-field></v-col>-->
-<!--        </v-row>-->
-<!--        <v-row>-->
-<!--          <v-col cols="2"><v-text-field dense class="extent" v-model="extent[4]" label="z" type="number"></v-text-field></v-col>-->
-<!--          <v-col cols="2"><v-text-field dense class="extent" v-model="extent[5]" label="Z" type="number"></v-text-field></v-col>-->
-<!--        </v-row>-->
-<!--      </v-card-text>-->
     <v-snackbar v-model="snackbar">
       Model copied to clipboard.
       <template v-slot:action="{ attrs }">
@@ -71,16 +53,7 @@ export default {
   computed: {
     ...mapState({
       history: state => state.history.events,
-    }),
-    extent: {
-      get() {
-        return this.$store.state.history.extent
-      },
-      set(value) {
-        this.$store.state.history.extent = value
-        this.$store.dispatch('preview/updatePreview')
-      }
-    }
+    })
   },
   data: () => ({
     drawer: false,

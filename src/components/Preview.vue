@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card class="mx-auto">
-      <v-card-title class="primary--text">Model & Sample Preview</v-card-title>
+      <v-card-title class="">Model & Sample Preview</v-card-title>
       <v-card-subtitle>Live-updating model section preview and stochastic sampling preview.</v-card-subtitle>
       <v-card-text class="py-0">
         <v-row>
@@ -181,7 +181,7 @@ export default {
 
 <style scoped>
   canvas {
-    /*border: solid 1px red;*/
+    border: solid 1px black;
     width: 100%;
   }
 </style>

@@ -32,9 +32,10 @@
     <v-overlay
         :absolute="false"
         :value="overlay"
+        class="text-right"
     >
       <v-color-picker v-model="rock.color" light class="elevation-10"></v-color-picker>
-      <v-btn @click="overlay = !overlay" light class="my-1 elevation-10">Close</v-btn>
+      <v-btn @click="overlay = !overlay" small light class="my-1 elevation-10">Close</v-btn>
     </v-overlay>
   </div>
 </template>
