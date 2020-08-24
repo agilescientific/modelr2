@@ -8,12 +8,25 @@
       <v-col>
         <v-row>
           <v-col>
-            <v-btn x-small color="primary" class="mr-2" @click="historyToClipboard()">Import</v-btn>
-            <v-btn x-small color="primary" @click="historyToClipboard()">Export</v-btn>
+            <v-btn x-small color="primary" class="mr-2">Import</v-btn>
+            <v-btn x-small color="primary" @click="libraryToClipboard()">Export</v-btn>
           </v-col>
         </v-row>
       </v-col>
     </v-row>
+    <v-snackbar v-model="snackbar">
+      Model copied to clipboard.
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            color="pink"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-container class="mt-10">
       <v-select :items="Object.keys(libraries)" v-model="selectedLibrary" label="Rock Library"></v-select>
     </v-container>
@@ -50,23 +63,25 @@
     },
     data() {
       return {
-        selectedLibrary: 'North Sea'
+        selectedLibrary: 'North Sea',
+        snackbar: false,
       }
     },
     computed: {
       libraries() {
         return this.$store.state.rockLibrary.libraries
       },
-      nameErrors() {
-        const errors = []
-        if (!this.$v.name.$dirty) return errors
-        !this.$v.select.required && errors.push('Name is required.')
-        return errors
-      }
     },
     methods: {
-      addRock() {
-        this.$v.$touch()
+      libraryToClipboard: function() {
+        console.log("lel")
+        let dummy = document.createElement("textarea");
+        document.body.appendChild(dummy);
+        dummy.value = JSON.stringify(this.$store.state.rockLibrary.libraries[this.selectedLibrary]);
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+        this.snackbar = true;
       }
     },
     validations: {
