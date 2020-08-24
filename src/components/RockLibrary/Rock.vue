@@ -11,6 +11,7 @@
             color="white red--text text--lighten-3"
             class="elevation-0"
             x-small
+            @click="deleteRock()"
         >
           <v-icon>mdi-delete-forever</v-icon>
         </v-btn>
@@ -60,6 +61,11 @@
       },
       rockCss() {
         return {'background-color': this.rock.color}
+      }
+    },
+    methods: {
+      deleteRock() {
+        this.$store.commit("rockLibrary/DELETE_ROCK", {index: this.index})
       }
     }
   }

@@ -173,6 +173,9 @@ const mutations = {
           }
         }
     )
+  },
+  DELETE_ROCK: (state, {index}) => {
+    state.libraries[state.currentLibrary].splice(index, 1)
   }
 };
 
