@@ -1,30 +1,8 @@
 <template>
   <v-app>
     <v-app-bar app>
-<!--      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>-->
       <v-toolbar-title>AppName</v-toolbar-title>
     </v-app-bar>
-
-<!--    <v-navigation-drawer-->
-<!--      v-model="drawer"-->
-<!--      absolute-->
-<!--      temporary-->
-<!--    >-->
-<!--      <v-list nav dense>-->
-<!--        <v-list-item-group-->
-<!--          active-class="primary&#45;&#45;text text&#45;&#45;accent-4"-->
-<!--        >-->
-<!--          <v-list-item-->
-<!--            v-for="route in routes" :key="route.name" :to="{path: route.path}">-->
-<!--            <v-list-item-icon>-->
-<!--              <v-icon>{{ route.icon }}</v-icon>-->
-<!--            </v-list-item-icon>-->
-<!--            <v-list-item-title>{{ route.name }}</v-list-item-title>-->
-<!--          </v-list-item>-->
-<!--        </v-list-item-group>-->
-<!--      </v-list>-->
-<!--    </v-navigation-drawer>-->
-
     <v-main class="primary">
       <v-container fluid>
         <router-view></router-view>
