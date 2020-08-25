@@ -17,6 +17,48 @@ const state = {
           }
         },
         {
+          name: "Siltstone",
+          color: "#ea6dc7",
+          properties: {
+            density: {
+              value: 2340,
+              uncertain: false,
+            },
+            vp: {
+              value: 2400,
+              uncertain: false,
+            }
+          }
+        },
+        {
+          name: "Mudstone",
+          color: "#67643a",
+          properties: {
+            density: {
+              value: 2200,
+              uncertain: false,
+            },
+            vp: {
+              value: 2300,
+              uncertain: false,
+            }
+          }
+        },
+        {
+          name: "Coal",
+          color: "#292926",
+          properties: {
+            density: {
+              value: 1900,
+              uncertain: false,
+            },
+            vp: {
+              value: 1950,
+              uncertain: false,
+            }
+          }
+        },
+        {
           name: "Shale",
           color: "#CDFFD9",
           properties: {
