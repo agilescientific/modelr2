@@ -8,7 +8,51 @@
       <v-col>
         <v-row>
           <v-col>
-            <v-btn x-small color="primary" class="mr-2" @click="historyToClipboard()">Import</v-btn>
+<!--            <v-btn x-small color="primary" class="mr-2" @click="importOverlay = !importOverlay">Import</v-btn>-->
+            <v-dialog
+                v-model="importOverlay"
+                width="500"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                    color="red lighten-2"
+                    dark
+                    x-small
+                    v-bind="attrs"
+                    v-on="on"
+                    class="mr-2"
+                >
+                  Import
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="headline grey lighten-2">
+                  Paste Geomodel JSON
+                </v-card-title>
+
+                <v-textarea
+                    class="mx-5"
+                    placeholder="Paste Geomodel JSON here..."
+                    v-model="importText"
+                >
+
+                </v-textarea>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                      color="primary"
+                      text
+                      @click="importHistory()"
+                  >
+                    Load
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
             <v-btn x-small color="primary" @click="historyToClipboard()">Export</v-btn>
           </v-col>
         </v-row>
@@ -43,6 +87,15 @@ import Event from './Events/EventContainer.vue';
 import AddEvent from './Events/AddEvent.vue';
 import DeleteEvent from "./Events/DeleteEvent";
 
+function IsJsonString(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
 export default {
   name: 'History',
   components: {
@@ -58,12 +111,21 @@ export default {
   data: () => ({
     drawer: false,
     snackbar: false,
+    importOverlay: false,
+    importText: undefined,
   }),
   methods: {
     getHistory: function() {
       return JSON.stringify(this.$store.state.history.events, null, 4)
     },
-    historyToClipboard: function() {
+    importHistory: function () {
+      this.importOverlay = false;
+      if (IsJsonString(this.importText) === true) {
+        this.$store.state.history.events = JSON.parse(this.importText);
+        this.importText = undefined;
+      }
+    },
+    historyToClipboard: function () {
       let dummy = document.createElement("textarea");
       document.body.appendChild(dummy);
       dummy.value = this.getHistory();

@@ -12,22 +12,18 @@
           v-model="density"
           :rules="inputNumber"
       >
-
       </v-text-field>
       <v-text-field
           label="Vp"
           v-model="vp"
           :rules="inputNumber"
       >
-
       </v-text-field>
       <div class="text-left grey--text text--darken-2">
         <span class="mr-4">Color</span>
         <v-btn @click="overlay = !overlay" class="mr-2 elevation-0" x-small :color="color"></v-btn>
       </div>
-
       <v-btn small color="primary" @click="submit()">Add to Library</v-btn>
-
     </v-form>
     <v-overlay
         :absolute="false"
@@ -64,8 +60,8 @@ export default {
       if (this.$refs.form.validate()) {
         this.$store.commit("rockLibrary/ADD_ROCK", {
           name: this.name,
-          density: this.density,
-          vp: this.vp,
+          density: parseInt(this.density),
+          vp: parseInt(this.vp),
           color: this.color,
         })
         this.name = undefined;

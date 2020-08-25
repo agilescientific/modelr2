@@ -8,7 +8,7 @@
       <v-col>
         <v-row>
           <v-col>
-            <v-btn x-small color="primary" class="mr-2">Import</v-btn>
+            <v-btn x-small color="primary" disabled class="mr-2">Import</v-btn>
             <v-btn x-small color="primary" @click="libraryToClipboard()">Export</v-btn>
           </v-col>
         </v-row>
