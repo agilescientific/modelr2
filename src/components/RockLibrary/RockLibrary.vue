@@ -8,7 +8,49 @@
       <v-col>
         <v-row>
           <v-col>
-            <v-btn x-small color="primary" disabled class="mr-2">Import</v-btn>
+            <v-dialog
+                v-model="importOverlay"
+                width="500"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                    color="orange white--text"
+                    x-small
+                    v-bind="attrs"
+                    v-on="on"
+                    class="mr-2"
+                >
+                  Import
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="headline grey lighten-2">
+                  Paste Geomodel JSON
+                </v-card-title>
+
+                <v-textarea
+                    class="mx-5"
+                    placeholder="Paste Geomodel JSON here..."
+                    v-model="importText"
+                >
+
+                </v-textarea>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                      color="primary"
+                      text
+                      @click="importLibrary()"
+                  >
+                    Load
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
             <v-btn x-small color="primary" @click="libraryToClipboard()">Export</v-btn>
           </v-col>
         </v-row>
@@ -55,6 +97,15 @@
   import { required } from 'vuelidate/lib/validators';
   import AddRock from "@/components/RockLibrary/AddRock";
 
+  function IsJsonString(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
   export default {
     mixins: [validationMixin],
     components: {
@@ -65,6 +116,8 @@
       return {
         selectedLibrary: 'North Sea',
         snackbar: false,
+        importOverlay: false,
+        importText: undefined,
       }
     },
     computed: {
@@ -73,6 +126,14 @@
       },
     },
     methods: {
+      importLibrary: function () {
+        this.importOverlay = false;
+        if (IsJsonString(this.importText) === true) {
+          let current = this.$store.state.rockLibrary.currentLibrary
+          this.$store.state.rockLibrary.libraries[current] = JSON.parse(this.importText);
+          this.importText = undefined;
+        }
+      },
       libraryToClipboard: function() {
         console.log("lel")
         let dummy = document.createElement("textarea");
