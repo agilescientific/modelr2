@@ -49,7 +49,6 @@
         ></v-range-slider>
       </v-col>
     </v-row>
-    <v-switch label="Lock"></v-switch>
   </div>
 </template>
 <script>
