@@ -11,9 +11,6 @@ const state = {
         num_layers: {
           value: 1,
           uncertain: true,
-          distribution: 'uniform',
-          low: 22,
-          high: 25
         },
         layer_names: {
           value: [

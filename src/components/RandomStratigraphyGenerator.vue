@@ -24,15 +24,15 @@
     <v-row>
       <v-col cols="4">Number of Layers</v-col>
       <v-col>
-        <v-range-slider
+        <v-slider
           thumb-label="always"
           thumb-size="26"
+          min="0"
+          max="200"
           dense
-          min="1"
-          max="50"
           v-model="nLayers"
           @click="setStochasticStratigraphy()"
-        ></v-range-slider>
+        ></v-slider>
       </v-col>
     </v-row>
     <v-row>
@@ -60,7 +60,7 @@
       return {
         currentModel: 'Discrete uniform distribution',
         thicknessOptions: ["Uniform"],
-        nLayers: [22, 29],
+        nLayers: 50,
         thicknessBounds: [200, 275],
         num_layers: undefined,
         layer_thickness: undefined,
@@ -85,9 +85,7 @@
       setStochasticStratigraphy: function() {
         let num_layers = {
             uncertain: true,
-            distribution: 'uniform',
-            low: this.nLayers[0],
-            high: this.nLayers[1]
+            value: this.nLayers
           }
         let layer_thickness = {
           uncertain: true,
