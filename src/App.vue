@@ -1,7 +1,9 @@
 <template>
   <v-app>
     <v-app-bar app>
-      <v-toolbar-title>AppName</v-toolbar-title>
+      <v-toolbar-title>
+        modelr
+      </v-toolbar-title>
     </v-app-bar>
     <v-main class="primary">
       <v-container fluid>
@@ -67,3 +69,8 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+
+
+</style>
