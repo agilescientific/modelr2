@@ -70,13 +70,6 @@
           </v-col>
         </v-row>
       </v-card-text>
-<!--      <v-card>-->
-<!--        <v-card-text>-->
-<!--          <code>-->
-<!--            {{ events }}-->
-<!--          </code>-->
-<!--        </v-card-text>-->
-<!--      </v-card>-->
      </v-card>
   </div>
 </template>
@@ -175,6 +168,9 @@ export default {
       updatePreview: 'preview/updatePreview',
       updatePreviews: 'preview/updatePreviews'
     })
+  },
+  mounted() {
+    this.$store.dispatch("preview/updatePreview")
   }
 };
 </script>
