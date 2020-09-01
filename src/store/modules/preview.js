@@ -44,9 +44,8 @@ const convertHexToRGBA = (hexCode, opacity) => {
 
 function getColors(rootState) {
   // Get colors of currently selected library
-  let current = rootState.rockLibrary.currentLibrary;
   let colors = {};
-  rootState.rockLibrary.libraries[current].map(x => colors[x.name] = convertHexToRGBA(x.color, 100));
+  rootState.rockLibrary.library.map(x => colors[x.name] = convertHexToRGBA(x.color, 100));
   return colors
 }
 
@@ -108,7 +107,7 @@ const actions = {
       'history/updateHistory', null, {root: true}
     ).then(() => {
         dispatch('getSectionPlotSection',
-          {seed: state.seed, direction: state.direction, canvas: 'canvasPreview'}
+          {seed: state.seed, direction: "y", canvas: 'canvasPreview'}
         )
         dispatch('getSectionPlotSection',
             {seed: state.seed, direction: "x", canvas: 'canvasPreviewX'}

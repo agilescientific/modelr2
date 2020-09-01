@@ -19,11 +19,10 @@
       </v-col>
     </v-row>
     <v-row no-gutters>
-      <v-col v-for="(_, property) in rock.properties" :key="property" class="mx-2">
+      <v-col v-for="(_, property) in rock" :key="property" class="mx-2">
         <RockProperty
           v-if="property !== 'name' && property !== 'color'"
           :index="index"
-          :library-name="libraryName"
           :property="property"
         />
       </v-col>
@@ -45,7 +44,7 @@
   export default {
     name: 'Rock',
     components: {RockProperty},
-    props: ['index', 'libraryName'],
+    props: ['index'],
     data() {
       return {
         overlay: false,
@@ -55,10 +54,10 @@
     computed: {
       rock: {
         get() {
-          return this.$store.state.rockLibrary.libraries[this.libraryName][this.index]
+          return this.$store.state.rockLibrary.library[this.index]
         },
         set(value) {
-          this.$store.state.rockLibrary.libraries[this.libraryName][this.index] = value
+          this.$store.state.rockLibrary.library[this.index] = value
         }
       },
       rockCss() {

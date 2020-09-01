@@ -30,9 +30,8 @@
             ></v-slider>
           </v-col>
           <v-col>
-
             <v-text-field
-                dense
+                class="mt-5"
                 v-model="seed"
                 type="number"
                 label="Random Seed"

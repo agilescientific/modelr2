@@ -79,7 +79,7 @@ const state = {
     updateHistory({state, rootState}) {
       return axios.post(rootState.fastAPIurl + 'history', {
         history: JSON.stringify(state.events),
-        rock_library: JSON.stringify(rootState.rockLibrary.libraries[rootState.rockLibrary.currentLibrary]),
+        rock_library: JSON.stringify(rootState.rockLibrary.library),
         extent: {
           x: state.extent[0], X: state.extent[1],
           y: state.extent[2], Y: state.extent[3],

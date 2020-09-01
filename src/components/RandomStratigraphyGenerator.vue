@@ -8,12 +8,6 @@
         </p>
       </v-col>
     </v-row>
-
-    <v-select
-        label="Rock Library"
-        :items="Object.keys(libraries)"
-        v-model="currentLibrary"
-    ></v-select>
     <v-select
         label="Model"
         :items="['Discrete uniform distribution']"
@@ -65,19 +59,6 @@
         layer_thickness: undefined,
         layer_names: undefined,
         lithology: undefined,
-      }
-    },
-    computed: {
-      libraries: function() {
-        return this.$store.state.rockLibrary.libraries
-      },
-      currentLibrary: {
-        get() {
-          return this.$store.state.rockLibrary.currentLibrary
-        },
-        set(value) {
-          this.$store.state.rockLibrary.currentLibrary= value
-        }
       }
     },
     methods: {

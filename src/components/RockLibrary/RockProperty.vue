@@ -1,6 +1,6 @@
 <template>
     <v-text-field
-        v-model="rock.properties[property].value"
+        v-model="rock[property]"
         dense
         :suffix="suffixes[property]"
         filled
@@ -11,7 +11,7 @@
 <script>
 export default {
   name: "RockProperty",
-  props: ['index', 'libraryName', 'property'],
+  props: ['index', 'property'],
   data() {
     return {
       suffixes: {
@@ -23,10 +23,10 @@ export default {
   computed: {
     rock: {
       get() {
-        return this.$store.state.rockLibrary.libraries[this.libraryName][this.index]
+        return this.$store.state.rockLibrary.library[this.index]
       },
       set(value) {
-        this.$store.state.rockLibrary.libraries[this.libraryName][this.index] = value
+        this.$store.state.rockLibrary.library[this.index] = value
       }
     }
   },

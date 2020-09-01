@@ -15,7 +15,7 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                    color="orange white--text"
+                    color="green white--text"
                     x-small
                     v-bind="attrs"
                     v-on="on"
@@ -52,7 +52,7 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
-            <v-btn x-small color="primary" @click="historyToClipboard()">Export</v-btn>
+            <v-btn x-small color="red white--text" @click="historyToClipboard()">Export</v-btn>
           </v-col>
         </v-row>
       </v-col>
