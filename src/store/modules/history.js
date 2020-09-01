@@ -3,7 +3,7 @@ import Vue from 'vue';
 const extent = [0, 10000, 0, 1000, 0, 5000]
 
 const state = {
-  extent: [0, 10000, 0, 1000, 0, 5000],
+  extent: [0, 10000, 0, 10000, 0, 5000],
   events: [
     {
     type: "stratigraphy",

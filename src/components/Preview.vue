@@ -5,20 +5,32 @@
       <v-card-subtitle>Live-updating model section preview and stochastic sampling preview.</v-card-subtitle>
       <v-card-text class="py-0">
         <v-row>
-          <v-col cols="5">
+          <v-col cols="5" class="text-center">
+            <span>y</span>
             <canvas id="canvasPreview"></canvas>
-          </v-col>
-          <v-col>
-            <v-select dense :items="sectionAxisOptions" v-model="direction" label="Section axis"></v-select>
             <v-slider
                 @click="updatePreview()"
                 dense
-                v-model="position"
+                v-model="positionY"
                 :min="getExtent[0]"
                 :max="getExtent[1]"
                 label="Section position"
-                thumb-label="always"
             ></v-slider>
+          </v-col>
+          <v-col cols="5" class="text-center">
+            <span>x</span>
+            <canvas id="canvasPreviewX"></canvas>
+            <v-slider
+                @click="updatePreview()"
+                dense
+                v-model="positionX"
+                :min="getExtent[0]"
+                :max="getExtent[1]"
+                label="Section position"
+            ></v-slider>
+          </v-col>
+          <v-col>
+
             <v-text-field
                 dense
                 v-model="seed"
@@ -44,7 +56,10 @@
               :thumb-size="26"
             ></v-slider>
           </v-col>
-          <v-col>
+          <v-col cols="2">
+            <v-select dense :items="sectionAxisOptions" v-model="direction" label="Section axis"></v-select>
+          </v-col>
+          <v-col cols="2">
             <v-btn
               class="ml-4 primary"
               dense small @click="handlePreviews()"
@@ -61,6 +76,7 @@
               Sample
             </v-btn>
           </v-col>
+
         </v-row>
       </v-card-text>
       <v-card-text class="py-0">
@@ -117,12 +133,20 @@ export default {
         this.updatePreview()
       }
     },
-    position: {
+    positionY: {
       get() {
-        return this.$store.state.preview.position
+        return this.$store.state.preview.positionY
       },
       set(value) {
-        this.$store.state.preview.position = value
+        this.$store.state.preview.positionY = value
+      }
+    },
+    positionX: {
+      get() {
+        return this.$store.state.preview.positionX
+      },
+      set(value) {
+        this.$store.state.preview.positionX = value
       }
     },
     settings() {

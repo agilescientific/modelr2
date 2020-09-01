@@ -3,7 +3,8 @@ import axios from 'axios';
 const state = {
   section: undefined,
   direction: 'y',
-  position: 0,
+  positionY: 0,
+  positionX: 0,
   seed: 42,
   canvas: 'canvasPreview',
   sectionCmap: 'salinity',
@@ -20,8 +21,8 @@ function prepareCanvas(canvasId, shape) {
   let canvasX = shape[0];
   let canvasY = shape[1];
   let canvas = document.getElementById(canvasId)
-  canvas.width = canvasX;
-  canvas.height = canvasY;
+  canvas.width = 200;
+  canvas.height = 100;
   let ctx = canvas.getContext("2d");
   let imageData = ctx.getImageData(0, 0, canvasX, canvasY);
   let buffer = new ArrayBuffer(imageData.data.length);
@@ -71,7 +72,13 @@ const actions = {
   },
 
   getSectionPlotSection({state, dispatch, rootState}, {seed, direction, canvas}) {
-    let url = rootState.fastAPIurl + 'sample/' + seed + "/" + direction + "?position="+state.position
+    let position = undefined
+    if (direction === "x") {
+      position = state.positionX
+    } else {
+      position = state.positionY
+    }
+    let url = rootState.fastAPIurl + 'sample/' + seed + "/" + direction + "?position="+position
     axios.get(url).then((response) => {
       let section = response.data.section
       let shape = response.data.shape.reverse()
@@ -102,6 +109,9 @@ const actions = {
     ).then(() => {
         dispatch('getSectionPlotSection',
           {seed: state.seed, direction: state.direction, canvas: 'canvasPreview'}
+        )
+        dispatch('getSectionPlotSection',
+            {seed: state.seed, direction: "x", canvas: 'canvasPreviewX'}
         )
     }
     )
