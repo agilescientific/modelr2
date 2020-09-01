@@ -19,9 +19,8 @@
       </v-col>
     </v-row>
     <v-row no-gutters>
-      <v-col v-for="(_, property) in rock" :key="property" class="mx-2">
+      <v-col v-for="property in rockProperties" :key="property" class="mx-1">
         <RockProperty
-          v-if="property !== 'name' && property !== 'color'"
           :index="index"
           :property="property"
         />
@@ -58,6 +57,17 @@
         },
         set(value) {
           this.$store.state.rockLibrary.library[this.index] = value
+        }
+      },
+      rockProperties: {
+        get() {
+          let properties = []
+          for (let key of Object.keys(this.rock)) {
+            if (key !== 'name' && key !== 'color') {
+              properties.push(key)
+            }
+          }
+          return properties
         }
       },
       rockCss() {
