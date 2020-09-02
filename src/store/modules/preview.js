@@ -9,7 +9,7 @@ const state = {
   seed: 42,
   canvas: 'canvasPreview',
   loading: 0,
-  plotPropertyColormap: "viridis",
+  plotPropertyColormap: "inferno",
   plotProperty: "density",
   plotPropertyBool: undefined,
 }

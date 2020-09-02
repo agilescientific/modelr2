@@ -4,22 +4,31 @@
       <v-card-title class="">Model & Sample Preview</v-card-title>
       <v-card-subtitle>Live-updating model section preview and stochastic sampling preview.</v-card-subtitle>
       <v-card-text class="py-0">
-        <v-switch
-            v-model="plotPropertyBool"
-            label="Property Coloring"
-        ></v-switch>
-        <v-select
-            :items=plotPropertyOptions
-            :disabled="!plotPropertyBool"
-            v-model="plotProperty"
-            label="Property"
-        ></v-select>
-        <v-select
-            :items=plotPropertyColormapOptions
-            :disabled="!plotPropertyBool"
-            v-model="plotPropertyColormap"
-            label="Colormap"
-        ></v-select>
+        <v-row>
+          <v-col>
+            <v-switch
+                v-model="plotPropertyBool"
+                label="Color by Property"
+            ></v-switch>
+          </v-col>
+          <v-col>
+            <v-select class="text-capitalize"
+                :items=plotPropertyOptions
+                :disabled="!plotPropertyBool"
+                v-model="plotProperty"
+                label="Property"
+            ></v-select>
+          </v-col>
+          <v-col>
+            <v-select
+                class="text-capitalize"
+                :items=plotPropertyColormapOptions
+                :disabled="!plotPropertyBool"
+                v-model="plotPropertyColormap"
+                label="Colormap"
+            ></v-select>
+          </v-col>
+        </v-row>
         <v-row>
           <v-col cols="5" class="text-center">
             <span>y</span>
