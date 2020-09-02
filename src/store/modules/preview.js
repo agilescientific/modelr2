@@ -1,4 +1,5 @@
 import axios from 'axios';
+const scale = require('scale-color-perceptual')
 
 const state = {
   section: undefined,
@@ -7,8 +8,10 @@ const state = {
   positionX: 0,
   seed: 42,
   canvas: 'canvasPreview',
-  sectionCmap: 'salinity',
   loading: 0,
+  plotPropertyColormap: "viridis",
+  plotProperty: "density",
+  plotPropertyBool: undefined,
 }
 
 const mutations = {
@@ -51,7 +54,21 @@ function getColors(rootState) {
 
 const actions = {
   drawSection({rootState}, {canvas, section, shape, sampled_lith}) {
-    let colors = getColors(rootState);
+    let colors = {}
+    if (rootState.preview.plotPropertyBool === true) {
+      let propertyMap = {}
+      rootState.rockLibrary.library.map(x => propertyMap[x.name] = x[rootState.preview.plotProperty])
+      let properties = Object.values(propertyMap)
+      let propertiesMax = Math.max(...properties)
+      for (let [key, value] of Object.entries(propertyMap)) {
+        let scaledValue = value / propertiesMax
+
+        colors[key] = convertHexToRGBA(scale[rootState.preview.plotPropertyColormap](scaledValue))
+        colors[key].a = 1
+      }
+    } else {
+      colors = getColors(rootState);
+    }
     let {ctx, buffer8, data, imageData} = prepareCanvas(canvas, shape);
     let layer_id = undefined;
     let color = undefined;

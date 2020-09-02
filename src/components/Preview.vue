@@ -4,6 +4,22 @@
       <v-card-title class="">Model & Sample Preview</v-card-title>
       <v-card-subtitle>Live-updating model section preview and stochastic sampling preview.</v-card-subtitle>
       <v-card-text class="py-0">
+        <v-switch
+            v-model="plotPropertyBool"
+            label="Property Coloring"
+        ></v-switch>
+        <v-select
+            :items=plotPropertyOptions
+            :disabled="!plotPropertyBool"
+            v-model="plotProperty"
+            label="Property"
+        ></v-select>
+        <v-select
+            :items=plotPropertyColormapOptions
+            :disabled="!plotPropertyBool"
+            v-model="plotPropertyColormap"
+            label="Colormap"
+        ></v-select>
         <v-row>
           <v-col cols="5" class="text-center">
             <span>y</span>
@@ -98,6 +114,8 @@ export default {
   data() {
     return {
       sectionAxisOptions: ['x', 'y'],
+      plotPropertyOptions: ["density", "vp"],
+      plotPropertyColormapOptions: ["viridis", "inferno", "magma", "plasma"],
     }
   },
   computed: {
@@ -121,6 +139,24 @@ export default {
       set(value) {
         this.$store.state.preview.seed = value
         this.updatePreview()
+      }
+    },
+    plotProperty: {
+      get() {
+        return this.$store.state.preview.plotProperty
+      },
+      set(value) {
+        this.$store.state.preview.plotProperty = value
+        this.$store.dispatch("preview/updatePreview")
+      }
+    },
+    plotPropertyBool: {
+      get() {
+        return this.$store.state.preview.plotPropertyBool
+      },
+      set(value) {
+        this.$store.state.preview.plotPropertyBool = value
+        this.$store.dispatch("preview/updatePreview")
       }
     },
     direction: {
@@ -173,6 +209,15 @@ export default {
       },
       set(value) {
         this.$store.state.settings.previewAutoReload = value
+      }
+    },
+    plotPropertyColormap: {
+      get() {
+        return this.$store.state.preview.plotPropertyColormap
+      },
+      set(value) {
+        this.$store.state.preview.plotPropertyColormap = value
+        this.$store.dispatch("preview/updatePreview")
       }
     }
   },

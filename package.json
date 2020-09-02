@@ -15,6 +15,7 @@
     "jstat": "^1.9.3",
     "mathjs": "^7.1.0",
     "numjs": "^0.16.0",
+    "scale-color-perceptual": "^1.1.2",
     "sharp": "^0.25.4",
     "vue": "^2.6.12",
     "vue-apexcharts": "^1.6.0",
