@@ -70,7 +70,7 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <v-expansion-panels :multiple="true" :hover="true" class="mt-10">
+    <v-expansion-panels :multiple="true" :hover="true" class="mt-10" v-model="panelsOpen">
       <v-expansion-panel v-for="(_, eventIndex) in history" :key="eventIndex">
         <Event :eventIndex="eventIndex" />
         <DeleteEvent v-if="eventIndex > 0" :eventIndex="eventIndex" />
@@ -112,6 +112,7 @@ export default {
     snackbar: false,
     importOverlay: false,
     importText: undefined,
+    panelsOpen: [0]
   }),
   methods: {
     getHistory: function() {
