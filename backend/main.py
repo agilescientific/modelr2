@@ -12,6 +12,9 @@ import numpy as np
 from uvicorn.config import logger as logging
 from typing import List, Optional, Union, Dict
 from models import Section, Model
+import os
+
+allow_3d = os.getenv("MODELR_3D", True)
 
 app = FastAPI()
 
@@ -283,27 +286,28 @@ def parse_g21(lines: list, res: tuple) -> np.ndarray:
     return np.array(sections)
 
 
-@app.get("/sample/{seed}")
-async def sample_3d_model(
-    seed: int,
-    faultblock: bool = False
-):
-    output = {"seed": seed}
-    nout_fn = sample_model(seed)
-    nout = pynoddy.output.NoddyOutput(nout_fn)
+if allow_3d:
+    @app.get("/sample/{seed}")
+    async def sample_3d_model(
+        seed: int,
+        faultblock: bool = False
+    ):
+        output = {"seed": seed}
+        nout_fn = sample_model(seed)
+        nout = pynoddy.output.NoddyOutput(nout_fn)
 
-    # compute block model
-    model = nout.block
-    output["model"] = model.tolist()
-    # fault block
-    if faultblock:
-        with open(nout_fn + ".g21", "r") as f:
-            lines = f.readlines()
-        fb = parse_g21(lines, (nout.nx, nout.ny, nout.nz))
-        faultblock = fb_diff(fb, nd=1)
-        output["faultblock"] = faultblock.tolist()
+        # compute block model
+        model = nout.block
+        output["model"] = model.tolist()
+        # fault block
+        if faultblock:
+            with open(nout_fn + ".g21", "r") as f:
+                lines = f.readlines()
+            fb = parse_g21(lines, (nout.nx, nout.ny, nout.nz))
+            faultblock = fb_diff(fb, nd=1)
+            output["faultblock"] = faultblock.tolist()
 
-    return output
+        return output
 
 
 if __name__ == "__main__":
