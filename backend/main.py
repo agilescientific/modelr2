@@ -50,7 +50,7 @@ history_default = [{
     },
     }
 }]
-extent_default = [0, 10000, 0, 1000, 0, 5000]
+extent_default = [0, 10000, 0, 10000, 0, 5000]
 
 
 def init_pynoddy(extent: List[float]):
@@ -65,7 +65,6 @@ def init_pynoddy(extent: List[float]):
     if not app.history:
         app.history = history_default
     app.rhist.history = app.history
-
 
 
 def sample_history(
@@ -92,6 +91,7 @@ def sample_history(
     fistory_fn = history_fn if history_fn else "tmp_section.his"
     nh.write_history(fistory_fn)
     return history_fn
+
 
 def sample_experiment(
     seed: int, 
@@ -148,7 +148,7 @@ async def get_probabilistic_history():
 
 
 @app.get("/events/{seed}")
-async def sample_experiment_events(seed: int):
+async def sample_pynoddy_experiment_events(seed: int):
     exp = sample_experiment(seed)
     events = exp.events
     return events
@@ -159,15 +159,15 @@ async def get_current_rock_library():
     return {'library': app.rhist.rock_library}
 
 
-@app.get("/sample/{seed}/{x}/{y}")
-async def sample_1d_borehole(seed: int, x: int, y: int):
-    exp = sample_experiment(seed)
-    return {
-        'seed': seed,
-        'x': x,
-        'y': y,
-        'model': exp.get_drillhole_data(x, y).tolist()
-        }
+# @app.get("/sample/{seed}/{x}/{y}")
+# async def sample_1d_borehole(seed: int, x: int, y: int):
+#     exp = sample_experiment(seed)
+#     return {
+#         'seed': seed,
+#         'x': x,
+#         'y': y,
+#         'model': exp.get_drillhole_data(x, y).tolist()
+#         }
 
 
 def fb_diff(fb: np.ndarray, nd: int=1) -> np.ndarray:
