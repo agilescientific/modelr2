@@ -8,13 +8,13 @@
         </p>
       </v-col>
     </v-row>
-    <v-select
-        label="Model"
-        :items="['Discrete uniform distribution']"
-        v-model="currentModel"
-        disabled
-    >
-    </v-select>
+<!--    <v-select-->
+<!--        label="Model"-->
+<!--        :items="['Discrete uniform distribution']"-->
+<!--        v-model="currentModel"-->
+<!--        disabled-->
+<!--    >-->
+<!--    </v-select>-->
     <v-row>
       <v-col cols="4">Number of Layers</v-col>
       <v-col>
