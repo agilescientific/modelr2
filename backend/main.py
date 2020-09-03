@@ -121,6 +121,16 @@ def sample_model(
 
 
 def fb_diff(fb: np.ndarray, nd: int = 1) -> np.ndarray:
+    """Create difference fault block for a 3D model.
+
+    Args:
+        fb (np.ndarray: Geomodel fault block.
+        nd (int): Number of array elements to shift along each axis
+            before calculating differences.
+
+    Returns:
+        [np.ndarray] Fault difference block used as fault labels.
+    """
     d0 = fb[nd:, :, :] - fb[:-nd, :, :]
     d1 = fb[:, nd:, :] - fb[:, :-nd, :]
     d2 = fb[:, :, nd:] - fb[:, :, :-nd]
@@ -138,6 +148,16 @@ def fb_diff(fb: np.ndarray, nd: int = 1) -> np.ndarray:
 
 
 def fb_diff_2d(fb: np.ndarray, nd: int = 1) -> np.ndarray:
+    """Create difference fault block for a 2D section.
+
+    Args:
+        fb (np.ndarray: Geomodel fault block.
+        nd (int): Number of array elements to shift along each axis
+            before calculating differences.
+
+    Returns:
+        [np.ndarray] Fault difference block used as fault labels.
+    """
     d0 = fb[nd:, :] - fb[:-nd, :]
     d1 = fb[:, nd:] - fb[:, :-nd]
 
