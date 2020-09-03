@@ -42,6 +42,7 @@ Vue.mixin({
         Z: this.extent[5],
         dip: 90,
         dip_dir: 360,
+        dip_direction: 360,
         slip: this.extent[5],
         amplitude: this.extent[5],
         wavelength: Math.max(...this.extent) * 5,
