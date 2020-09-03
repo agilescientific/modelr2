@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import sys
 import uvicorn
-sys.path.append("../../randomhistory")
 sys.path.append("../../pynoddy/")
 import randomhistory as rh
 import pynoddy
@@ -17,7 +16,6 @@ import os
 allow_3d = os.getenv("MODELR_3D", True)
 
 app = FastAPI()
-
 
 # allow cross-origin communication
 origins = [
@@ -122,12 +120,65 @@ def sample_model(
     return "output"
 
 
+def fb_diff(fb: np.ndarray, nd: int = 1) -> np.ndarray:
+    d0 = fb[nd:, :, :] - fb[:-nd, :, :]
+    d1 = fb[:, nd:, :] - fb[:, :-nd, :]
+    d2 = fb[:, :, nd:] - fb[:, :, :-nd]
+
+    d0 = d0.astype(bool)
+    d1 = d1.astype(bool)
+    d2 = d2.astype(bool)
+
+    diff = np.logical_or(
+        d0[:, nd:, nd:],
+        d1[nd:, :, nd:],
+        d2[nd:, nd:, :]
+    )
+    return diff
+
+
+def fb_diff_2d(fb: np.ndarray, nd: int = 1) -> np.ndarray:
+    d0 = fb[nd:, :] - fb[:-nd, :]
+    d1 = fb[:, nd:] - fb[:, :-nd]
+
+    d0 = d0.astype(bool)
+    d1 = d1.astype(bool)
+
+    diff = np.logical_or(
+        d0[:, nd:],
+        d1[nd:, :],
+    )
+    return diff
+
+
+def parse_g21(lines: list, res: tuple) -> np.ndarray:
+    """
+    Parse given .g21 file lines into 3D numpy array representing
+    the fault block of the Noddy model.
+    """
+    nx, ny, nz = res
+    splits = []
+    for line in lines:
+        if line == "\n":
+            continue
+        split = [int(l) for l in line.rstrip().split("\t")]
+        splits.append(split)
+
+    sections = []
+    for n in range(1, nz + 1):
+        sections.append(np.array(splits[(n-1)*ny:n*ny]))
+
+    return np.array(sections)
+
+
 init_pynoddy(extent_default)
 
 
-##  #########################################
-##  Routes
-##  #########################################
+#  ---------------------------------------------------------------------------------------------------------------------
+#  ---------------------------------------------------------------------------------------------------------------------
+#  Routes
+#  ---------------------------------------------------------------------------------------------------------------------
+#  ---------------------------------------------------------------------------------------------------------------------
 @app.post("/history")
 async def set_probabilistic_history(model: Model):
     """Set or update front-end parametrization in RandomHistory object.
@@ -154,51 +205,9 @@ async def sample_pynoddy_experiment_events(seed: int):
     return events
 
 
-@app.get("/rocklibrary/")
-async def get_current_rock_library():
+@app.get("/rocks/")
+async def get_rock_properties():
     return {'library': app.rhist.rock_library}
-
-
-# @app.get("/sample/{seed}/{x}/{y}")
-# async def sample_1d_borehole(seed: int, x: int, y: int):
-#     exp = sample_experiment(seed)
-#     return {
-#         'seed': seed,
-#         'x': x,
-#         'y': y,
-#         'model': exp.get_drillhole_data(x, y).tolist()
-#         }
-
-
-def fb_diff(fb: np.ndarray, nd: int=1) -> np.ndarray:
-    d0 = fb[nd:, :,:] - fb[:-nd, :,:]
-    d1 = fb[:,nd:,:] - fb[:,:-nd,:]
-    d2 = fb[:,:, nd:] - fb[:,:, :-nd]
-    
-    d0 = d0.astype(bool)
-    d1 = d1.astype(bool)
-    d2 = d2.astype(bool)
-    
-    diff = np.logical_or(
-        d0[:, nd:, nd:], 
-        d1[nd:, :, nd:], 
-        d2[nd:, nd:, :]
-    )
-    return diff
-
-
-def fb_diff_2d(fb: np.ndarray, nd: int=1) -> np.ndarray:
-    d0 = fb[nd:, :] - fb[:-nd, :]
-    d1 = fb[:,nd:] - fb[:,:-nd]
-    
-    d0 = d0.astype(bool)
-    d1 = d1.astype(bool)
-    
-    diff = np.logical_or(
-        d0[:, nd:], 
-        d1[nd:, :], 
-    )
-    return diff
 
 
 @app.get("/sample/{seed}/{direction}")
@@ -264,26 +273,6 @@ async def sample_2d_section(
             payload["faultlabels"] = fb.tolist()
 
     return payload
-
-
-def parse_g21(lines: list, res: tuple) -> np.ndarray:
-    """
-    Parse given .g21 file lines into 3D numpy array representing
-    the fault block of the Noddy model.    
-    """
-    nx, ny, nz = res
-    splits = []
-    for line in lines:
-        if line == "\n":
-            continue
-        split = [int(l) for l in line.rstrip().split("\t")]
-        splits.append(split)
-
-    sections = []
-    for n in range(1, nz + 1):
-        sections.append(np.array(splits[(n-1)*ny:n*ny]))
-
-    return np.array(sections)
 
 
 if allow_3d:
