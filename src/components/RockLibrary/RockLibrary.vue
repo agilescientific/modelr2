@@ -33,7 +33,6 @@
                     placeholder="Paste Geomodel JSON here..."
                     v-model="importText"
                 >
-
                 </v-textarea>
 
                 <v-divider></v-divider>
@@ -75,6 +74,12 @@
           <AddRock />
         </v-expansion-panel-content>
       </v-expansion-panel>
+<!--      <v-expansion-panel>-->
+<!--      <v-expansion-panel-header  class="grey lighten-3">Add Property</v-expansion-panel-header>-->
+<!--      <v-expansion-panel-content>-->
+<!--        <AddProperty />-->
+<!--      </v-expansion-panel-content>-->
+<!--      </v-expansion-panel>-->
     </v-expansion-panels>
     <v-card-text class="mt-5">
       <div
@@ -89,9 +94,10 @@
 
 <script>
   import Rock from '@/components/RockLibrary/Rock.vue';
-  import { validationMixin } from 'vuelidate';
-  import { required } from 'vuelidate/lib/validators';
+  // import { validationMixin } from 'vuelidate';
+  // import { required } from 'vuelidate/lib/validators';
   import AddRock from "@/components/RockLibrary/AddRock";
+  // import AddProperty from "@/components/RockLibrary/AddProperty";
 
   function IsJsonString(str) {
     try {
@@ -103,8 +109,9 @@
   }
 
   export default {
-    mixins: [validationMixin],
+    // mixins: [validationMixin],
     components: {
+      // AddProperty,
       AddRock,
       Rock,
     },
@@ -139,9 +146,6 @@
         document.body.removeChild(dummy);
         this.snackbar = true;
       }
-    },
-    validations: {
-      name: { required }
     }
   }
 </script>
