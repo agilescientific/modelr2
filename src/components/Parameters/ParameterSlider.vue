@@ -12,13 +12,6 @@
         @click="updateModel()"
         class="text-capitalize"
       >
-<!--        <template v-slot:prepend>-->
-<!--          <div>-->
-<!--            {{ minValues[parameterName] }}-->
-<!--          </div>-->
-<!--        </template>-->
-<!--        <template v-slot:append>{{ maxValues[parameterName] }}-->
-<!--        </template>-->
       </v-slider>
 
     </div>
