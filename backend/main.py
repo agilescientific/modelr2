@@ -68,24 +68,43 @@ def init_pynoddy(extent: List[float]):
 def sample_history(
     seed: int,
     history_fn: str = None
-):
-    events = app.rhist.sample_events(seed=seed)
+) -> str:
+    """
+    Sample from probabilistic history using given random seed and
+    write Noddy history file.
+
+    Args:
+        seed (int): Random seed.
+        history_fn: Custom history filename.
+
+    Returns:
+        [str] History file filename.
+    """
+    events = app.rhist.sample_events(seed=seed)  # draw samples for all events
+
     logging.debug(events)
     logging.debug("--- EVENT PARSING ---")
+
+    # create noddy history object, which takes care of noddy boilerplate
+    # for history file
     nh = pynoddy.history.NoddyHistory()
 
     for event_type, properties in events:
         if not properties.get('name'):
+            # add a random name for each event, as Noddy requires it
             properties['name'] = str(np.random.randn())
 
+        # logging for debugging
         logging.debug(f"--- {event_type}")
         for pname, prop in properties.items():
             if type(prop) is list:
                 prop = [prop[0], "...", prop[-1]]
             logging.debug(f"{pname}: {prop}")
 
+        # add event to noddy history
         nh.add_event(event_type, properties)
 
+    # write history file
     fistory_fn = history_fn if history_fn else "tmp_section.his"
     nh.write_history(fistory_fn)
     return history_fn
@@ -99,6 +118,7 @@ def sample_experiment(
 
     Args:
         seed (int): Random seed.
+        history_fn (str): History filename.
 
     Returns:
         pynoddy.experiment.Experiment: Parametrized pynoddy Experiment object.
