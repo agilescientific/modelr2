@@ -2,10 +2,20 @@ version: '3'
 
 services:
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+#    command: uvicorn main:app
     ports:
-      - "8000:8000"
-#  frontend:
-#    build: .
-#    ports:
-#        - "8080:8080"
+      - "8000:80"
+#    networks:
+#      - defaultnetwork
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    command: http-server dist
+    ports:
+      - "8080:8080"
+#    networks:
+#      - defaultnetwork
