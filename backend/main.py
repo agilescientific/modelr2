@@ -137,6 +137,11 @@ async def set_probabilistic_history(model: Model):
     app.rhist.rock_library = json.loads(model.rock_library)
     app.origin = (model.extent.x, model.extent.y, model.extent.Z)
     app.extent = (model.extent.X, model.extent.Y, model.extent.z + model.extent.Z)
+    
+    
+@app.get("/history")
+async def get_probabilistic_history():
+    return app.rhist.history
 
 
 @app.get("/events/{seed}")
