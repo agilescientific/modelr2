@@ -4,6 +4,11 @@
       <v-toolbar-title>
         modelr
       </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn href="https://github.com/alex-schaaf/modelr2" target="_blank" text>
+        <v-icon class="mr-2">mdi-github</v-icon>
+        <span >GitHub</span>
+      </v-btn>
     </v-app-bar>
     <v-main class="primary">
       <v-container fluid>
