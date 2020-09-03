@@ -9,7 +9,7 @@ import pynoddy.experiment
 import json
 import numpy as np
 from uvicorn.config import logger as logging
-from typing import List, Optional, Union, Dict
+from typing import List
 from models import Section, Model
 import os
 
@@ -221,25 +221,32 @@ init_pynoddy(extent_default)
 #  ---------------------------------------------------------------------------------------------------------------------
 @app.post("/history")
 async def set_probabilistic_history(model: Model):
-    """Set or update front-end parametrization in RandomHistory object.
+    """Set/update front-end parametrization changes in RandomHistory object. So this
+    communicates every relevant change to the parametrization in the front end to
+    the backend to ensure synchronization at all times.
 
     Args:
         model (Model): Model parametrization.
     """
-    events = json.loads(model.history)
+    events = json.loads(model.history)  # load the history json as dict from POST data
     app.rhist.history = events
-    app.rhist.rock_library = json.loads(model.rock_library)
-    app.origin = (model.extent.x, model.extent.y, model.extent.Z)
-    app.extent = (model.extent.X, model.extent.Y, model.extent.z + model.extent.Z)
+    app.rhist.rock_library = json.loads(model.rock_library)  # load rock library json as dict
+    app.origin = (model.extent.x, model.extent.y, model.extent.Z)  # update origin
+    app.extent = (model.extent.X, model.extent.Y, model.extent.z + model.extent.Z)  # update extent
     
     
 @app.get("/history")
 async def get_probabilistic_history():
+    """Returns the probabilistic history dict/JSON. Same result as using the export history button
+    in the front end."""
     return app.rhist.history
 
 
 @app.get("/events/{seed}")
 async def sample_pynoddy_experiment_events(seed: int):
+    """Converts a probabilistic event sample into the data structure used by pynoddy.Experiment. This
+    can be used to quickly generate thousands of sample parametrizations that will work with any
+    pynoddy installation on any system."""
     exp = sample_experiment(seed)
     events = exp.events
     return events
@@ -247,6 +254,7 @@ async def sample_pynoddy_experiment_events(seed: int):
 
 @app.get("/rocks/")
 async def get_rock_properties():
+    """Gets the rock property JSON."""
     return {'library': app.rhist.rock_library}
 
 
@@ -260,6 +268,20 @@ async def sample_2d_section(
         faultdiff: int = 1,
         faultblock: bool = False
 ):
+    """
+    Sample a 2D section through the model along the specified axis.
+
+    Args:
+        seed (int): Random seed.
+        direction (str): Specifies along which axis to extract the section. {'x', 'y', 'z'}
+        position (int): Position of the section along the axis in extent coordinates.
+        cubesize (int): Discretization cube size. The smaller the more fine-grained the section.
+            Significantly increases computation time.
+        faultlabels (bool): If True returns the fault labels section too. Defaults to False.
+        faultdiff (int): Used to adjust the shifting used to create the fault labels block from
+            the fault block. Defaults to 1.
+        faultblock (bool): If True returns the fault block section. Defaults to False.
+    """
     exp = sample_experiment(seed)
     
     if not position:
@@ -319,7 +341,8 @@ if allow_3d:
     @app.get("/sample/{seed}")
     async def sample_3d_model(
         seed: int,
-        faultblock: bool = False
+        faultlabels: bool = False,
+        faultdiff: int = 1,
     ):
         output = {"seed": seed}
         nout_fn = sample_model(seed)
@@ -329,12 +352,12 @@ if allow_3d:
         model = nout.block
         output["model"] = model.tolist()
         # fault block
-        if faultblock:
+        if faultlabels:
             with open(nout_fn + ".g21", "r") as f:
                 lines = f.readlines()
             fb = parse_g21(lines, (nout.nx, nout.ny, nout.nz))
-            faultblock = fb_diff(fb, nd=1)
-            output["faultblock"] = faultblock.tolist()
+            faultblock = fb_diff(fb, nd=faultdiff)
+            output["faultlabels"] = faultblock.tolist()
 
         return output
 
