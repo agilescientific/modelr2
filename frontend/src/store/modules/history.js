@@ -77,7 +77,7 @@ const state = {
   
   const actions = {
     updateHistory({state, rootState}) {
-      console.log(rootState.fastAPIurl + 'history')
+      // console.log(rootState.fastAPIurl + 'history')
       return axios.post(rootState.fastAPIurl + 'history', {
         history: JSON.stringify(state.events),
         rock_library: JSON.stringify(rootState.rockLibrary.library),
