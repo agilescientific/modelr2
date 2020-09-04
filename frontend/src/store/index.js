@@ -15,16 +15,13 @@ export default new Vuex.Store({
     preview: preview,
   },
   state: {
-    modelExtent: [0, 10000, 0, 1000, 0, 5000],
+    modelExtent: [0, 10000, 0, 10000, 0, 5000],
     previewSection: undefined,
     previewSeismic: undefined,
     fastAPIurl: 'http://localhost:8000/',
   },
 
   mutations: {
-    setParameter(state, payload) {
-      state[payload.parameter] = payload.value
-    }
   },
 
   actions: {}

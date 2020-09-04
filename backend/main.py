@@ -19,13 +19,14 @@ app = FastAPI()
 
 # allow cross-origin communication
 origins = [
-    'http://localhost:8080'
+    '*'
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_methods=['*'],
+    allow_headers=['*']
 )
 
 
@@ -235,11 +236,11 @@ async def set_probabilistic_history(model: Model):
     app.extent = (model.extent.X, model.extent.Y, model.extent.z + model.extent.Z)  # update extent
     
     
-@app.get("/history")
-async def get_probabilistic_history():
-    """Returns the probabilistic history dict/JSON. Same result as using the export history button
-    in the front end."""
-    return app.rhist.history
+# @app.get("/history")
+# async def get_probabilistic_history():
+#     """Returns the probabilistic history dict/JSON. Same result as using the export history button
+#     in the front end."""
+#     return app.rhist.history
 
 
 @app.get("/events/{seed}")

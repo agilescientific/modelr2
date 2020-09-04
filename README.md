@@ -1,32 +1,52 @@
-# frontend
 
-## Project setup
+# Installation
+## Docker (recommended)
+The recommended way to install and run the app on your machine is by using Docker Compose
+```
+docker-compose up --build
+```
+
+```
+docker-compose up
+```
+
+And you can access the API (backend) at `localhost:8000`, and the frontend at `localhost:8080`.
+
+## manual
+###  frontend
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+#### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+#### Compiles and minifies for production
 ```
 npm run build
 ```
 
-### Lints and fixes files
+
+### backend
+
+Install 
 ```
-npm run lint
+cd backend
+pip install pipenv
+pipenv install
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-
-# backend
+```
+git clone https://github.com/cgre-aachen/pynoddy
+cd pynoddy
+pipenv run python setup.py install
+```
 
 ```
 cd backend
+pipenv shell
 uvicorn main:app --reload
 ```
