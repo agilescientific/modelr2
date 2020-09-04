@@ -1,38 +1,50 @@
+# modelr2
 
-# Installation
-## Docker (recommended)
-The recommended way to install and run the app on your machine is by using Docker Compose
+
+
+## Installation
+
+The recommended way to install and run the app on your machine is by using Docker Compose. 
+
+You can also install the dependencies for both the back and frontend and then run both services 
+manually (only recommended for people experienced with Python webservers and `npm`).
+
+### Docker (recommended)
+
+To install the app using Docker Compose, first clone the repository, change into the repository directory and
+run the Docker command with the `--build` flag.
 ```
+git clone https://github.com/softwareunderground/modelr2.git
+cd modelr2
 docker-compose up --build
 ```
-
+Once the multi-container Docker application is built once, you can start it without the flag: 
 ```
 docker-compose up
 ```
 
-And you can access the API (backend) at `localhost:8000`, and the frontend at `localhost:8080`.
+You can then access the API (backend) at `localhost:8000`, and the frontend at `localhost:8080`.
 
-## manual
-###  frontend
+### Manual
+####  Frontend
 
 ```
 npm install
 ```
 
-#### Compiles and hot-reloads for development
+##### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
 
-#### Compiles and minifies for production
+##### Compiles and minifies for production
 ```
 npm run build
 ```
 
 
-### backend
+#### Backend
 
-Install 
 ```
 cd backend
 pip install pipenv
