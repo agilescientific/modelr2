@@ -124,13 +124,15 @@ const actions = {
       'history/updateHistory', null, {root: true}
     ).then(() => {
         dispatch('getSectionPlotSection',
-          {seed: state.seed, direction: "y", canvas: 'canvasPreview'}
+          {seed: state.seed, direction: state.direction, canvas: 'canvasPreview'}
         )
-        dispatch('getSectionPlotSection',
-            {seed: state.seed, direction: "x", canvas: 'canvasPreviewX'}
-        )
-    }
-    )
+
+    })
+    // ).then(() => {
+    //   dispatch('getSectionPlotSection',
+    //       {seed: state.seed, direction: "x", canvas: 'canvasPreviewX'}
+    //   )
+    // })
   }
 }
 

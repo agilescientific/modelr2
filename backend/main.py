@@ -284,6 +284,7 @@ async def sample_2d_section(
             the fault block. Defaults to 1.
         faultblock (bool): If True returns the fault block section. Defaults to False.
     """
+    # history_fn = direction.value + ".his"
     exp = sample_experiment(seed)
     
     if not position:
@@ -296,12 +297,13 @@ async def sample_2d_section(
             direction=direction.value,
             position=position,
             sim_type="TOPOLOGY",
-            remove_tmp_files=False
+            remove_tmp_files=False,
         )
     else:
         tmp_out = exp.get_section(
             direction=direction.value,
             position=position,
+            remove_tmp_files=False,
         )
     
     section = tmp_out.block

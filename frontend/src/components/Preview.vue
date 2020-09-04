@@ -5,33 +5,8 @@
       <v-card-subtitle>Live-updating model section preview and stochastic sampling preview.</v-card-subtitle>
       <v-card-text class="py-0">
         <v-row>
-          <v-col>
-            <v-switch
-                v-model="plotPropertyBool"
-                label="Color by Property"
-            ></v-switch>
-          </v-col>
-          <v-col>
-            <v-select class="text-capitalize"
-                :items=plotPropertyOptions
-                :disabled="!plotPropertyBool"
-                v-model="plotProperty"
-                label="Property"
-            ></v-select>
-          </v-col>
-          <v-col>
-            <v-select
-                class="text-capitalize"
-                :items=plotPropertyColormapOptions
-                :disabled="!plotPropertyBool"
-                v-model="plotPropertyColormap"
-                label="Colormap"
-            ></v-select>
-          </v-col>
-        </v-row>
-        <v-row>
           <v-col cols="5" class="text-center">
-            <span>y</span>
+            <span>{{ direction }}</span>
             <canvas id="canvasPreview"></canvas>
             <v-slider
                 @click="updatePreview()"
@@ -42,25 +17,54 @@
                 label="Section position"
             ></v-slider>
           </v-col>
-          <v-col cols="5" class="text-center">
-            <span>x</span>
-            <canvas id="canvasPreviewX"></canvas>
-            <v-slider
-                @click="updatePreview()"
-                dense
-                v-model="positionX"
-                :min="getExtent[0]"
-                :max="getExtent[1]"
-                label="Section position"
-            ></v-slider>
-          </v-col>
+<!--          <v-col cols="5" class="text-center">-->
+<!--            <span>x</span>-->
+<!--            <canvas id="canvasPreviewX"></canvas>-->
+<!--            <v-slider-->
+<!--                @click="updatePreview()"-->
+<!--                dense-->
+<!--                v-model="positionX"-->
+<!--                :min="getExtent[0]"-->
+<!--                :max="getExtent[1]"-->
+<!--                label="Section position"-->
+<!--            ></v-slider>-->
+<!--          </v-col>-->
           <v-col>
             <v-text-field
-                class="mt-5"
-                v-model="seed"
-                type="number"
-                label="Random Seed"
+              class="mt-5"
+              v-model="seed"
+              type="number"
+              label="Random Seed"
             ></v-text-field>
+            <v-select
+                dense
+                :items="sectionAxisOptions"
+                v-model="direction"
+                label="Section axis"
+            ></v-select>
+
+            <v-divider></v-divider>
+
+            <v-switch
+                v-model="plotPropertyBool"
+                label="Color by Property"
+            ></v-switch>
+            <v-select
+                dense
+                class="text-capitalize"
+                :items=plotPropertyColormapOptions
+                :disabled="!plotPropertyBool"
+                v-model="plotPropertyColormap"
+                label="Colormap"
+            ></v-select>
+            <v-select
+                dense
+                class="text-capitalize"
+                :items=plotPropertyOptions
+                :disabled="!plotPropertyBool"
+                v-model="plotProperty"
+                label="Property"
+            ></v-select>
           </v-col>
         </v-row>
         <v-divider></v-divider>
@@ -79,9 +83,6 @@
               thumb-label="always"
               :thumb-size="26"
             ></v-slider>
-          </v-col>
-          <v-col cols="2">
-            <v-select dense :items="sectionAxisOptions" v-model="direction" label="Section axis"></v-select>
           </v-col>
           <v-col cols="2">
             <v-btn
@@ -195,14 +196,6 @@ export default {
     },
     settings() {
       return this.$store.state.settings
-    },
-    previewSeismic: {
-      get() {
-        return this.$store.state.settings.previewSeismic
-      },
-      set(value) {
-        this.$store.state.settings.previewSeismic = value
-      }
     },
     previewNSamples: {
       get() {
