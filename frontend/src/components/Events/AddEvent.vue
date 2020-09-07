@@ -31,16 +31,11 @@
 </template>
 
 <script>
-// import {extent} from "@/main";
-
 export default {
   name: 'AddEvent',
   props: ['eventIndex'],
   computed: {
     extent: this.$store.state.history.extent,
-    xCenter: (this.extent[0] + this.extent[1]) / 2,
-    yCenter: (this.extent[2] + this.extent[3]) / 2,
-    zCenter: (this.extent[4] + this.extent[5]) / 2,
   },
   data() {
     return {
@@ -55,8 +50,8 @@ export default {
           parameters: {
             name: {value: "Fault"},
             X: {value: 2000 + Math.random() * 6000, uncertain: false},
-            Y: {value: this.yCenter, uncertain: false},
-            Z: {value: this.zCenter, uncertain: false},
+            Y: {value: 5000, uncertain: false},
+            Z: {value: 2500, uncertain: false},
             dip: {value: 55 + Math.random() * 10, uncertain: false},
             dip_dir: {value: 270, uncertain: false},
             slip: {value: 200 + Math.random() * 400, uncertain: false}
@@ -71,9 +66,9 @@ export default {
           parameters: {
             name: {value: 'Curved Fault'},
             geometry: {value: 'Curved'},
-            X: {value: this.xCenter, uncertain: false},
-            Y: {value: this.yCenter, uncertain: false},
-            Z: {value: this.zCenter, uncertain: false},
+            X: {value: 5000, uncertain: false},
+            Y: {value: 5000, uncertain: false},
+            Z: {value: 2500, uncertain: false},
             dip: {value: 45, uncertain: false},
             dip_dir: {value: 270, uncertain: false},
             slip: {value: 400, uncertain: false},
@@ -91,9 +86,9 @@ export default {
           nEvents: [1,3],
           parameters: {
             name: {value: 'Unconformity'},
-            X: {value: this.xCenter, uncertain: false},
-            Y: {value: this.yCenter, uncertain: false},
-            Z: {value: this.zCenter, uncertain: false},
+            X: {value: 5000, uncertain: false},
+            Y: {value: 5000, uncertain: false},
+            Z: {value: 2500, uncertain: false},
             dip_direction: {value: 90, uncertain: false},
             dip: {value: 0, uncertain: false},
             num_layers: {value: 1, uncertain: true, distribution: 'uniform', low: 5, high: 10},
@@ -110,9 +105,9 @@ export default {
           nEvents: [1,3],
           parameters: {
             name: {value: 'Tilt'},
-            X: {value: this.xCenter, uncertain: false},
-            Y: {value: this.yCenter, uncertain: false},
-            Z: {value: this.zCenter, uncertain: false},
+            Y: {value: 5000, uncertain: false},
+            X: {value: 5000, uncertain: false},
+            Z: {value: 2500, uncertain: false},
             rotation: {value: 0, uncertain: false},
             plunge_direction: {value: 0, uncertain: false},
             plunge: {value: 0, uncertain: false}
@@ -126,9 +121,9 @@ export default {
           nEvents: [1,3],
           parameters: {
             name: {value: "Fold"},
-            X: {value: this.xCenter, uncertain: false},
-            Y: {value: this.yCenter, uncertain: false},
-            Z: {value: this.zCenter, uncertain: false},
+            X: {value: 5000, uncertain: false},
+            Y: {value: 5000, uncertain: false},
+            Z: {value: 2500, uncertain: false},
             amplitude: {value: 100, uncertain: false},
             wavelength: {value: 10000, uncertain: false},
             dip_dir: {value: 90, uncertain: false}
