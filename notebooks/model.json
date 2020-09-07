@@ -1,0 +1,411 @@
+[
+    {
+        "type": "stratigraphy",
+        "parameters": {
+            "num_layers": {
+                "uncertain": true,
+                "value": 86
+            },
+            "layer_names": {
+                "value": [
+                    "Layer 1"
+                ]
+            },
+            "layer_thickness": {
+                "uncertain": true,
+                "distribution": "uniform",
+                "low": 62,
+                "high": 91
+            },
+            "lithology": {
+                "value": [
+                    "Sandstone"
+                ]
+            }
+        }
+    },
+    {
+        "type": "tilt",
+        "uncertain": false,
+        "probability": 0.9,
+        "event_family": false,
+        "nEvents": [
+            1,
+            3
+        ],
+        "parameters": {
+            "name": {
+                "value": "Tilt"
+            },
+            "X": {
+                "value": 5000,
+                "uncertain": false,
+                "scale": 1
+            },
+            "Y": {
+                "value": 0,
+                "uncertain": false,
+                "scale": 1
+            },
+            "Z": {
+                "value": 3000,
+                "uncertain": false,
+                "scale": 1
+            },
+            "rotation": {
+                "value": 7,
+                "uncertain": false,
+                "scale": 1
+            },
+            "plunge_direction": {
+                "value": 0,
+                "uncertain": false,
+                "scale": 1
+            },
+            "plunge": {
+                "value": 0,
+                "uncertain": false,
+                "scale": 1
+            }
+        }
+    },
+    {
+        "type": "fold",
+        "uncertain": false,
+        "probability": 0.9,
+        "event_family": false,
+        "nEvents": [
+            1,
+            3
+        ],
+        "parameters": {
+            "name": {
+                "value": "Fold"
+            },
+            "X": {
+                "value": 2798,
+                "uncertain": false,
+                "scale": 1
+            },
+            "Y": {
+                "value": 0,
+                "uncertain": false,
+                "scale": 1
+            },
+            "Z": {
+                "value": 5000,
+                "uncertain": false,
+                "scale": 1
+            },
+            "amplitude": {
+                "value": 100,
+                "uncertain": false,
+                "scale": 1
+            },
+            "wavelength": {
+                "value": 10000,
+                "uncertain": false,
+                "scale": 1
+            },
+            "dip_dir": {
+                "value": 90,
+                "uncertain": false,
+                "scale": 1
+            }
+        }
+    },
+    {
+        "type": "fault",
+        "uncertain": false,
+        "probability": 0.9,
+        "event_family": false,
+        "nEvents": [
+            1,
+            3
+        ],
+        "parameters": {
+            "name": {
+                "value": "Fault"
+            },
+            "X": {
+                "value": 6908,
+                "uncertain": true,
+                "scale": 196.5,
+                "distribution": "norm"
+            },
+            "Y": {
+                "value": 0,
+                "uncertain": false,
+                "scale": 1
+            },
+            "Z": {
+                "value": 5000,
+                "uncertain": false,
+                "scale": 1
+            },
+            "dip": {
+                "value": 64,
+                "uncertain": false,
+                "scale": 1
+            },
+            "dip_dir": {
+                "value": 94,
+                "uncertain": false,
+                "scale": 1
+            },
+            "slip": {
+                "value": 240,
+                "uncertain": false,
+                "scale": 1
+            }
+        }
+    },
+    {
+        "type": "fault",
+        "uncertain": false,
+        "probability": 0.9,
+        "event_family": false,
+        "nEvents": [
+            1,
+            3
+        ],
+        "parameters": {
+            "name": {
+                "value": "Fault"
+            },
+            "X": {
+                "value": 3673,
+                "uncertain": true,
+                "scale": 288.6,
+                "distribution": "norm"
+            },
+            "Y": {
+                "value": 0,
+                "uncertain": false,
+                "scale": 1
+            },
+            "Z": {
+                "value": 5000,
+                "uncertain": false,
+                "scale": 1
+            },
+            "dip": {
+                "value": 58,
+                "uncertain": false,
+                "scale": 1
+            },
+            "dip_dir": {
+                "value": 72,
+                "uncertain": false,
+                "scale": 1
+            },
+            "slip": {
+                "value": 421,
+                "uncertain": false,
+                "scale": 1
+            }
+        }
+    },
+    {
+        "type": "fault",
+        "uncertain": false,
+        "probability": 0.9,
+        "event_family": false,
+        "nEvents": [
+            1,
+            3
+        ],
+        "parameters": {
+            "name": {
+                "value": "Fault"
+            },
+            "X": {
+                "value": 4833,
+                "uncertain": true,
+                "scale": 281,
+                "distribution": "norm"
+            },
+            "Y": {
+                "value": 0,
+                "uncertain": false,
+                "scale": 1
+            },
+            "Z": {
+                "value": 5000,
+                "uncertain": false,
+                "scale": 1
+            },
+            "dip": {
+                "value": 60,
+                "uncertain": false,
+                "scale": 1
+            },
+            "dip_dir": {
+                "value": 108,
+                "uncertain": false,
+                "scale": 1
+            },
+            "slip": {
+                "value": 379,
+                "uncertain": false,
+                "scale": 1
+            }
+        }
+    },
+    {
+        "type": "fault",
+        "uncertain": false,
+        "probability": 0.9,
+        "event_family": true,
+        "nEvents": [
+            1,
+            3
+        ],
+        "parameters": {
+            "name": {
+                "value": "Fault"
+            },
+            "X": {
+                "value": 8021,
+                "uncertain": true,
+                "scale": 1111.1,
+                "distribution": "norm"
+            },
+            "Y": {
+                "value": 0,
+                "uncertain": false,
+                "scale": 1
+            },
+            "Z": {
+                "value": 3857,
+                "uncertain": false,
+                "scale": 1
+            },
+            "dip": {
+                "value": 45,
+                "uncertain": false,
+                "scale": 1
+            },
+            "dip_dir": {
+                "value": 270,
+                "uncertain": false,
+                "scale": 1
+            },
+            "slip": {
+                "value": 259,
+                "uncertain": false,
+                "scale": 1
+            }
+        }
+    },
+    {
+        "type": "fault",
+        "uncertain": false,
+        "probability": 0.9,
+        "event_family": true,
+        "nEvents": [
+            1,
+            3
+        ],
+        "parameters": {
+            "name": {
+                "value": "Fault"
+            },
+            "X": {
+                "value": 993,
+                "uncertain": true,
+                "scale": 1111.1,
+                "distribution": "norm"
+            },
+            "Y": {
+                "value": 0,
+                "uncertain": false,
+                "scale": 1
+            },
+            "Z": {
+                "value": 2474,
+                "uncertain": false,
+                "scale": 1
+            },
+            "dip": {
+                "value": 65,
+                "uncertain": false,
+                "scale": 1
+            },
+            "dip_dir": {
+                "value": 95,
+                "uncertain": true,
+                "scale": 11.5,
+                "distribution": "norm"
+            },
+            "slip": {
+                "value": 366,
+                "uncertain": false,
+                "scale": 1
+            }
+        }
+    },
+    {
+        "type": "unconformity",
+        "uncertain": false,
+        "probability": 0.9,
+        "event_family": false,
+        "nEvents": [
+            1,
+            3
+        ],
+        "parameters": {
+            "name": {
+                "value": "Unconformity"
+            },
+            "X": {
+                "value": 5000,
+                "uncertain": false,
+                "scale": 1
+            },
+            "Y": {
+                "value": 0,
+                "uncertain": false,
+                "scale": 1
+            },
+            "Z": {
+                "value": 3780,
+                "uncertain": true,
+                "scale": 87.2,
+                "distribution": "norm"
+            },
+            "dip_direction": {
+                "value": 90,
+                "uncertain": false,
+                "scale": null
+            },
+            "dip": {
+                "value": 5,
+                "uncertain": false,
+                "scale": 1
+            },
+            "num_layers": {
+                "uncertain": true,
+                "value": 50
+            },
+            "layer_names": {
+                "value": [
+                    "Unconformity 1"
+                ],
+                "uncertain": false
+            },
+            "layer_thickness": {
+                "uncertain": true,
+                "distribution": "uniform",
+                "low": 87,
+                "high": 304
+            },
+            "lithology": {
+                "value": [
+                    "Sandstone"
+                ],
+                "uncertain": false
+            }
+        }
+    }
+]
