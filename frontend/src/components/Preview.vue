@@ -11,7 +11,7 @@
             <v-slider
                 @click="updatePreview()"
                 dense
-                v-model="positionY"
+                v-model="position"
                 :min="getExtent[0]"
                 :max="getExtent[1]"
                 label="Section position"
@@ -178,20 +178,12 @@ export default {
         this.updatePreview()
       }
     },
-    positionY: {
+    position: {
       get() {
-        return this.$store.state.preview.positionY
+        return this.$store.state.preview.position
       },
       set(value) {
-        this.$store.state.preview.positionY = value
-      }
-    },
-    positionX: {
-      get() {
-        return this.$store.state.preview.positionX
-      },
-      set(value) {
-        this.$store.state.preview.positionX = value
+        this.$store.state.preview.position = value
       }
     },
     settings() {
