@@ -34,9 +34,6 @@
 export default {
   name: 'AddEvent',
   props: ['eventIndex'],
-  computed: {
-    extent: this.$store.state.history.extent,
-  },
   data() {
     return {
       eventType: '',
