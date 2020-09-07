@@ -10,6 +10,7 @@ import json
 import numpy as np
 from uvicorn.config import logger as logging
 from typing import List
+from starlette.responses import RedirectResponse
 from models import Section, Model
 import os
 
@@ -220,6 +221,13 @@ init_pynoddy(extent_default)
 #  Routes
 #  ---------------------------------------------------------------------------------------------------------------------
 #  ---------------------------------------------------------------------------------------------------------------------
+
+@app.get("/")
+async def home():
+    response = RedirectResponse(url="/docs")
+    return response
+
+
 @app.post("/history")
 async def set_probabilistic_history(model: Model):
     """Set/update front-end parametrization changes in RandomHistory object. So this
