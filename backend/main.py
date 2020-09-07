@@ -272,7 +272,6 @@ async def sample_2d_section(
         direction: Section,
         position: int = None,
         cubesize: int = 50,
-        velocity: bool = False,
         faultlabels: bool = False,
         faultdiff: int = 1,
         faultblock: bool = False
