@@ -29,7 +29,7 @@
               <v-icon>mdi-linkedin</v-icon>
             </v-btn>
           </a>
-          <a href="swung.slack.com/">
+          <a href="https://swung.slack.com/">
             <v-btn icon>
               <v-icon>mdi-slack</v-icon>
             </v-btn>
