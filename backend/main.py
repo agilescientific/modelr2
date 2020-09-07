@@ -223,9 +223,8 @@ init_pynoddy(extent_default)
 #  ---------------------------------------------------------------------------------------------------------------------
 
 @app.get("/")
-async def home():
-    response = RedirectResponse(url="/docs")
-    return response
+async def documentation():
+    return RedirectResponse(url="/docs")
 
 
 @app.post("/history")
