@@ -4,8 +4,7 @@ const scale = require('scale-color-perceptual')
 const state = {
   section: undefined,
   direction: 'y',
-  positionY: 0,
-  positionX: 0,
+  position: 0,
   seed: 42,
   canvas: 'canvasPreview',
   loading: 0,
@@ -88,13 +87,7 @@ const actions = {
   },
 
   getSectionPlotSection({state, dispatch, rootState}, {seed, direction, canvas}) {
-    let position = undefined
-    if (direction === "x") {
-      position = state.positionX
-    } else {
-      position = state.positionY
-    }
-    let url = rootState.fastAPIurl + 'sample/' + seed + "/" + direction + "?position="+position
+    let url = rootState.fastAPIurl + 'sample/' + seed + "/" + direction + "?position="+state.position
     axios.get(url).then((response) => {
       let section = response.data.section
       let shape = response.data.shape.reverse()
