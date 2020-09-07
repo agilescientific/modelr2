@@ -24,12 +24,16 @@
               <v-icon>mdi-twitter</v-icon>
             </v-btn>
           </a>
-          <v-btn icon>
-            <v-icon>mdi-linkedin</v-icon>
-          </v-btn>
-          <v-btn icon>
-            <v-icon>mdi-slack</v-icon>
-          </v-btn>
+          <a href="https://www.linkedin.com/company/agile-/">
+            <v-btn icon>
+              <v-icon>mdi-linkedin</v-icon>
+            </v-btn>
+          </a>
+          <a href="swung.slack.com/">
+            <v-btn icon>
+              <v-icon>mdi-slack</v-icon>
+            </v-btn>
+          </a>
         </v-card-text>
         <v-card-text>
           <a
