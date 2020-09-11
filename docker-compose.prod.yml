@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+
+  server:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./frontend/Caddyfile:/etc/Caddyfile
+      - ~/.caddy:/root/.caddy
+    networks:
+      - defaultnetwork
+    depends_on:
+      - backend
+
+  backend:
+    build:
+        context: ./backend
+        dockerfile: Dockerfile
+    networks:
+        - defaultnetwork
+
+networks:
+  defaultnetwork:
+    driver: bridge

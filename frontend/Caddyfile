@@ -1,0 +1,7 @@
+www.modelr.io, modelr.io {
+    root /var/www
+}
+
+api.modelr.io {
+    proxy / backend:80
+}

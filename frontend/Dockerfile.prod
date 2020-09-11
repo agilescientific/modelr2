@@ -1,0 +1,17 @@
+# Stage 0, "build-stage", based on Node.js, to build and compile the frontend
+FROM node:lts-alpine as build-stage
+
+WORKDIR /app
+
+COPY package*.json /app/
+
+RUN npm install
+
+COPY ./ /app/
+
+RUN npm run build
+
+# Stage 1, Use Caddy to serve front and back
+FROM abiosoft/caddy
+
+COPY --from=build-stage /app/dist/ /var/www
