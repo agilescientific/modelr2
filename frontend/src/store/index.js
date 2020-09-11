@@ -18,7 +18,7 @@ export default new Vuex.Store({
     modelExtent: [0, 10000, 0, 10000, 0, 5000],
     previewSection: undefined,
     previewSeismic: undefined,
-    fastAPIurl: 'http://localhost:8000/',
+    fastAPIurl: process.env.VUE_APP_APIURL,
   },
 
   mutations: {

@@ -13,7 +13,9 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    command: http-server dist
+    environment:
+      - VUE_APP_APIURL=http://localhost:8000/
+    command: npm run serve
     ports:
       - "8080:8080"
     networks:
