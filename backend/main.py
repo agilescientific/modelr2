@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import sys
 import uvicorn
@@ -227,8 +227,8 @@ async def documentation():
     return RedirectResponse(url="/docs")
 
 
-@app.post("/history")
-async def set_probabilistic_history(model: Model):
+@app.api_route("/history", methods=["GET", "POST"])
+async def set_probabilistic_history(request: Request, model: Model):
     """Set/update front-end parametrization changes in RandomHistory object. So this
     communicates every relevant change to the parametrization in the front end to
     the backend to ensure synchronization at all times.
@@ -236,13 +236,18 @@ async def set_probabilistic_history(model: Model):
     Args:
         model (Model): Model parametrization.
     """
-    events = json.loads(model.history)  # load the history json as dict from POST data
-    app.rhist.history = events
-    app.rhist.rock_library = json.loads(model.rock_library)  # load rock library json as dict
-    app.origin = (model.extent.x, model.extent.y, model.extent.Z)  # update origin
-    app.extent = (model.extent.X, model.extent.Y, model.extent.z + model.extent.Z)  # update extent
-    
-    
+    if request.method == "GET":
+        return app.rhist.history  # jsonify(app.rhist.history)
+
+    elif request.method == "POST":
+        events = json.loads(model.history)  # load the history json as dict from POST data
+        app.rhist.history = events
+        app.rhist.rock_library = json.loads(model.rock_library)  # load rock library json as dict
+        app.origin = (model.extent.x, model.extent.y, model.extent.Z)  # update origin
+        app.extent = (model.extent.X, model.extent.Y, model.extent.z + model.extent.Z)  # update extent
+        return
+
+
 # @app.get("/history")
 # async def get_probabilistic_history():
 #     """Returns the probabilistic history dict/JSON. Same result as using the export history button
@@ -263,7 +268,7 @@ async def sample_pynoddy_experiment_events(seed: int):
 @app.get("/rocks/")
 async def get_rock_properties():
     """Gets the rock property JSON."""
-    return {'library': app.rhist.rock_library}
+    return app.rhist.rock_library
 
 
 @app.get("/sample/{seed}/{direction}")
